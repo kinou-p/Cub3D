@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 18:07:18 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/04 21:17:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	quit_game(t_data *img)
 	mlx_destroy_display(img->mlx);
 	if (img->mlx)
 		free(img->mlx);
+	free(img->map.simple_map);
 	//free_double(img->map);
 	exit(0);
 }

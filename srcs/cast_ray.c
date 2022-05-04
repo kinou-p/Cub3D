@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:08:14 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 20:55:52 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/04 21:06:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	draw_ray(t_data *img)
 	float	ray_x = 0; //where ray touch y
 	float	next_x = 0;
 	float	next_y = 0;
-	float	dist_v = 1000000000;
-	float	dist_h = 1000000000;
-	float	dist_f = 0;
+	float	dist_v;
+	float	dist_h;
+	float	dist_f;
 	float	vx = 0;
 	float	vy = 0;
 	int		count = 0;
@@ -42,9 +42,8 @@ void	draw_ray(t_data *img)
 	int		mx = 0;
 	int		mp = 0;
 	
-
+	(void)dist_f;
 	//printf("\nENTER DRAW RAY\n");
-	int k = -1;
 	//while (++k < ft_strlen(img->map.simple_map))
 	//	printf("%d--- %c\n", k, img->map.simple_map[k]);
 	//printf("map = -%s-\n", img->map.simple_map);
@@ -161,16 +160,18 @@ void	draw_ray(t_data *img)
 		vx = cos(deg_to_rad(ray_angle));
 		vy = -sin(deg_to_rad(ray_angle));
 		//printf("player.vx= %f vx= %f player.vy= %f vy= %f\n", img->player.vx, vx, img->player.vy, vy);
-		if ((dist_h != -1 || dist_v != -1) && dist_h < dist_v && dist_h > 0)
+		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
 			print_ray2(img, vx, vy, fabs(dist_h));
 			dist_f = dist_h;
 		}
-		else if (dist_h != -1 || dist_v != -1)
+		else if (dist_v != -1)
 		{
 			dist_f = dist_v;
 			print_ray2(img, vx, vy, fabs(dist_v));
 		}
+		else
+			dist_f = 0;
 		ray_angle = reset_angle(ray_angle - 1);
 	}
 }
