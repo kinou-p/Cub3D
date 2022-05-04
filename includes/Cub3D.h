@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/03 16:48:27 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:34:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@
 # include <stdio.h>
 # include <math.h>
 
-# define PI 3.14159265359
+# define PI 3.1415926535
 
 typedef struct map_information{
-	char **map;
-	int floor;
-	int sky;
+	char	**map;
+	int		floor;
+	int		sky;
+	char	*simple_map;
+	int		size;
+	int		x;
+	int		y;
 }				map_info;
 
 typedef struct player_position
@@ -43,15 +47,19 @@ typedef struct player_position
 typedef struct s_data {
 	void	*mlx;
 	void	*mlx_win;
-	char	**map;
+	char	**double_map;
+	map_info map;
 	player	player;
 }				t_data;
 
+int reset_angle(int angle);
+float deg_to_rad(int angle);
+void	draw_ray(t_data *img);
 void	print_ray(t_data *img);
 int		key_press(int code, t_data *img);
 int		quit_game(t_data *img);
 void	ft_error(char *error_msg);
 void	print_player(player player, t_data *img);
-void	print_map(char **map, t_data *img);
+void	print_map(map_info map, t_data *img);
 
 #endif

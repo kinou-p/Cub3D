@@ -6,17 +6,18 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/13 16:27:49 by apommier          #+#    #+#              #
-#    Updated: 2022/05/03 16:19:32 by apommier         ###   ########.fr        #
+#    Updated: 2022/05/04 18:08:34 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= Cub3D
 SRCS	= srcs/main.c\
+			srcs/cast_ray.c\
 			srcs/utils.c
 OBJS	= ${SRCS:.c=.o}
 CC		= gcc
 LIB		= -L ./mlx -lmlx -lXext -lX11 -lm
-CFLAGS	= -Wall -Wextra
+CFLAGS	= -Wall -Wextra -g
 RM		= rm -rf
 LIBFT	= ./libft
 
