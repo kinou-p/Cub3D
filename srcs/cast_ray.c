@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:08:14 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 21:06:34 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:37:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,68 @@
 void	print_ray2(t_data *img, float vx, float vy, float dist)
 {
 	int i = -1;
+	int red = 0;
+
+	red = red << 8;
+	red +=255;
+	red = red << 8;
+	red = red << 8;
 	while (++i < dist)
 	{
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) , 500);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , 500);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, 500);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) , red);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , red);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, red);
+	}
+}
+
+int get_red()
+{
+	int red = 0;
+
+	red = red << 8;
+	red +=255;
+	red = red << 8;
+	red = red << 8;
+	return (red);
+}
+
+int get_dark_red()
+{
+	int red = 0;
+
+	red = red << 8;
+	red +=139;
+	red = red << 8;
+	red = red << 8;
+	return (red);
+}
+
+void	draw_ray3d(t_data *img, float dist, int ray, int type)
+{
+	float	line_height;
+	float	line_offset;
+	int		i;
+	int		y;
+	int		x;
+
+	x = 0;
+	i = 0;
+	line_height = img->map.size * 320 / dist;
+	if (line_height > 320)
+		line_height = 320;
+	line_offset = 160 - line_height / 2;
+	while (i < 8)
+	{
+		y = 0;
+		while (y < line_height)
+		{
+			if (type)
+				mlx_pixel_put(img->mlx, img->mlx_win, ray * 8 + 530 + i, y + line_offset , get_red());
+			else
+				mlx_pixel_put(img->mlx, img->mlx_win, ray * 8 + 530 + i, y + line_offset , get_dark_red());
+			y++;
+		}
+		i++;
 	}
 }
 
@@ -160,18 +217,24 @@ void	draw_ray(t_data *img)
 		vx = cos(deg_to_rad(ray_angle));
 		vy = -sin(deg_to_rad(ray_angle));
 		//printf("player.vx= %f vx= %f player.vy= %f vy= %f\n", img->player.vx, vx, img->player.vy, vy);
+		int wall_type;
 		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
 			print_ray2(img, vx, vy, fabs(dist_h));
 			dist_f = dist_h;
+			wall_type = 0;
 		}
 		else if (dist_v != -1)
 		{
 			dist_f = dist_v;
 			print_ray2(img, vx, vy, fabs(dist_v));
+			wall_type = 1;
 		}
 		else
 			dist_f = 0;
+		int ca = reset_angle(img->player.angle - ray_angle); //fisheye
+		dist_f = dist_f * cos(deg_to_rad(ca));				 //fisheye
+		draw_ray3d(img, dist_f, nb_ray, wall_type);
 		ray_angle = reset_angle(ray_angle - 1);
 	}
 }

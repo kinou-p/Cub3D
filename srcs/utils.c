@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 21:17:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:29:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ int	key_press(int code, t_data *img)
 		if (is_good(img, code))
 		{
 			//printf("code = %d\n", code);
-			//mlx_clear_window(img->mlx, img->mlx_win);
+			mlx_clear_window(img->mlx, img->mlx_win);
 			print_map(img->map, img);
 			print_player(img->player, img);
-			print_ray(img);
 			draw_ray(img);
+			print_ray(img);
 		}
 	}
 	return (1);

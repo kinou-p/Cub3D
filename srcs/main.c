@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 18:08:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:12:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_ray(t_data *img)
 	int i = -1;
 	while (++i < 15)	
 	{
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i) + 3, (img->player.y + (img->player.vy) * i) + 3, 255);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i) + 4, (img->player.y + (img->player.vy) * i) + 3, 255);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i) + 3, (img->player.y + (img->player.vy) * i) + 4, 255);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) , 255 << 8);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i) + 1, (img->player.y + (img->player.vy) * i) , 255 << 8);
+		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) + 1, 255 << 8);
 	}
 }
 
@@ -182,7 +182,7 @@ void	print_player(player player, t_data *img)
 	
 	buffer = mlx_xpm_file_to_image(img->mlx, "./sprite/player.xpm",
 				&img_width, &img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, buffer, player.x, player.y);
+	mlx_put_image_to_window(img->mlx, img->mlx_win, buffer, player.x - 3.5	, player.y -3.5);
 	mlx_destroy_image(img->mlx, buffer);
 }
 
