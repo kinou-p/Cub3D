@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:52:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:55:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int	main(int argc, char **argv)
 	img.player.vy = sin(deg_to_rad(img.player.angle));
 	print_map(img.map, &img);
 	print_player(img.player, &img);
-	print_ray(&img);
+	//print_ray(&img);
 	mlx_hook(img.mlx_win, 2, 1L << 0, &key_press, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);
 	mlx_loop(img.mlx);

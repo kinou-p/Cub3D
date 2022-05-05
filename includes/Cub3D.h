@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/04 18:46:58 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:58:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_data {
 	player	player;
 }				t_data;
 
+int get_color(char one, char two, char three);
 int reset_angle(int angle);
 float deg_to_rad(int angle);
 void	draw_ray(t_data *img);

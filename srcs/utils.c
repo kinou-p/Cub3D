@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:53:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 03:05:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,24 @@ int	is_good(t_data *img, int type)
 	return (1);
 }
 
+void print_back(t_data *img)
+{
+	int x = 530;
+	int y = 160;
+
+	while (x < 1024)
+	{
+		y = 0;
+		while (y < 320)
+		{
+			mlx_pixel_put(img->mlx, img->mlx_win, x , y, get_color(128, 128, 128));
+			//mlx_pixel_put(img->mlx, img->mlx_win, x , y - 160, get_color(0, 255, 255));
+			y++;
+		}
+		x++;
+	}
+}
+
 int	key_press(int code, t_data *img)
 {
 	if (code == 65307)
@@ -107,9 +125,10 @@ int	key_press(int code, t_data *img)
 		if (is_good(img, code))
 		{
 			//printf("code = %d\n", code);
-			mlx_clear_window(img->mlx, img->mlx_win);
+			//mlx_clear_window(img->mlx, img->mlx_win);
 			print_map(img->map, img);
 			print_player(img->player, img);
+			print_back(img);
 			draw_ray(img);
 			print_ray(img);
 		}

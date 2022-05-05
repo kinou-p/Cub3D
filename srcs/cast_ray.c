@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:08:14 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:51:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:59:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	print_ray2(t_data *img, float vx, float vy, float dist)
 		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , red);
 		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, red);
 	}
+}
+
+int get_color(char one, char two, char three)
+{
+	int color = 0;
+
+	color = color << 8;
+	color += one;
+	color = color << 8;
+	color += two;
+	color = color << 8;
+	color += three;
+	return (color);
 }
 
 int get_red()
