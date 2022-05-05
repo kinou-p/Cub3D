@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:12:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:52:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int	main(int argc, char **argv)
 	t_data	img;
 
 	if (argc != 2)
-		ft_error("Error: bad number of arguments");
+		ft_error("Error: bad number of arguments, only need a map");
 	img.mlx = mlx_init();
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");

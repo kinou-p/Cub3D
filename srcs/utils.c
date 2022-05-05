@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:29:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:53:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_error(char *error_msg)
 	/*int	i;
 
 	i = 0;*/
-	ft_putstr_fd(error_msg, 2);
+	ft_putendl_fd(error_msg, 2);
 	exit(1);
 }
 
