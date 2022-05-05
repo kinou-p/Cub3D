@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:08:14 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:37:46 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/05 02:51:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	draw_ray3d(t_data *img, float dist, int ray, int type)
 	float	line_offset;
 	int		i;
 	int		y;
-	int		x;
 
-	x = 0;
 	i = 0;
 	line_height = img->map.size * 320 / dist;
 	if (line_height > 320)
