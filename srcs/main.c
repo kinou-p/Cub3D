@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:55:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/17 23:52:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,16 +189,20 @@ void	print_player(player player, t_data *img)
 int	main(int argc, char **argv)
 {
 	t_data	img;
+	sprite	texture;
 
+	texture.north = get_texture(1);
 	if (argc != 2)
 		ft_error("Error: bad number of arguments, only need a map");
 	img.mlx = mlx_init();
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");
+	
 	img.map = set_map(argv);
 	img.mlx_win = mlx_new_window(img.mlx, 1024, 512, "Cub3D");
 	//img->player.x=150; img->player.y=400; pa=90;
  	//pdx=cos(deg_to_rad(pa)); pdy=-sin(deg_to_rad(pa));
+	img.map.texture = texture;
 	img.player.x = 150;
 	img.player.y = 400;
 	img.player.angle = 90;
@@ -206,6 +210,12 @@ int	main(int argc, char **argv)
 	img.player.vy = sin(deg_to_rad(img.player.angle));
 	print_map(img.map, &img);
 	print_player(img.player, &img);
+
+
+
+
+
+	
 	//print_ray(&img);
 	mlx_hook(img.mlx_win, 2, 1L << 0, &key_press, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);

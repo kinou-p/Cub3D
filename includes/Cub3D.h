@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 02:58:26 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/17 22:51:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,28 @@
 
 # define PI 3.1415926535
 
+typedef struct ray_info{
+	float	ty;
+	float	tx;
+	float	mp;
+	float	dist;
+	int 	index;
+	int		wall_type;
+	int		pixel;
+	
+}				ray;
+
+
+typedef struct all_wall_texture{
+	int	*north;
+	int	*east;
+	int	*west;
+	int	*south;
+}				sprite;
+
 typedef struct map_information{
 	char	**map;
+	sprite	texture;
 	int		floor;
 	int		sky;
 	char	*simple_map;
@@ -52,9 +72,10 @@ typedef struct s_data {
 	player	player;
 }				t_data;
 
-int get_color(char one, char two, char three);
-int reset_angle(int angle);
-float deg_to_rad(int angle);
+int		*get_texture(int type);
+int		get_color(char one, char two, char three);
+int		reset_angle(int angle);
+float	deg_to_rad(int angle);
 void	draw_ray(t_data *img);
 void	print_ray(t_data *img);
 int		key_press(int code, t_data *img);

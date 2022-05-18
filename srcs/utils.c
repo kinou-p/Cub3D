@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/05 03:05:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/18 00:08:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,35 @@ int	key_press(int code, t_data *img)
 			print_player(img->player, img);
 			print_back(img);
 			draw_ray(img);
-			print_ray(img);
+			print_ray(img);			
 		}
 	}
+
+
+
+	int y = 0;
+	int x = 0;
+	int	pixel = 0;
+	int color;
+	//printf("pixel=%d   ", ray.pixel);
+	while (x < 16)
+	{
+		y = 0;
+		while (y < 16)
+		{
+			//printf("test\n");
+			pixel = (x * 16 + y)* 3 + 1;
+			color = get_color(img->map.texture.north[pixel], img->map.texture.north[pixel + 1], img->map.texture.north[pixel + 2]);
+			mlx_pixel_put(img->mlx, img->mlx_win, x, y, color);
+			y++;	
+		}
+		x++;
+	}
+
+
+
+
+
+	
 	return (1);
 }

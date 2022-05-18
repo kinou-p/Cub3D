@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 00:09:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/01/18 06:50:22 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/06 20:01:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ long	ft_atoi(const char *nptr)
 	minus = 1;
 	nbr = 0;
 	i = 0;
+	if (!nptr)
+		return (0);
 	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
 		i++;
 	if (nptr[i] == '+')
