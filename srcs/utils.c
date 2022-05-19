@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/18 00:08:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:32:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ int	quit_game(t_data *img)
 	exit(0);
 }
 
-float deg_to_rad(int angle)
+double deg_to_rad(double angle)
 {
-	return (angle * M_PI / 180.0);
+	return (angle * 3.14159265358979323846 / 180.0);
 }
 
-int reset_angle(int angle)
+double reset_angle(double angle)
 {
 	if (angle > 359)
-		angle -= 360;
+		angle -= 360.0;
 	if (angle < 0)
-		angle += 360;
+		angle += 360.0;
 	return (angle);
 }
 
@@ -49,8 +49,8 @@ void	ft_error(char *error_msg)
 int	is_good(t_data *img, int type)
 {
 	//printf("touche= %c\n", type);
-	//printf("vx= %f vy= %f\n", img->player.vx, img->player.vy);
-	//printf("player:       x= %f y= %f\n", img->player.x, img->player.y);
+	//printf("vx= %d vy= %d\n", img->player.vx, img->player.vy);
+	//printf("player:       x= %d y= %d\n", img->player.x, img->player.y);
 
 //
  /*if(key=='a'){ pa+=5; pa=FixAng(pa); pdx=cos(deg_to_rad(pa)); pdy=-sin(deg_to_rad(pa));} 	
@@ -94,19 +94,19 @@ int	is_good(t_data *img, int type)
 	}
 	else
 		return (0);
-	//printf("after player: x= %f y= %f\n", img->player.x, img->player.y);
+	//printf("after player: x= %d y= %d\n", img->player.x, img->player.y);
 	return (1);
 }
 
 void print_back(t_data *img)
 {
-	int x = 530;
-	int y = 160;
+	int x = 0;
+	int y = 0;
 
 	while (x < 1024)
 	{
 		y = 0;
-		while (y < 320)
+		while (y < 512)
 		{
 			mlx_pixel_put(img->mlx, img->mlx_win, x , y, get_color(128, 128, 128));
 			//mlx_pixel_put(img->mlx, img->mlx_win, x , y - 160, get_color(0, 255, 255));
@@ -126,22 +126,22 @@ int	key_press(int code, t_data *img)
 		{
 			//printf("code = %d\n", code);
 			//mlx_clear_window(img->mlx, img->mlx_win);
-			print_map(img->map, img);
-			print_player(img->player, img);
+			//print_map(img->map, img);
+			//print_player(img->player, img);
 			print_back(img);
 			draw_ray(img);
-			print_ray(img);			
+			//print_ray(img);
 		}
 	}
 
 
 
-	int y = 0;
-	int x = 0;
-	int	pixel = 0;
-	int color;
+	// int y = 0;
+	// int x = 0;
+	// int	pixel = 0;
+	// int color;
 	//printf("pixel=%d   ", ray.pixel);
-	while (x < 16)
+	/*while (x < 16)
 	{
 		y = 0;
 		while (y < 16)
@@ -153,7 +153,7 @@ int	key_press(int code, t_data *img)
 			y++;	
 		}
 		x++;
-	}
+	}*/
 
 
 

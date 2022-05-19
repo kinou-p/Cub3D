@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/17 23:52:27 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:09:32 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_ray(t_data *img)
 	int i = -1;
 	while (++i < 15)	
 	{
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) , 255 << 8);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i) + 1, (img->player.y + (img->player.vy) * i) , 255 << 8);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) + 1, 255 << 8);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) , 255 << 8);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (img->player.vx) * i) + 1, (img->player.y + (img->player.vy) * i) , 255 << 8);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) + 1, 255 << 8);
 	}
 }
 
@@ -117,15 +117,15 @@ void	print_case(char type, t_data *img, int y, int x)
 
 	//printf("type= %c\n", type);
 	if (type == '1')
-		buffer = mlx_xpm_file_to_image(img->mlx, "./sprite/wall.xpm",
+		buffer = mlx_xpm_file_to_image(img->mlx_test, "./sprite/wall.xpm",
 				&img_width, &img_height);
 	else if (type == '0')
-		buffer = mlx_xpm_file_to_image(img->mlx, "./sprite/back.xpm",
+		buffer = mlx_xpm_file_to_image(img->mlx_test, "./sprite/back.xpm",
 				&img_width, &img_height);
 	if (!buffer)
 		ft_error("no buffer");
-	mlx_put_image_to_window(img->mlx, img->mlx_win, buffer, x, y);
-	mlx_destroy_image(img->mlx, buffer);
+	mlx_put_image_to_window(img->mlx_test, img->mlx_win_test, buffer, x, y);
+	mlx_destroy_image(img->mlx_test, buffer);
 }
 
 void	print_map(map_info map, t_data *img)
@@ -159,19 +159,19 @@ void	print_map(map_info map, t_data *img)
 		{
 			print_case(map[j][i], img, (j * 64), (i * 64));
 			i++;
-			x++;
+			x++; 
 		}
 		j++;
 		y++;
 	}*/
 }
 
-void	print_line(t_data *img, float x, float y)
+void	print_line(t_data *img, double x, double y)
 {
-	float i = -1;
+	double i = -1;
 	int j = -1;
 	while (++i < x && ++j < y)
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (img->player.vx / 5) * i) + 2, (img->player.y + (img->player.vy / 5) * i) + 2, 65);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (img->player.vx / 5) * i) + 2, (img->player.y + (img->player.vy / 5) * i) + 2, 65);
 }
 
 void	print_player(player player, t_data *img)
@@ -180,10 +180,10 @@ void	print_player(player player, t_data *img)
 	int	img_width;
 	int	img_height;
 	
-	buffer = mlx_xpm_file_to_image(img->mlx, "./sprite/player.xpm",
+	buffer = mlx_xpm_file_to_image(img->mlx_test, "./sprite/player.xpm",
 				&img_width, &img_height);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, buffer, player.x - 3.5	, player.y -3.5);
-	mlx_destroy_image(img->mlx, buffer);
+	mlx_put_image_to_window(img->mlx_test, img->mlx_win_test, buffer, player.x - 3.5	, player.y -3.5);
+	mlx_destroy_image(img->mlx_test, buffer);
 }
 
 int	main(int argc, char **argv)
@@ -195,11 +195,18 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		ft_error("Error: bad number of arguments, only need a map");
 	img.mlx = mlx_init();
+	
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");
 	
 	img.map = set_map(argv);
-	img.mlx_win = mlx_new_window(img.mlx, 1024, 512, "Cub3D");
+	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
+	
+	
+	//img.mlx_test = mlx_init();
+	//img.mlx_win_test = mlx_new_window(img.mlx, 512, 512, "Cub3D_test");
+
+
 	//img->player.x=150; img->player.y=400; pa=90;
  	//pdx=cos(deg_to_rad(pa)); pdy=-sin(deg_to_rad(pa));
 	img.map.texture = texture;
@@ -208,14 +215,8 @@ int	main(int argc, char **argv)
 	img.player.angle = 90;
 	img.player.vx = cos(deg_to_rad(img.player.angle));
 	img.player.vy = sin(deg_to_rad(img.player.angle));
-	print_map(img.map, &img);
-	print_player(img.player, &img);
-
-
-
-
-
-	
+	//print_map(img.map, &img);
+	//print_player(img.player, &img);
 	//print_ray(&img);
 	mlx_hook(img.mlx_win, 2, 1L << 0, &key_press, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);

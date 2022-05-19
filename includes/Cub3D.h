@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/17 22:51:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:19:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define PI 3.1415926535
 
 typedef struct ray_info{
-	float	ty;
-	float	tx;
-	float	mp;
-	float	dist;
+	double	ty;
+	double	tx;
+	double	mp;
+	double	dist;
 	int 	index;
 	int		wall_type;
 	int		pixel;
@@ -57,16 +57,18 @@ typedef struct map_information{
 
 typedef struct player_position
 {
-	float x;
-	float y;
-	float angle;
-	float vx;
-	float vy;
+	double x;
+	double y;
+	double angle;
+	double vx;
+	double vy;
 }				player;
 
 typedef struct s_data {
 	void	*mlx;
 	void	*mlx_win;
+	void	*mlx_test;
+	void	*mlx_win_test;
 	char	**double_map;
 	map_info map;
 	player	player;
@@ -74,8 +76,8 @@ typedef struct s_data {
 
 int		*get_texture(int type);
 int		get_color(char one, char two, char three);
-int		reset_angle(int angle);
-float	deg_to_rad(int angle);
+double	reset_angle(double angle);
+double	deg_to_rad(double angle);
 void	draw_ray(t_data *img);
 void	print_ray(t_data *img);
 int		key_press(int code, t_data *img);

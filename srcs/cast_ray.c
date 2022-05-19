@@ -6,26 +6,27 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 18:08:14 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/18 19:13:39 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:04:22 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Cub3D.h"
 
-void	print_ray2(t_data *img, float vx, float vy, float dist)
+void	print_ray2(t_data *img, double vx, double vy, double dist)
 {
 	int i = -1;
 	int red = 0;
 
+	//printf("in print ray2\n");
 	red = red << 8;
 	red +=255;
 	red = red << 8;
 	red = red << 8;
 	while (++i < dist)
 	{
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) , red);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , red);
-		mlx_pixel_put(img->mlx, img->mlx_win, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, red);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) , red);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , red);
+		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, red);
 	}
 }
 
@@ -66,13 +67,13 @@ int get_dark_red()
 
 void	draw_ray3d(t_data *img, ray ray)
 {
-	float	line_height;
-	float	line_offset;
+	double	line_height;
+	double	line_offset;
 	int		x = 0;
-	float	y = 0;
+	double	y = 0;
 	int		mx = 0;
 	int		my = 0;
-	int 	pixel;
+	//int 	pixel;
 	int 	color;
 	int		texture_size = 64;
 	//char	*wall;
@@ -89,8 +90,8 @@ void	draw_ray3d(t_data *img, ray ray)
 	}*/
 
 
-	// float ty=ty_off*ty_step;//+hmt*32;
- 	// float tx;
+	// double ty=ty_off*ty_step;//+hmt*32;
+ 	// double tx;
 	// if(shade==1)
 	// {
 	// 	tx=(int)(rx/2.0)%32;
@@ -106,17 +107,17 @@ void	draw_ray3d(t_data *img, ray ray)
 
 	
 	//pixel = ((int)ty * 32 + (int)tx) * 3 + (hmt * 32 * 32 * 3);
-	int copy = ray.ty;
+	//int copy = ray.ty;
 	
 	//i = 0;
-	line_height = img->map.size * 320 / ray.dist;
-	if (line_height > 320)
-		line_height = 320;
-	line_offset = 160 - line_height / 2;
-	float	gap = 1;
-	float	old_y = 0;
-	float myy = 0;
-	printf("mp= %f modulo texture_size= %d\n", ray.mp, ((int)ray.mp / 4) % texture_size);
+	line_height = img->map.size * 960 / ray.dist;
+	//if (line_height > 512)
+	//	line_height = 512;
+	line_offset = 256 - line_height / 2;
+	double	gap = 1;
+	//double	old_y = 0;
+	double myy = 0;
+	//printf("mp= %f modulo texture_size= %d\n", ray.mp, ((int)ray.mp / 4) % texture_size);
 	
 	//while (x < 8)
 	//{
@@ -125,7 +126,7 @@ void	draw_ray3d(t_data *img, ray ray)
 		myy = 0;
 		//double step = 1.0 * texHeight / lineHeight;
 		gap = (texture_size / line_height);
-		old_y = 0;
+		//old_y = 0;
 	 	//ray.ty = ;
 		mx = ((int)ray.mp) % texture_size;
 		//int texX = int(wallX * double(texWidth));
@@ -148,18 +149,18 @@ void	draw_ray3d(t_data *img, ray ray)
 			//ray.pixel = ((((int)ray.mp) % 16) * 16 + gap /*+ x*/) * 3 + 1 ;
 			ray.pixel = ((my) * texture_size + mx)* 3 - 1;
 			x = -1;
-			//printf("my= %d mx= %d pixel= %d\n", my, mx, ray.pixel);
+			//printf("x= %d y= %f pixel= %d\n", ray.index /** 2 + 530 + x*/, y, ray.pixel);
 			color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
-			while (++x < 8)
+			while (++x < 4)
 			{
 				if (ray.wall_type)
-					mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 8 + 530 + x, y + line_offset , color);
+					mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
 				else
-					mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 8 + 530 + x, y + line_offset , (color >> 1) & 8355711);
+					mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , (color >> 1) & 8355711);
 			}
 			//printf("pixel=%d   ", ray.pixel);
 			//if (ray.wall_type)
-			int l = 0;
+			//int l = 0;
 			//while (l < 8)
 			//{
 				//x = -1;
@@ -173,32 +174,32 @@ void	draw_ray3d(t_data *img, ray ray)
 		}
 		x++;
 	//}
-	printf("\n");
+	//printf("\n");
 	//ray.tx++;
 	
 }
 
 void	draw_ray(t_data *img)
 {
-	float	ray_angle = 0; //ray angle
-	float	ray_y = 0; //where ray touch x
-	float	ray_x = 0; //where ray touch y
-	float	next_x = 0;
-	float	next_y = 0;
-	float	dist_v;
-	float	dist_h;
-	float	dist_f;
-	float	vx = 0;
-	float	vy = 0;
+	double	ray_angle = 0; //ray angle
+	double	ray_y = 0; //where ray touch x
+	double	ray_x = 0; //where ray touch y
+	double	next_x = 0;
+	double	next_y = 0;
+	double	dist_v;
+	double	dist_h;
+	double	dist_f;
+	double	vx = 0;
+	double	vy = 0;
 	int		count = 0;
-	float	aTan = 0;
+	double	aTan = 0;
 	int		nb_ray = -1;
 	int		my = 0;
 	int		mx = 0;
 	int		mp = 0;
 	
 	(void)dist_f;
-	printf("---NEW RAY----\n\n");
+	//printf("---NEW RAY----\n\n");
 	//printf("\nENTER DRAW RAY\n");
 	//while (++k < ft_strlen(img->map.simple_map))
 	//	printf("%d--- %c\n", k, img->map.simple_map[k]);
@@ -206,7 +207,7 @@ void	draw_ray(t_data *img)
 	count = 0;
 	ray_angle = reset_angle(img->player.angle + 30);
 	//ray_angle = reset_angle(img->player.angle);
-	while (++nb_ray < 60)
+	while (++nb_ray < 240)
 	{
 		
 		//if (nb_ray)
@@ -218,6 +219,12 @@ void	draw_ray(t_data *img)
 		//printf("player_angle= %f ray_angle= %f\n", img->player.angle, ray_angle);
 		//----------start vertical ray----------
 		aTan = tan(deg_to_rad(ray_angle));
+		//if (aTan != tan(deg_to_rad(ray_angle - 0.25)))
+		//double test = 0.1111111111111;
+		//printf("test= %f\n", test);
+		//printf("ray_angle = %f\n", ray_angle);
+		//printf("in atan= %f\n", deg_to_rad(ray_angle));
+		//printf("atan= %f\n", aTan);
 		if (cos(deg_to_rad(ray_angle)) > 0.001)//looking left
 		{
 			ray_x = (((int)img->player.x>>6)<<6) + 64;
@@ -322,29 +329,29 @@ void	draw_ray(t_data *img)
 		
 		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
-			print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_h));
+			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_h));
 			dist_f = dist_h;
-			printf("rx= %f ry= %f\n", ray_x, ray_y);
+			//printf("rx= %f ry= %f\n", ray_x, ray_y);
 			ray_info.mp = ray_x;
 			wall_type = 0;
 		}
 		else if (dist_v != -1)
 		{
 			dist_f = dist_v;
-			printf("vx= %f vy= %f\n", vx, vy);
+			//printf("vx= %f vy= %f\n", vx, vy);
 			ray_x = vx;
 			ray_y = vy;
 			ray_info.mp = vy;
-			print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_v));
+			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_v));
 			wall_type = 1;
 		}
 		else
 			dist_f = 0;
 		
-		float tx;
-		float ty_off = 0;
-		float ty_step = 32.0/dist_f;
-		//float ty = ;
+		double tx;
+		//double ty_off = 0;
+		//double ty_step = 32.0/dist_f;
+		//double ty = ;
 		/*if(dist_f > 640)
 		{
 			ty_off = (dist_f - 320) / 2.0;
@@ -356,17 +363,19 @@ void	draw_ray(t_data *img)
 		//if(ray_angle > 180)
 		//	tx = 15 - tx;
 		//ray_info.pixel = ((int)ty * 16 + (int)tx) * 3 + 3;
-		printf("nb_ray= %d\n", nb_ray);
+		//printf("nb_ray= %d\n", nb_ray);
 		ray_info.ty = ray_y;
 		ray_info.tx = ray_x;
-		
+		//ray_info.mp = ray_info.mp / 2;
 		ray_info.index = nb_ray;
 		ray_info.wall_type = wall_type;
 		int ca = reset_angle(img->player.angle - ray_angle); //fisheye
 		dist_f = dist_f * cos(deg_to_rad(ca));	
 		ray_info.dist = dist_f;			 //fisheye
 		draw_ray3d(img, ray_info);
-		
-		ray_angle = reset_angle(ray_angle - 1);
+		//ray_angle -= 0.5;
+		//printf("entre ray_angle = %f\n", ray_angle);
+		ray_angle = reset_angle(ray_angle - 0.25);
+		//printf("after ray_angle = %f\n", ray_angle);
 	}
 }
