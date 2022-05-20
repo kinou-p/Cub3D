@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/19 14:19:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:04:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef struct ray_info{
 
 
 typedef struct all_wall_texture{
-	int	*north;
-	int	*east;
-	int	*west;
-	int	*south;
+	unsigned char	*north;
+	unsigned char	*east;
+	unsigned char	*west;
+	unsigned char	*south;
 }				sprite;
 
 typedef struct map_information{
@@ -68,22 +68,27 @@ typedef struct s_data {
 	void	*mlx;
 	void	*mlx_win;
 	void	*mlx_test;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	char	*buffer;
 	void	*mlx_win_test;
 	char	**double_map;
 	map_info map;
 	player	player;
 }				t_data;
 
-int		*get_texture(int type);
-int		get_color(char one, char two, char three);
-double	reset_angle(double angle);
-double	deg_to_rad(double angle);
-void	draw_ray(t_data *img);
-void	print_ray(t_data *img);
-int		key_press(int code, t_data *img);
-int		quit_game(t_data *img);
-void	ft_error(char *error_msg);
-void	print_player(player player, t_data *img);
-void	print_map(map_info map, t_data *img);
+void			set_back(t_data *img);
+unsigned char	*get_texture(int type);
+int				get_color(char one, char two, char three);
+double			reset_angle(double angle);
+double			deg_to_rad(double angle);
+void			draw_ray(t_data *img);
+void			print_ray(t_data *img);
+int				key_press(int code, t_data *img);
+int				quit_game(t_data *img);
+void			ft_error(char *error_msg);
+void			print_player(player player, t_data *img);
+void			print_map(map_info map, t_data *img);
 
 #endif

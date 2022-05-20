@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/19 15:32:21 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:00:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ void	ft_error(char *error_msg)
 
 int	is_good(t_data *img, int type)
 {
-	//printf("touche= %c\n", type);
-	//printf("vx= %d vy= %d\n", img->player.vx, img->player.vy);
-	//printf("player:       x= %d y= %d\n", img->player.x, img->player.y);
-
-//
- /*if(key=='a'){ pa+=5; pa=FixAng(pa); pdx=cos(deg_to_rad(pa)); pdy=-sin(deg_to_rad(pa));} 	
- if(key=='d'){ pa-=5; pa=FixAng(pa); pdx=cos(deg_to_rad(pa)); pdy=-sin(deg_to_rad(pa));} 
- if(key=='w'){ img->player.x+=pdx*5; img->player.y+=pdy*5;}
- if(key=='s'){ img->player.x-=pdx*5; img->player.y-=pdy*5;}*/
-//	
 	if (type == 'w')
 	{
 		img->player.x += img->player.vx * 5;
@@ -98,26 +88,75 @@ int	is_good(t_data *img, int type)
 	return (1);
 }
 
-void print_back(t_data *img)
+void set_back(t_data *img)
 {
-	int x = 0;
-	int y = 0;
+	//int x = 0;
+	//int y = 0;
+	//int	*buffer;
+	//int	color;
 
-	while (x < 1024)
+	//color = get_color(128, 128, 128);
+	//printf("test= %d\n", img->buffer[0]);
+	//img->buffer;
+	
+	
+	/*for(int y = 0; y < 512; ++y)
+	for(int x = 0; x < 960; ++x)
+	{
+    	int pixel = (y * img->size_line) + (x * 4);
+
+    	if (endian == 1)        // Most significant (Alpha) byte first
+    	{
+    	    buffer[pixel + 0] = (color >> 24);
+    	    buffer[pixel + 1] = (color >> 16) & 0xFF;
+    	    buffer[pixel + 2] = (color >> 8) & 0xFF;
+    	    buffer[pixel + 3] = (color) & 0xFF;
+    	}
+    	//else if (endian == 0)   // Least significant (Blue) byte first
+    	//{
+    	    img->buffer[pixel + 0] = (color) & 0xFF;
+    	    img->buffer[pixel + 1] = (color >> 8) & 0xFF;
+    	    img->buffer[pixel + 2] = (color >> 16) & 0xFF;
+    	    img->buffer[pixel + 3] = (color >> 24);
+    	//}
+	}*/
+	int x = 0;
+	while (x < 512 * 960 * 4)
+	{
+		if (x > 512 * 960 * 2)
+		{
+			img->buffer[x + 0] = 128;
+    		img->buffer[x + 1] = 128;
+    		img->buffer[x + 2] = 128;
+    		img->buffer[x + 3] = 128;
+		}
+		else
+		{
+			img->buffer[x + 0] = 255;
+    		img->buffer[x + 1] = 191;
+    		img->buffer[x + 2] = 0;
+    		img->buffer[x + 3] = 0;
+		}
+		x += 4;
+	}
+	
+	/*while (x < 960)
 	{
 		y = 0;
 		while (y < 512)
 		{
 			mlx_pixel_put(img->mlx, img->mlx_win, x , y, get_color(128, 128, 128));
+			//img->buffer[1] = color;
 			//mlx_pixel_put(img->mlx, img->mlx_win, x , y - 160, get_color(0, 255, 255));
 			y++;
 		}
 		x++;
-	}
+	}*/
 }
 
 int	key_press(int code, t_data *img)
 {
+	printf("touche ");
 	if (code == 65307)
 		quit_game(img);
 	else
@@ -128,37 +167,10 @@ int	key_press(int code, t_data *img)
 			//mlx_clear_window(img->mlx, img->mlx_win);
 			//print_map(img->map, img);
 			//print_player(img->player, img);
-			print_back(img);
+			//set_back(img);
 			draw_ray(img);
 			//print_ray(img);
 		}
 	}
-
-
-
-	// int y = 0;
-	// int x = 0;
-	// int	pixel = 0;
-	// int color;
-	//printf("pixel=%d   ", ray.pixel);
-	/*while (x < 16)
-	{
-		y = 0;
-		while (y < 16)
-		{
-			//printf("test\n");
-			pixel = (x * 16 + y)* 3 + 1;
-			color = get_color(img->map.texture.north[pixel], img->map.texture.north[pixel + 1], img->map.texture.north[pixel + 2]);
-			mlx_pixel_put(img->mlx, img->mlx_win, x, y, color);
-			y++;	
-		}
-		x++;
-	}*/
-
-
-
-
-
-	
 	return (1);
 }

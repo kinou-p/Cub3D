@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/19 19:09:32 by apommier         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:57:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,56 +22,6 @@ void	print_ray(t_data *img)
 		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (img->player.vx) * i), (img->player.y + (img->player.vy) * i) + 1, 255 << 8);
 	}
 }
-
-/*map_info	set_map(char **argv)  //simple local allocation
-{
-	map_info	map;
-	char		ret_map[]=
-	{
-		'1','1','1','1','1','1','1','1',
-		'1','0','1','0','0','0','0','1',
-		'1','0','1','0','0','0','0','1',
-		'1','0','0','0','0','0','0','1',
-		'1','0','0','0','0','0','0','1',
-		'1','0','1','0','0','1','0','1',
-		'1','0','0','0','0','1','0','1',
-		'1','1','1','1','1','1','1','1',
-	};
-	map.simple_map = ret_map;
-	map.x = 8;
-	map.y = 8;
-	map.size = map.x * map.y;
-	return (map);
-}*/
-
-/*map_info	set_map(char **argv)
-{
-	char	**map_tab;
-	char	*map;
-	char	*del;
-	char	*swap;
-	int		fd;
-
-	map = 0;
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		ft_error("Error: Open call fail");
-	swap = get_next_line(fd);
-	while (swap)
-	{
-		del = map;
-		map = ft_strjoin(map, swap);
-		free(swap);
-		swap = get_next_line(fd);
-		free(del);
-	}
-	close(fd);
-	map_tab = ft_split(map, '\n');
-	free(map);
-	if (!map_tab)
-		ft_error("Error: Map file is empty");
-	return (map_tab);
-}*/
 
 map_info	set_map(char **argv)
 {
@@ -102,10 +52,6 @@ map_info	set_map(char **argv)
 	ret_map.x = 8;
 	ret_map.y = 8;
 	ret_map.size = ret_map.x * ret_map.y;
-	//map_tab = ft_split(map, '\n');
-	//free(map);
-	//if (!map_tab)
-	//	ft_error("Error: Map file is empty");
 	return (ret_map);
 }
 
@@ -135,7 +81,6 @@ void	print_map(map_info map, t_data *img)
 	int	x = 0;
 	int	y = 0;
 
-	//printf("map= -%s-\n", map.simple_map);
 	while (i < map.size)
 	{
 		j = -1;
@@ -148,22 +93,6 @@ void	print_map(map_info map, t_data *img)
 		}
 		y++;
 	}
-
-	/*i = 0;
-	j = 0;
-	while (map[j])
-	{
-		x = 0;
-		i = 0;
-		while (map[j][i])
-		{
-			print_case(map[j][i], img, (j * 64), (i * 64));
-			i++;
-			x++; 
-		}
-		j++;
-		y++;
-	}*/
 }
 
 void	print_line(t_data *img, double x, double y)
@@ -192,6 +121,12 @@ int	main(int argc, char **argv)
 	sprite	texture;
 
 	texture.north = get_texture(1);
+	//int index= -1;
+	/*while (texture.north[++index] != -1)
+	{
+		printf("element= %d\n", texture.north[index]);
+	}
+	printf("end element= %d\n", texture.north[index]);*/
 	if (argc != 2)
 		ft_error("Error: bad number of arguments, only need a map");
 	img.mlx = mlx_init();
