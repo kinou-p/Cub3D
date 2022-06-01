@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/20 15:57:10 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:04:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ map_info	set_map(char **argv)
 	}
 	close(fd);
 	ret_map.simple_map = map;
+	//ret_map.floor = ;
+	//ret_map.sky = ;
 	ret_map.x = 8;
 	ret_map.y = 8;
 	ret_map.size = ret_map.x * ret_map.y;

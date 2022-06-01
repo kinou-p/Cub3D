@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/20 16:00:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:21:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,15 @@ int	is_good(t_data *img, int type)
 	return (1);
 }
 
+/*int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}*/
+int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+{
+	return (*(int *)(unsigned char [4]){b, g, r, t});
+}
+
 void set_back(t_data *img)
 {
 	//int x = 0;
@@ -121,25 +130,44 @@ void set_back(t_data *img)
     	//}
 	}*/
 	int x = 0;
+	//int tmp;
+	
+	//tmp = (int *)img->buffer;
+	img->map.floor.r = 128;
+	img->map.floor.g = 128;
+	img->map.floor.b = 128;
+	img->map.sky.r = 0;
+	img->map.sky.g = 191;
+	img->map.sky.b = 255;
 	while (x < 512 * 960 * 4)
 	{
 		if (x > 512 * 960 * 2)
 		{
+			img->buffer[x + 0] = img->map.floor.b;
+			img->buffer[x + 1] = img->map.floor.g;
+			img->buffer[x + 2] =img->map.floor.r;
+			img->buffer[x + 3] = 0;
+			//tmp = create_trgb(128, 128, 128, 0);
 			img->buffer[x + 0] = 128;
     		img->buffer[x + 1] = 128;
     		img->buffer[x + 2] = 128;
-    		img->buffer[x + 3] = 128;
+    		img->buffer[x + 3] = 0;
 		}
 		else
 		{
-			img->buffer[x + 0] = 255;
+			img->buffer[x + 0] = img->map.sky.b;
+			img->buffer[x + 1] = img->map.sky.g;
+			img->buffer[x + 2] =img->map.sky.r;
+			img->buffer[x + 3] = 0;
+			//tmp = create_trgb(255, 191, 0, 0);
+			/*img->buffer[x + 0] = 255;
     		img->buffer[x + 1] = 191;
     		img->buffer[x + 2] = 0;
-    		img->buffer[x + 3] = 0;
+    		img->buffer[x + 3] = 0;*/
 		}
 		x += 4;
 	}
-	
+	//img->buffer = (char *)tmp;
 	/*while (x < 960)
 	{
 		y = 0;
@@ -156,7 +184,7 @@ void set_back(t_data *img)
 
 int	key_press(int code, t_data *img)
 {
-	printf("touche ");
+	//printf("touche ");
 	if (code == 65307)
 		quit_game(img);
 	else

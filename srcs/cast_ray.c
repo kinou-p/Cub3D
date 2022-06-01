@@ -122,6 +122,8 @@ void	draw_ray3d(t_data *img, ray ray)
 	int		texture_size = 64;
 
 	line_height = img->map.size * 960 / ray.dist;
+	if (line_height > 5000)
+		line_height = 5000;
 	line_offset = 256 - line_height / 2;
 	double	gap = 1;
 	double myy = 0;
@@ -130,7 +132,7 @@ void	draw_ray3d(t_data *img, ray ray)
 		myy = 0;
 		gap = (texture_size / line_height);
 		mx = ((int)ray.mp) % texture_size;
-		while (y < line_height)
+		while (y < line_height - 8)
 		{
 			myy += gap;
 			my = (int)myy;//gap;
