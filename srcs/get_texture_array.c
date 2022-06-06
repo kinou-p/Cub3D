@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/20 14:11:29 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:31:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ unsigned char *get_texture(int type)
 		swap = get_next_line(fd);
 	}
 	close(fd);
-	printf("count= %d\n", count);
+	//printf("count= %d\n", count);
 	ret = ft_calloc(sizeof(char), count);
 	fd = open("./sprite/brick_wall.ppm", O_RDONLY);
 	if (!ret)
