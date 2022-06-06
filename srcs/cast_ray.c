@@ -194,7 +194,6 @@ void	draw_ray(t_data *img)
 	int size_line = 0;
 	int endian = 0;
 
-	
 	new_img = mlx_new_image(img->mlx, 960, 512);
 	if (!new_img)
 	{
@@ -342,4 +341,5 @@ void	draw_ray(t_data *img)
 		ray_angle = reset_angle(ray_angle - 0.25);
 	}
 	mlx_put_image_to_window(img->mlx, img->mlx_win, new_img, 0, 0);
+	mlx_destroy_image(img->mlx, new_img);
 }
