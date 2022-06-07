@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/07 20:09:36 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:19:32 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	check_inner_utils(char *line)
 		// 	return (2);
 		i++;
 	}
-	printf("%d\n", player);
 	return (player);
 }
 
@@ -220,13 +219,6 @@ int check_map(char **av, t_root *global)
 		return (1);
 	}
 	map = isafile(av, global);
-	int i = 0;
-	printf("----------------\n");
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
 	if (global->error != 0)
 	{
 		ft_putstr_fd("Error\n", 2);
