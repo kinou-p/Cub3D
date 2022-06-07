@@ -6,11 +6,24 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/07 20:19:32 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:32:19 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsercub3D.h"
+
+void free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	tab = NULL;
+}
 
 void size_line(char *str, t_root *global)
 {
@@ -171,6 +184,7 @@ void	check_zero_one(char **split, t_root *global)
 	inter_map(split, tmp);
 	check_border(tmp, global);
 	check_inner(tmp, global);
+	free_tab(tmp);
 }
 
 char	**isafile(char **av, t_root *global)
@@ -219,6 +233,7 @@ int check_map(char **av, t_root *global)
 		return (1);
 	}
 	map = isafile(av, global);
+	free_tab(map);
 	if (global->error != 0)
 	{
 		ft_putstr_fd("Error\n", 2);
