@@ -6,11 +6,29 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/07 21:32:19 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:40:08 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsercub3D.h"
+
+void ft_exit(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(1);
+}
+
+void error_msg(t_root *global)
+{
+	if (global->error == 1)
+		ft_putstr_fd("Error: Map isn't closed\n", 2);
+	if (global->error == 2)
+		ft_putstr_fd("Error: Missing player\n", 2);
+	if (global->error == 3)
+		ft_putstr_fd("Error: Too many players\n", 2);
+	if (global->error == -1)
+		ft_putstr_fd("Error: Bad character in map\n", 2);
+}
 
 void free_tab(char **tab)
 {
@@ -22,6 +40,7 @@ void free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
+	free(tab);
 	tab = NULL;
 }
 
@@ -95,13 +114,13 @@ void inter_map(char **split, char **tmp)
 void close_or_not(char **tab, int i, int j, t_root *global)
 {
 	if(tab[i + 1][j] == '3' || tab[i - 1][j] == '3')
-		global->error++;
+		global->error = 1;
 	if(tab[i][j + 1] == '3' || tab[i][j - 1] == '3')
-		global->error++;
+		global->error = 1;
 	if(tab[i + 1][j + 1] == '3' || tab[i + 1][j - 1] == '3')
-		global->error++;
+		global->error = 1;
 	if(tab[i - 1][j + 1] == '3' || tab[i - 1][j - 1] == '3')
-		global->error++;
+		global->error = 1;
 }
 
 int	check_inner_utils(char *line)
@@ -119,7 +138,7 @@ int	check_inner_utils(char *line)
 			player++;
 		else if (line[i] != 'W' && line[i] != 'N' && line[i] != 'S' && line[i] != 'E'
 			&& line[i] != '3' && line[i] != '0' && line[i] != '1')
-			return (2);
+			return (100);
 		// else
 		// 	return (2);
 		i++;
@@ -139,8 +158,12 @@ void check_inner(char **map, t_root *global)
 		player += check_inner_utils(map[i]);
 		i++;
 	}
-	if (player != 1)
-		global->error++;
+	if (player == 0)
+		global->error = 2;
+	if (player > 1 && player < 100)
+		global->error = 3;
+	if (player >= 100)
+		global->error = -1;
 }
 
 void check_border(char **tab, t_root *global)
@@ -175,7 +198,7 @@ void	check_zero_one(char **split, t_root *global)
 	if (!tmp)
 		return ;
 	i = 0;
-	while(i < global->height + 3)
+	while(i < global->height + 2)
 	{
 		tmp[i] = charge_new(global);
 		i++;
@@ -199,7 +222,7 @@ char	**isafile(char **av, t_root *global)
 	str = NULL;
 	tmp = NULL;
 	if (fd == - 1)
-		exit(1);
+		ft_exit("Error: File doesn't exist\n");
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		tmp = ft_strjoin(str, line);
@@ -229,14 +252,14 @@ int check_map(char **av, t_root *global)
 	map = NULL;
 	if (reverse_comp(av[1], ".cub") || (ft_strlen(av[1]) == ft_strlen(".cub")))
 	{
-		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Error: Not a valid file \".cub\"\n", 2);
 		return (1);
 	}
 	map = isafile(av, global);
 	free_tab(map);
 	if (global->error != 0)
 	{
-		ft_putstr_fd("Error\n", 2);
+		error_msg(global);
 		return (1);
 	}
 	return (0);
