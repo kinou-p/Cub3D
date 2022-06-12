@@ -146,23 +146,25 @@ void	draw_ray3d(t_data *img, ray ray)
 			//	int diff = line_height - 512 \ 2;
 			myy += gap;
 			my = (int)myy;//gap;
-			ray.pixel = ((my) * texture_size + mx)* 3 + 1;
+			ray.pixel = ((my) * 64 + mx)* 3 + 1;
 			x = -1;
 			if (ray.pixel > 12186)
 				color = 0;
 			else
 				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
-			while (++x < 4)
+			while (++x < /*img->map.x / 2*/4)
 			{
 				if (ray.wall_type)
 				{
 					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
-					set_pixel(img, color, ray.index * 4 + x, y + line_offset);
+					set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
+					//set_pixel(img, color, ray.index * (img->map.x / 2) + x, y + line_offset);
 				}
 				else
 				{
 					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , (color >> 1) & 8355711);
-					set_pixel(img, (color >> 1) & 8355711, ray.index * 4 + x, y + line_offset);
+					set_pixel(img, (color >> 1) & 8355711, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
+					//set_pixel(img, (color >> 1) & 8355711, ray.index * (img->map.x / 2) + x, y + line_offset);
 				}
 			}
 			y++;
@@ -241,18 +243,20 @@ void	draw_ray(t_data *img)
 		{
 			ray_x = img->player.x;
 			ray_y = img->player.y;
-			count = 8;
+			count = img->map.max;
 		}
-		while (count < 8) 
+		//printf("max= %d\n", img->map.max);
+		while (count < img->map.max) 
 		{ 
 			//printf("count = %d\n", count);
 			mx = (int)(ray_x)>>6;
 			my = (int)(ray_y)>>6;
 			mp = my * img->map.x + mx;
-			//printf("mx=%d my=%d mp= %d\n", mx, my, mp);				  
-			if (mp > 0 && mp < img->map.x * img->map.y && img->map.simple_map[mp] == '1')//hit wall
+			//printf("mx=%d my=%d mp= %d\n", mx, my, mp);
+			//printf("map= -%s- c= %c\n",img->map.simple_map, img->map.simple_map[mp]);
+			if (mp > 0 && mp < img->map.size && img->map.simple_map[mp] == '1')//hit wall
 			{
-				count = 8;
+				count = img->map.max;
 				//printf("vertical wall\n");
 				dist_v = cos(deg_to_rad(ray_angle)) * (ray_x-img->player.x) - sin(deg_to_rad(ray_angle)) * (ray_y-img->player.y);
 			}		 
@@ -287,17 +291,17 @@ void	draw_ray(t_data *img)
 		{
 			ray_x = img->player.x;
 			ray_y = img->player.y;
-			count = 8;
+			count = img->map.max;
 		}//looking straight left or right
 		
-		while (count < 8)  
+		while (count < img->map.max)  
 		{ 
 			mx = (int)(ray_x)>>6;
 			my = (int)(ray_y)>>6;
 			mp = my * img->map.x + mx;		   
-			if (mp > 0 && mp < img->map.x * img->map.y && img->map.simple_map[mp] == '1')//hit   
+			if (mp > 0 && mp < img->map.size && img->map.simple_map[mp] == '1')//hit   
 			{
-				count = 8;
+				count = img->map.max;
 				dist_h = cos(deg_to_rad(ray_angle)) * (ray_x - img->player.x) - sin(deg_to_rad(ray_angle)) * (ray_y - img->player.y);
 			}	
 			else

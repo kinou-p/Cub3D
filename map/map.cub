@@ -1,0 +1,11 @@
+NO ./sprite/brick_wall.ppm
+SO ./sprite/brick_wall.ppm
+EA ./sprite/brick_wall.ppm
+WE ./sprite/brick_wall.ppm
+
+111111111111111111
+110000000000000001
+100000000000000011
+100000000000000001
+11000000E000000001
+111111111111111111
