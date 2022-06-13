@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/12 21:54:23 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:10:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_map(t_data *img)
 	mlx_destroy_image(img->mlx_test, buffer);
 }
 
-/*void	print_map(map_info map, t_data *img)
+void	print_map(map_info map, t_data *img)
 {
 	int	i = 0;
 	int	j;
@@ -91,6 +91,47 @@ void	print_line(t_data *img, double x, double y)
 	mlx_destroy_image(img->mlx_test, buffer);
 }*/
 
+int	key_pressed(int type, t_data *img)
+{
+	if (type == 'w')
+		img->player.front = 1;
+	else if (type == 's')
+		img->player.front = -1;
+	else if (type == 'a')
+		img->player.side = -1;
+	else if (type == 'd')
+		img->player.side = 1;
+	else if (type == 65361)//fleche gauche
+		img->player.angle_side = -1;
+	else if (type == 65363)//fleche droite
+		img->player.angle_side = 1;
+	return (0);
+}
+
+int	key_released(int type, t_data *img)
+{
+	if (type == 'w')
+		img->player.front = 0;
+	else if (type == 's')
+		img->player.front = 0;
+	else if (type == 'a')
+		img->player.side = 0;
+	else if (type == 'd')
+		img->player.side = 0;
+	else if (type == 65361)//fleche gauche
+		img->player.angle_side = 0;
+	else if (type == 65363)//fleche droite
+		img->player.angle_side = 0;
+	return (0);
+}
+
+int	loop(t_data *img)
+{
+	update_pos(img);
+	draw_ray(img);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	img;
@@ -108,20 +149,26 @@ int	main(int argc, char **argv)
 	set_map(&img);
 	if (check_map(argv, &img))
 		return (0);
+	img.map.texture.basic = get_texture(0, 0, &img);
 	printf("size= %d\n", img.map.size);
 	img.mlx = mlx_init();
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");
 	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
-	img.player.x = 64 * 3 + 16;
-	img.player.y = 64 + 16;
+	img.player.x = 64 * 3 + 32;
+	img.player.y = 64 + 32;
 	img.player.angle = 90;
 	img.player.vx = cos(deg_to_rad(img.player.angle));
 	img.player.vy = sin(deg_to_rad(img.player.angle));
 	//print_map(img.map, &img);
 	//print_player(img.player, &img);
 	//print_ray(&img);
-	mlx_hook(img.mlx_win, 2, 1L << 0, &key_press, &img);
+
+
+	mlx_hook(img.mlx_win, 2, 1L << 0, key_pressed, &img);
+	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
+	mlx_loop_hook(img.mlx, loop, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);
+	
 	mlx_loop(img.mlx);
 }

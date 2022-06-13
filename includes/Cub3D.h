@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 20:33:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 23:22:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct ray_info{
 	int 	index;
 	int		wall_type;
 	int		pixel;
+	char	texture_type;
 	
 }				ray;
 
@@ -77,6 +78,9 @@ typedef struct player_position
 	double angle;
 	double vx;
 	double vy;
+	int		front;
+	int		side;
+	int		angle_side;
 }				player;
 
 typedef struct s_data {

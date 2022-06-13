@@ -1,7 +1,7 @@
-NO ./sprite/brick_wall.ppm
-SO ./sprite/magma.ppm
-EA ./sprite/obsidian.ppm
-WE ./sprite/glowstone.ppm
+NO ./sprite/magma_shade.ppm
+SO ./sprite/magma_shade.ppm
+EA ./sprite/magma_shade.ppm
+WE ./sprite/magma_shade.ppm
 
 
         1111111111111111111111111

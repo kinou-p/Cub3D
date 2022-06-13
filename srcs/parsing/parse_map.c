@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/13 12:25:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 20:51:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ void size_line(char *str, t_data *img)
 	int i;
 
 	i = 0;
-	
 	while (str[i])
 		i++;
 	if (i > img->map.x)
 		img->map.x = i;
-	printf("sizelie= %s, size= %d\n", str, i);
 }
 
 char *charge_new(t_data *img)
@@ -238,6 +236,8 @@ char	**isafile(char **av, t_data *img)
 		line = NULL;
 	}
 	split = ft_split(str, '\n');
+	//printf("this is it\n");
+	//print_double_fd(split, 1);
 	free(line);
 	free(str);
 	close(fd);
@@ -252,20 +252,16 @@ char	**isafile(char **av, t_data *img)
 
 int check_map(char **av, t_data *img)
 {
-	char	**map;
-
 	img->map.x = 0;
 	img->map.y = 0;
 	img->map.error = 0;
 
-	map = NULL;
 	if (reverse_comp(av[1], ".cub") || (ft_strlen(av[1]) == ft_strlen(".cub")))
 	{
 		ft_putstr_fd("Error: Not a valid file \".cub\"\n", 2);
 		return (1);
 	}
-	map = isafile(av, img);
-
+	isafile(av, img);
 	if (img->map.x > img->map.y)
 		img->map.max = img->map.x;
 	else

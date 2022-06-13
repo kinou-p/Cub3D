@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/13 12:39:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:09:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_texture(t_data *img)
 		free(img->map.texture.east);
 	if (img->map.texture.west)
 		free(img->map.texture.west);
+	if (img->map.texture.basic)
+		free(img->map.texture.basic);
 }
 
 int	quit_game(t_data *img)
@@ -60,47 +62,85 @@ void	ft_error(char *error_msg)
 	exit(1);
 }
 
-int	is_good(t_data *img, int type)
+int	update_pos(t_data *img)
 {
-	if (type == 'w')
+	if (img->player.front == 1)
 	{
-		img->player.x += img->player.vx * 5;
-		img->player.y += img->player.vy * 5;
+		img->player.x += img->player.vx * 2;
+		img->player.y += img->player.vy * 2;
 	}
-	else if (type == 's')
+	else if (img->player.front == -1)
 	{
-		img->player.x -= img->player.vx * 5;
-		img->player.y -= img->player.vy * 5;
+		img->player.x -= img->player.vx * 2;
+		img->player.y -= img->player.vy * 2;
 	}
-	else if (type == 'a')
+	if (img->player.side == 1)
 	{
-		img->player.x += img->player.vy * 5;
-		img->player.y -= img->player.vx * 5;
+ 		img->player.x -= img->player.vy ;
+ 		img->player.y += img->player.vx ;
 	}
-	else if (type == 'd')
+	else if (img->player.side == -1)
 	{
-		img->player.x -= img->player.vy * 5;
-		img->player.y += img->player.vx * 5;
+		img->player.x += img->player.vy; //* 5;
+		img->player.y -= img->player.vx; //* 5;
 	}
-	else if (type == 65361)//fleche gauche
+	if (img->player.angle_side == -1)//fleche gauche
 	{
-		img->player.angle += 5;
+		img->player.angle += 1;
 		img->player.angle = reset_angle(img->player.angle);
 		img->player.vx = cos(deg_to_rad(img->player.angle));
 		img->player.vy = -sin(deg_to_rad(img->player.angle));
 	}
-	else if (type == 65363)//fleche droite
+	else if (img->player.angle_side == 1)//fleche droite
 	{
-		img->player.angle -= 5;
+		img->player.angle -= 1;
 		img->player.angle = reset_angle(img->player.angle);
 		img->player.vx = cos(deg_to_rad(img->player.angle));
 		img->player.vy = -sin(deg_to_rad(img->player.angle));
 	}
-	else
-		return (0);
-	//printf("after player: x= %d y= %d\n", img->player.x, img->player.y);
-	return (1);
 }
+
+// int	is_good(t_data *img, int type)
+// {
+// 	if (type == 'w')
+// 	{
+// 		img->player.x += img->player.vx * 5;
+// 		img->player.y += img->player.vy * 5;
+// 	}
+// 	else if (type == 's')
+// 	{
+// 		img->player.x -= img->player.vx * 5;
+// 		img->player.y -= img->player.vy * 5;
+// 	}
+// 	else if (type == 'a')
+// 	{
+// 		img->player.x += img->player.vy * 5;
+// 		img->player.y -= img->player.vx * 5;
+// 	}
+// 	else if (type == 'd')
+// 	{
+// 		img->player.x -= img->player.vy * 5;
+// 		img->player.y += img->player.vx * 5;
+// 	}
+// 	else if (type == 65361)//fleche gauche
+// 	{
+// 		img->player.angle += 5;
+// 		img->player.angle = reset_angle(img->player.angle);
+// 		img->player.vx = cos(deg_to_rad(img->player.angle));
+// 		img->player.vy = -sin(deg_to_rad(img->player.angle));
+// 	}
+// 	else if (type == 65363)//fleche droite
+// 	{
+// 		img->player.angle -= 5;
+// 		img->player.angle = reset_angle(img->player.angle);
+// 		img->player.vx = cos(deg_to_rad(img->player.angle));
+// 		img->player.vy = -sin(deg_to_rad(img->player.angle));
+// 	}
+// 	else
+// 		return (0);
+// 	//printf("after player: x= %d y= %d\n", img->player.x, img->player.y);
+// 	return (1);
+// }
 
 /*int	create_trgb(int t, int r, int g, int b)
 {
@@ -157,15 +197,21 @@ void set_back(t_data *img)
 	{
 		if (x > 512 * 960 * 2)
 		{
-			img->buffer[x + 0] = img->map.floor.b;
-			img->buffer[x + 1] = img->map.floor.g;
-			img->buffer[x + 2] =img->map.floor.r;
-			img->buffer[x + 3] = 0;
+			if (img->map.floor.b)
+			{
+				img->buffer[x + 0] = img->map.floor.b;
+				img->buffer[x + 1] = img->map.floor.g;
+				img->buffer[x + 2] =img->map.floor.r;
+				img->buffer[x + 3] = 0;
+			}
 			//tmp = create_trgb(128, 128, 128, 0);
-			img->buffer[x + 0] = 128;
-    		img->buffer[x + 1] = 128;
-    		img->buffer[x + 2] = 128;
-    		img->buffer[x + 3] = 0;
+			else
+			{
+				img->buffer[x + 0] = 128;
+    			img->buffer[x + 1] = 128;
+    			img->buffer[x + 2] = 128;
+    			img->buffer[x + 3] = 0;
+			}
 		}
 		else
 		{
@@ -196,23 +242,23 @@ void set_back(t_data *img)
 	}*/
 }
 
-int	key_press(int code, t_data *img)
-{
-	//printf("touche ");
-	if (code == 65307)
-		quit_game(img);
-	else
-	{
-		if (is_good(img, code))
-		{
-			//printf("code = %d\n", code);
-			//mlx_clear_window(img->mlx, img->mlx_win);
-			//print_map(img->map, img);
-			//print_player(img->player, img);
-			//set_back(img);
-			draw_ray(img);
-			//print_ray(img);
-		}
-	}
-	return (1);
-}
+// int	key_press(int code, t_data *img)
+// {
+// 	//printf("touche ");
+// 	if (code == 65307)
+// 		quit_game(img);
+// 	else
+// 	{
+// 		if (is_good(img, code))
+// 		{
+// 			//printf("code = %d\n", code);
+// 			//mlx_clear_window(img->mlx, img->mlx_win);
+// 			//print_map(img->map, img);
+// 			//print_player(img->player, img);
+// 			//set_back(img);
+// 			draw_ray(img);
+// 			//print_ray(img);
+// 		}
+// 	}
+// 	return (1);
+//}

@@ -1,8 +1,5 @@
-NO ./sprite/brick_wall.ppm
-SO ./sprite/magma.ppm
-EA ./sprite/obsidian.ppm
-WE ./sprite/glowstone.ppm
-
+F 220,100,0
+C 225,30,0
 
         1111111111111111111111111
         1000000000110000000000001

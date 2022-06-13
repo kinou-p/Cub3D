@@ -148,26 +148,43 @@ void	draw_ray3d(t_data *img, ray ray)
 			my = (int)myy;//gap;
 			ray.pixel = ((my) * 64 + mx)* 3 + 1;
 			x = -1;
-			if (ray.pixel >= 12290)//here read
-				color = 0;
+			if (ray.pixel >= 12290 || ray.pixel < 0)//here read
+				return ;
 			else if (ray.pixel > 0)
-				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);//here read
+			{
+				if (ray.texture_type == 'N' && img->map.texture.north)
+					color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
+				else if (ray.texture_type == 'S' && img->map.texture.south)
+					color = get_color(img->map.texture.south[ray.pixel], img->map.texture.south[ray.pixel + 1], img->map.texture.south[ray.pixel + 2]);
+				else if (ray.texture_type == 'W' && img->map.texture.west)
+					color = get_color(img->map.texture.west[ray.pixel], img->map.texture.west[ray.pixel + 1], img->map.texture.west[ray.pixel + 2]);
+				else if (ray.texture_type == 'E' && img->map.texture.east)
+					color = get_color(img->map.texture.east[ray.pixel], img->map.texture.east[ray.pixel + 1], img->map.texture.east[ray.pixel + 2]);
+				else
+					color = get_color(img->map.texture.basic[ray.pixel], img->map.texture.basic[ray.pixel + 1], img->map.texture.basic[ray.pixel + 2]);//here read
+			}
 			else
 				color = 0;
 			while (++x < /*img->map.x / 2*/4)
 			{
-				if (ray.wall_type)//here read
-				{
+				//if (ray.wall_type)//here read
+				//{
 					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
 					set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
 					//set_pixel(img, color, ray.index * (img->map.x / 2) + x, y + line_offset);
-				}
-				else
-				{
-					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , (color >> 1) & 8355711);
-					set_pixel(img, (color >> 1) & 8355711, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
-					//set_pixel(img, (color >> 1) & 8355711, ray.index * (img->map.x / 2) + x, y + line_offset);
-				}
+				//}
+				// if (ray.wall_type)//here read
+				// {
+				// 	//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
+				// 	set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
+				// 	//set_pixel(img, color, ray.index * (img->map.x / 2) + x, y + line_offset);
+				// }
+				// else
+				// {
+				// 	//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , (color >> 1) & 8355711);
+				// 	set_pixel(img, (color >> 1) & 8355711, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
+				// 	//set_pixel(img, (color >> 1) & 8355711, ray.index * (img->map.x / 2) + x, y + line_offset);
+				// }
 			}
 			y++;
 		}
@@ -192,6 +209,9 @@ void	draw_ray(t_data *img)
 	int		my = 0;
 	int		mx = 0;
 	int		mp = 0;
+	char	vertical_type;
+	char	horizontal_type;
+	//char texture_type;
 
 	void *new_img;
 	int bits_per_pixel = 0;
@@ -233,6 +253,7 @@ void	draw_ray(t_data *img)
 			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
 			next_x = 64;
 			next_y = -next_x * aTan;
+			vertical_type = 'W';
 		}
 		else if (cos(deg_to_rad(ray_angle)) < -0.001)//looking right
 		{
@@ -240,6 +261,7 @@ void	draw_ray(t_data *img)
 			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
 			next_x = -64;
 			next_y = -next_x * aTan;
+			vertical_type = 'E';
 		}
 		else
 		{
@@ -281,6 +303,7 @@ void	draw_ray(t_data *img)
 			ray_x = (img->player.y - ray_y) * aTan + img->player.x;
 			next_y = -64;
 			next_x = -next_y * aTan;
+			horizontal_type = 'N';
 		}
 		else if (sin(deg_to_rad(ray_angle))<-0.001)//looking down
 		{
@@ -288,6 +311,7 @@ void	draw_ray(t_data *img)
 			ray_x = (img->player.y - ray_y) * aTan + img->player.x;
 			next_y = 64;
 			next_x = -next_y * aTan;
+			horizontal_type = 'S';
 		}
 		else
 		{
@@ -317,6 +341,7 @@ void	draw_ray(t_data *img)
 		ray	ray_info;
 		
 		wall_type = 0;
+		ray_info.texture_type = 0;
 		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
 			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_h));
@@ -324,6 +349,7 @@ void	draw_ray(t_data *img)
 			//printf("rx= %f ry= %f\n", ray_x, ray_y);
 			ray_info.mp = ray_x;
 			wall_type = 0;
+			ray_info.texture_type = horizontal_type;
 		}
 		else if (dist_v != -1)
 		{
@@ -334,6 +360,7 @@ void	draw_ray(t_data *img)
 			ray_info.mp = vy;
 			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_v));
 			wall_type = 1;
+			ray_info.texture_type = vertical_type;
 		}
 		else
 		{
@@ -346,9 +373,10 @@ void	draw_ray(t_data *img)
 		ray_info.index = nb_ray;
 		ray_info.wall_type = wall_type;
 		int ca = reset_angle(img->player.angle - ray_angle); //fisheye
-		dist_f = dist_f * cos(deg_to_rad(ca));	
-		ray_info.dist = dist_f;			 //fisheye
-		draw_ray3d(img, ray_info);
+		dist_f = dist_f * cos(deg_to_rad(ca));	//fisheye
+		ray_info.dist = dist_f;	
+		if (dist_f > 0)	 
+			draw_ray3d(img, ray_info);
 		ray_angle = reset_angle(ray_angle - 0.25);
 	}
 	mlx_put_image_to_window(img->mlx, img->mlx_win, new_img, 0, 0);
