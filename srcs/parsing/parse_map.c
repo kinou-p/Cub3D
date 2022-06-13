@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/12 01:46:29 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:25:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,6 @@ char	**isafile(char **av, t_data *img)
 	free(line);
 	free(str);
 	close(fd);
-
 	int pass = 0;
 	pass = check_texture_color(split, img);
 	check_zero_one(split + pass, img);

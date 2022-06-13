@@ -148,9 +148,9 @@ void	draw_ray3d(t_data *img, ray ray)
 			my = (int)myy;//gap;
 			ray.pixel = ((my) * 64 + mx)* 3 + 1;
 			x = -1;
-			if (ray.pixel > 12185)//here read
+			if (ray.pixel >= 12290)//here read
 				color = 0;
-			else if (ray.pixel != 0)
+			else if (ray.pixel > 0)
 				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);//here read
 			else
 				color = 0;

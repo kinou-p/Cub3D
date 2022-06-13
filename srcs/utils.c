@@ -6,11 +6,23 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 20:39:44 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:39:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Cub3D.h"
+
+void	free_texture(t_data *img)
+{
+	if (img->map.texture.north)
+		free(img->map.texture.north);
+	if (img->map.texture.south)
+		free(img->map.texture.south);
+	if (img->map.texture.east)
+		free(img->map.texture.east);
+	if (img->map.texture.west)
+		free(img->map.texture.west);
+}
 
 int	quit_game(t_data *img)
 {
@@ -18,8 +30,9 @@ int	quit_game(t_data *img)
 	mlx_destroy_display(img->mlx);
 	if (img->mlx)
 		free(img->mlx);
+	free_texture(img);
 	free(img->map.simple_map);
-	free(img->map.texture.north);
+	//free(img->map.texture.north);
 	//free_double(img->map);
 	exit(0);
 }

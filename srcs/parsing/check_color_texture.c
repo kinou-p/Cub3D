@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 17:33:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:12:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ char *transform_map(char **double_map, t_data *img)
 		while (double_map[i][++j])
 		{
 			//printf("INDEX= %d\n", i * img->map.x + j);
+			//if ()
 			map[i * img->map.x + j] = double_map[i][j];
-			map[index] = double_map[i][j];
+			//map[index] = double_map[i][j];
 			//printf("index= %d\n", index);
 			index++;
 		}
+		
 	}
 	
 	img->map.simple_map = map;
