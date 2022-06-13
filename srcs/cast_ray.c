@@ -121,7 +121,7 @@ void	draw_ray3d(t_data *img, ray ray)
 	int 	color;
 	int		texture_size = 64;
 
-	line_height = img->map.size * 960 / ray.dist;
+	line_height = /*img->map.size*/64 * 960 / ray.dist;
 	//if (line_height > 5000)
 	//	line_height = 5000;
 	//if (line_height > 5000)
@@ -148,13 +148,15 @@ void	draw_ray3d(t_data *img, ray ray)
 			my = (int)myy;//gap;
 			ray.pixel = ((my) * 64 + mx)* 3 + 1;
 			x = -1;
-			if (ray.pixel > 12186)
+			if (ray.pixel > 12185)//here read
 				color = 0;
+			else if (ray.pixel != 0)
+				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);//here read
 			else
-				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
+				color = 0;
 			while (++x < /*img->map.x / 2*/4)
 			{
-				if (ray.wall_type)
+				if (ray.wall_type)//here read
 				{
 					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
 					set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
@@ -314,6 +316,7 @@ void	draw_ray(t_data *img)
 		int wall_type;
 		ray	ray_info;
 		
+		wall_type = 0;
 		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
 			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_h));
@@ -333,8 +336,12 @@ void	draw_ray(t_data *img)
 			wall_type = 1;
 		}
 		else
+		{
+			ray_info.mp = 0;
 			dist_f = 0;
+		}
 		ray_info.ty = ray_y;
+		ray_info.pixel = 0; 
 		ray_info.tx = ray_x;
 		ray_info.index = nb_ray;
 		ray_info.wall_type = wall_type;

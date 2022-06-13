@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/01 19:21:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/11 20:33:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 
 # define PI 3.1415926535
 
+typedef struct s_root {
+	int size;
+	int height;
+	int error;
+}				t_root;
+
 typedef struct ray_info{
 	double	ty;
 	double	tx;
@@ -36,12 +42,12 @@ typedef struct ray_info{
 	
 }				ray;
 
-
 typedef struct all_wall_texture{
 	unsigned char	*north;
 	unsigned char	*east;
 	unsigned char	*west;
 	unsigned char	*south;
+	unsigned char	*basic;
 }				sprite;
 
 typedef struct s_color{
@@ -60,6 +66,8 @@ typedef struct map_information{
 	int		size;
 	int		x;
 	int		y;
+	int		max;
+	int		error;
 }				map_info;
 
 typedef struct player_position
@@ -85,8 +93,12 @@ typedef struct s_data {
 	player	player;
 }				t_data;
 
+char			*transform_map(char **double_map, t_data *img);
+int				check_texture_color(char **tab, t_data *img);
+int				check_map(char **av, t_data *img);
+void			ft_exit(char *str);
 void			set_back(t_data *img);
-unsigned char	*get_texture(int type);
+unsigned char	*get_texture(char type, char *path, t_data *img);
 int				get_color(char one, char two, char three);
 double			reset_angle(double angle);
 double			deg_to_rad(double angle);

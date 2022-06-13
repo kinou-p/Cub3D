@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 17:23:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 01:49:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ unsigned char *get_texture(char type, char *path, t_data *img)
 		//	printf("c= %d ", ret[count]);
 		count++;
 	}
+	printf("texture size = %d\n", count);
 	close(fd);
 	put_texture_in_struct(type, ret, img);
 	return (ret);

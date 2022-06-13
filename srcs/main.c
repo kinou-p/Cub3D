@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 20:32:22 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/12 21:54:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	main(int argc, char **argv)
 	set_map(&img);
 	if (check_map(argv, &img))
 		return (0);
+	printf("size= %d\n", img.map.size);
 	img.mlx = mlx_init();
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");
