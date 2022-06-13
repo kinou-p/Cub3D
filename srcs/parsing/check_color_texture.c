@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/13 12:12:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:34:39 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ char *transform_map(char **double_map, t_data *img)
 			//printf("index= %d\n", index);
 			index++;
 		}
-		
+
 	}
-	
+
 	img->map.simple_map = map;
 	printf("map = -%s-\n", map);
-	return (0);	
+	return (0);
 }
 
 void	set_texture_file(char *str, t_data *img, char c)

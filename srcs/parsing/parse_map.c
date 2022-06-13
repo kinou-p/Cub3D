@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/13 12:25:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 19:57:27 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void size_line(char *str, t_data *img)
 	int i;
 
 	i = 0;
-	
+
 	while (str[i])
 		i++;
 	if (i > img->map.x)
@@ -92,7 +92,7 @@ int	reverse_comp(char *s1, char *s2)
 	return (0);
 }
 
-void inter_map(char **split, char **tmp)
+void inter_map(char **split, char **tmp, t_data *img)
 {
 	int i;
 	int j;
@@ -103,7 +103,12 @@ void inter_map(char **split, char **tmp)
 		j = 0;
 		while(split[i][j])
 		{
-			if (ft_isalnum(split[i][j]))
+			if (split[i][j] == '3')
+			{
+				img->map.error = -1;
+				printf("%s %d\n", "-------------------------------------------", img->map.error);
+			}
+			else if (split[i][j] != ' ')
 				tmp[i + 1][j + 1] = split[i][j];
 			j++;
 		}
@@ -178,7 +183,7 @@ void check_border(char **tab, t_data *img)
 		j = 0;
 		while (tab[i][j])
 		{
-			if (tab[i][j] == '0')
+			if (tab[i][j] == '0' || tab[i][j] == 'W' || tab[i][j] == 'N' || tab[i][j] == 'S' || tab[i][j] == 'E')
 				close_or_not(tab, i, j, img);
 			j++;
 		}
@@ -208,14 +213,53 @@ void	check_zero_one(char **split, t_data *img)
 		i++;
 	}
 	tmp[i] = NULL;
-	inter_map(split, tmp);
+	inter_map(split, tmp, img);
+	if (img->map.error == -1)
+		return;
 	check_border(tmp, img);
 	check_inner(tmp, img);
 	free_tab(tmp);
 }
 
+// typedef struct 	s_global
+// {
+// 	int 	err;
+// }		t_global;
+
+int	is_in_charset(char c, char *charset)
+{
+	while (*charset)
+	{
+		if (c == *charset)
+			return (1);
+		charset++;
+	}
+	return (0);
+}
+
+int	detect_map_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (0);
+	if (*line == '\0')
+		return (0);
+	while (line[i])
+	{
+		if (is_in_charset(line[i], " 01NSEW\n") == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 char	**isafile(char **av, t_data *img)
 {
+	// t_global g;
+	img->err = 0;
+
 	int		fd;
 	char	*line;
 	char	*str;
@@ -229,6 +273,11 @@ char	**isafile(char **av, t_data *img)
 		ft_exit("Error: File doesn't exist\n");
 	while ((line = get_next_line(fd)) != NULL)
 	{
+		if (line[0] != '\n' && img->err == 0)
+			if (detect_map_line(line))
+				img->err = 1;
+			if (line[0] == '\n' && img->err == 1)
+				img->err = 2;
 		tmp = ft_strjoin(str, line);
 		if (str != NULL)
 			free(str);
@@ -237,9 +286,15 @@ char	**isafile(char **av, t_data *img)
 		free(line);
 		line = NULL;
 	}
+	if (img->err == 2)
+	{
+		// free(line);
+		free(str);
+		ft_exit("Error\nBad texture file\n");
+	}
 	split = ft_split(str, '\n');
-	free(line);
 	free(str);
+	free(line);
 	close(fd);
 	int pass = 0;
 	pass = check_texture_color(split, img);
@@ -270,7 +325,8 @@ int check_map(char **av, t_data *img)
 		img->map.max = img->map.x;
 	else
 		img->map.max = img->map.y;
-	
+	printf("----------------- d = %d", img->map.error);
+
 	if (img->map.error != 0)
 	{
 		error_msg(img);

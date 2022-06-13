@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/11 20:33:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:49:28 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct ray_info{
 	int 	index;
 	int		wall_type;
 	int		pixel;
-	
+
 }				ray;
 
 typedef struct all_wall_texture{
@@ -91,6 +91,7 @@ typedef struct s_data {
 	char	**double_map;
 	map_info map;
 	player	player;
+	int		err;
 }				t_data;
 
 char			*transform_map(char **double_map, t_data *img);
