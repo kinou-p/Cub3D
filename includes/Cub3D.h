@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/13 23:22:21 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 01:04:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_data {
 	char	**double_map;
 	map_info map;
 	player	player;
+	int		err;
 }				t_data;
 
 char			*transform_map(char **double_map, t_data *img);
