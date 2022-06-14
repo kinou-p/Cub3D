@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/13 20:41:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:26:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,10 @@ unsigned char *get_texture(char type, char *path, t_data *img)
 		swap = get_next_line(fd);
 	}
 	close(fd);
-	//printf("count= %d\n", count);
 	ret = ft_calloc(sizeof(char), count);
 	fd = open(path, O_RDONLY);
 	if (!ret)
 		return (0);
-	//ret[count] = -1;
 	count = 0;
 	while (swap || !count)
 	{	
@@ -82,14 +80,10 @@ unsigned char *get_texture(char type, char *path, t_data *img)
 			free(swap);
 			swap = get_next_line(fd);
 		}
-		//printf("c= %d ", (unsigned char)ft_atoi(swap));
 		if (swap)
 			ret[count] = (unsigned char)ft_atoi(swap);
-		//if (swap)
-		//	printf("c= %d ", ret[count]);
 		count++;
 	}
-	//printf("texture size = %d\n", count);
 	close(fd);
 	put_texture_in_struct(type, ret, img);
 	return (ret);

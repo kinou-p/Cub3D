@@ -17,7 +17,6 @@ void	print_ray2(t_data *img, double vx, double vy, double dist)
 	int i = -1;
 	int red = 0;
 
-	//printf("in print ray2\n");
 	red = red << 8;
 	red +=255;
 	red = red << 8;
@@ -72,28 +71,10 @@ int get_dark_red()
 void	set_pixel(t_data *img, int color, int x, int y)
 {
 	int pixel;
-	//int R;
-	//int G;
-	//int B;
-	
-	//printf("color in set = %d\n", color);
-	
-	/*color = color >> 24;
-	printf("color= %d\n", color);
-	//color += R;
-	color = color >> 16;
-	printf("color= %d\n", color);
-	//color += G;
-	color = color >> 8;
-	printf("color= %d\n", color);
-	//color += B;*/
-	
-	
-	//printf("1= %d 2= %d 3= %d 4= %d\n", (color >> 24) & 0xFF, (color >> 16) & 0xFF, (color >> 8) & 0xFF, (color) & 0xFF);
+
 	if (y < 0 || y > 520 || x < 0 || x > 960)
 		return ;
 	pixel = (y * img->size_line) + (x * 4);
-	//printf("x= %d y= %d pixel value= %d tabsize = %d\n", x, y, pixel, 512 * 960 * 4);
 	if (img->endian == 1)		// Most significant (Alpha) byte first
 	{
 		img->buffer[pixel + 0] = 0;
@@ -122,11 +103,6 @@ void	draw_ray3d(t_data *img, ray ray)
 	int		texture_size = 64;
 
 	line_height = /*img->map.size*/64 * 960 / ray.dist;
-	//if (line_height > 5000)
-	//	line_height = 5000;
-	//if (line_height > 5000)
-	//	line_height = 5000;
-	//printf("ray dist= %f line height= %f\n", ray.dist, line_height);
 	line_offset = 256 - ((int)line_height) / 2;
 	double	gap = 1;
 	double myy = 0;
@@ -142,8 +118,6 @@ void	draw_ray3d(t_data *img, ray ray)
 		}
 		while (y < line_height - 8 && y < 512)
 		{
-			//if (line_height > 512)
-			//	int diff = line_height - 512 \ 2;
 			myy += gap;
 			my = (int)myy;//gap;
 			ray.pixel = ((my) * 64 + mx)* 3 + 1;
@@ -167,24 +141,7 @@ void	draw_ray3d(t_data *img, ray ray)
 				color = 0;
 			while (++x < /*img->map.x / 2*/4)
 			{
-				//if (ray.wall_type)//here read
-				//{
-					//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
 					set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
-					//set_pixel(img, color, ray.index * (img->map.x / 2) + x, y + line_offset);
-				//}
-				// if (ray.wall_type)//here read
-				// {
-				// 	//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , color);
-				// 	set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
-				// 	//set_pixel(img, color, ray.index * (img->map.x / 2) + x, y + line_offset);
-				// }
-				// else
-				// {
-				// 	//mlx_pixel_put(img->mlx, img->mlx_win, ray.index * 4 + x, y + line_offset , (color >> 1) & 8355711);
-				// 	set_pixel(img, (color >> 1) & 8355711, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
-				// 	//set_pixel(img, (color >> 1) & 8355711, ray.index * (img->map.x / 2) + x, y + line_offset);
-				// }
 			}
 			y++;
 		}
@@ -253,7 +210,7 @@ void	draw_ray(t_data *img)
 			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
 			next_x = 64;
 			next_y = -next_x * aTan;
-			vertical_type = 'W';
+			vertical_type = 'E';
 		}
 		else if (cos(deg_to_rad(ray_angle)) < -0.001)//looking right
 		{
@@ -261,7 +218,7 @@ void	draw_ray(t_data *img)
 			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
 			next_x = -64;
 			next_y = -next_x * aTan;
-			vertical_type = 'E';
+			vertical_type = 'W';
 		}
 		else
 		{

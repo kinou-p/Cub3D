@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 14:58:03 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:27:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,52 +107,6 @@ int	update_pos(t_data *img)
 	return (0);
 }
 
-// int	is_good(t_data *img, int type)
-// {
-// 	if (type == 'w')
-// 	{
-// 		img->player.x += img->player.vx * 5;
-// 		img->player.y += img->player.vy * 5;
-// 	}
-// 	else if (type == 's')
-// 	{
-// 		img->player.x -= img->player.vx * 5;
-// 		img->player.y -= img->player.vy * 5;
-// 	}
-// 	else if (type == 'a')
-// 	{
-// 		img->player.x += img->player.vy * 5;
-// 		img->player.y -= img->player.vx * 5;
-// 	}
-// 	else if (type == 'd')
-// 	{
-// 		img->player.x -= img->player.vy * 5;
-// 		img->player.y += img->player.vx * 5;
-// 	}
-// 	else if (type == 65361)//fleche gauche
-// 	{
-// 		img->player.angle += 5;
-// 		img->player.angle = reset_angle(img->player.angle);
-// 		img->player.vx = cos(deg_to_rad(img->player.angle));
-// 		img->player.vy = -sin(deg_to_rad(img->player.angle));
-// 	}
-// 	else if (type == 65363)//fleche droite
-// 	{
-// 		img->player.angle -= 5;
-// 		img->player.angle = reset_angle(img->player.angle);
-// 		img->player.vx = cos(deg_to_rad(img->player.angle));
-// 		img->player.vy = -sin(deg_to_rad(img->player.angle));
-// 	}
-// 	else
-// 		return (0);
-// 	//printf("after player: x= %d y= %d\n", img->player.x, img->player.y);
-// 	return (1);
-// }
-
-/*int	create_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}*/
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
 {
 	return (*(int *)(unsigned char [4]){b, g, r, t});
@@ -160,16 +114,6 @@ int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char
 
 void set_back(t_data *img)
 {
-	//int x = 0;
-	//int y = 0;
-	//int	*buffer;
-	//int	color;
-
-	//color = get_color(128, 128, 128);
-	//printf("test= %d\n", img->buffer[0]);
-	//img->buffer;
-	
-	
 	/*for(int y = 0; y < 512; ++y)
 	for(int x = 0; x < 960; ++x)
 	{
@@ -234,38 +178,4 @@ void set_back(t_data *img)
 		}
 		x += 4;
 	}
-	//img->buffer = (char *)tmp;
-	/*while (x < 960)
-	{
-		y = 0;
-		while (y < 512)
-		{
-			mlx_pixel_put(img->mlx, img->mlx_win, x , y, get_color(128, 128, 128));
-			//img->buffer[1] = color;
-			//mlx_pixel_put(img->mlx, img->mlx_win, x , y - 160, get_color(0, 255, 255));
-			y++;
-		}
-		x++;
-	}*/
 }
-
-// int	key_press(int code, t_data *img)
-// {
-// 	//printf("touche ");
-// 	if (code == 65307)
-// 		quit_game(img);
-// 	else
-// 	{
-// 		if (is_good(img, code))
-// 		{
-// 			//printf("code = %d\n", code);
-// 			//mlx_clear_window(img->mlx, img->mlx_win);
-// 			//print_map(img->map, img);
-// 			//print_player(img->player, img);
-// 			//set_back(img);
-// 			draw_ray(img);
-// 			//print_ray(img);
-// 		}
-// 	}
-// 	return (1);
-//}

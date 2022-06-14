@@ -1,6 +1,6 @@
 NO ./sprite/magma.ppm
-SO ./sprite/magma.ppm
-EA ./sprite/obsidian.ppm
+SO ./sprite/stone_bricks.ppm
+EA ./sprite/glowstone.ppm
 WE ./sprite/obsidian.ppm
 
 
