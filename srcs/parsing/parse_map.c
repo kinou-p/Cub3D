@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 01:03:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:56:22 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ void inter_map(char **split, char **tmp, t_data *img)
 		while(split[i][j])
 		{
 			if (split[i][j] == '3')
-			{
 				img->map.error = -1;
-				printf("%s %d\n", "-------------------------------------------", img->map.error);
-			}
 			else if (split[i][j] != ' ')
 				tmp[i + 1][j + 1] = split[i][j];
 			j++;
@@ -128,7 +125,19 @@ void close_or_not(char **tab, int i, int j, t_data *img)
 		img->map.error = 0;
 }
 
-int	check_inner_utils(char *line)
+void	find_angle(char c, t_data *img)
+{
+	if (c == 'N')
+		img->player.angle = 0;
+	if (c == 'E')
+		img->player.angle = 90;
+	if (c == 'S')
+		img->player.angle = 180;
+	if (c == 'W')
+		img->player.angle = 270;
+}
+
+int	check_inner_utils(char *line, t_data *img)
 {
 	int	i;
 	int player;
@@ -140,7 +149,11 @@ int	check_inner_utils(char *line)
 		// if (line[i] == '0' || line[i] == '1' || line[i] == '3' || line[i] == '\n')
 		// 	i++;
 		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+		{
+			find_angle(line[i], img);
+			img->player.x = (i - 1) * 64;
 			player++;
+		}
 		else if (line[i] != '3' && line[i] != '0' && line[i] != '1')
 			return (100);
 		// else
@@ -159,7 +172,9 @@ void check_inner(char **map, t_data *img)//fonction bizarre
 	player = 0;
 	while (map[i])
 	{
-		player += check_inner_utils(map[i]);
+		player += check_inner_utils(map[i], img);
+		if (player == 1)
+			img->player.y == (i - 1) * 64;
 		i++;
 	}
 	if (player == 0)
@@ -219,11 +234,6 @@ void	check_zero_one(char **split, t_data *img)
 	free_tab(tmp);
 }
 
-// typedef struct 	s_global
-// {
-// 	int 	err;
-// }		t_global;
-
 int	is_in_charset(char c, char *charset)
 {
 	while (*charset)
@@ -255,8 +265,6 @@ int	detect_map_line(char *line)
 
 char	**isafile(char **av, t_data *img)
 {
-	// t_global g;
-	img->err = 0;
 
 	int		fd;
 	char	*line;
@@ -264,6 +272,7 @@ char	**isafile(char **av, t_data *img)
 	char	*tmp;
 	char	**split;
 
+	img->err = 0;
 	fd = open(av[1], O_RDONLY);
 	str = NULL;
 	tmp = NULL;
