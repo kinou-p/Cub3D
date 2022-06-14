@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 15:55:55 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:32:34 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ void error_msg(t_data *img)
 		ft_putstr_fd("Error: Bad character in map\n", 2);
 }
 
-void free_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	tab = NULL;
-}
-
 void size_line(char *str, t_data *img)
 {
 	int i;
@@ -55,7 +41,7 @@ void size_line(char *str, t_data *img)
 		img->map.x = i;
 }
 
-char *charge_new(t_data *img)
+char *charge_new(t_data *img, char **map, char **tmp_map)
 {
 	char *str;
 	int i;
@@ -63,7 +49,11 @@ char *charge_new(t_data *img)
 	i = 0;
 	str = malloc(sizeof(char) * (img->map.x + 3));
 	if (!str)
-		return (NULL);
+	{
+		free_double(map);
+		free_double(tmp_map);
+		quit_game(img);
+	}
 	while (i < img->map.x + 2)
 	{
 		str[i] = '3';
@@ -153,7 +143,6 @@ int	check_inner_utils(char *line, t_data *img)
 			find_angle(line[i], img);
 			//img->player.x = (i - 1) * 64;
 			img->player.x = i * 64 - 32;
-			printf("playerx= %f\n", img->player.x);
 			player++;
 		}
 		else if (line[i] != '3' && line[i] != '0' && line[i] != '1')
@@ -177,7 +166,6 @@ void check_inner(char **map, t_data *img)//fonction bizarre
 		player += check_inner_utils(map[i], img);
 		if (player == 1 && !img->player.y)
 			img->player.y = i * 64 - 32;
-		printf("playery= %f\n", img->player.y);
 			//img->player.y = (i - 1) * 64;
 		i++;
 	}
@@ -222,11 +210,14 @@ void	check_zero_one(char **split, t_data *img)
 	img->map.y = i;
 	tmp = malloc(sizeof(char *) * (i + 3));
 	if (!tmp)
-		return ;
+	{
+		free_double(split);
+		quit_game(img);
+	}
 	i = 0;
 	while(i < img->map.y + 2)
 	{
-		tmp[i] = charge_new(img);
+		tmp[i] = charge_new(img, split, tmp);
 		i++;
 	}
 	tmp[i] = NULL;
@@ -235,7 +226,7 @@ void	check_zero_one(char **split, t_data *img)
 		return;
 	check_border(tmp, img);
 	check_inner(tmp, img);
-	free_tab(tmp);
+	free_double(tmp);
 }
 
 int	is_in_charset(char c, char *charset)
@@ -334,8 +325,6 @@ int check_map(char **av, t_data *img)
 		img->map.max = img->map.x;
 	else
 		img->map.max = img->map.y;
-	printf("----------------- d = %d", img->map.error);
-
 	if (img->map.error != 0)
 	{
 		error_msg(img);
