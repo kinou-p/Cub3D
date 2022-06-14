@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 00:10:50 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:56:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	key_pressed(int type, t_data *img)
 		img->player.angle_side = -1;
 	else if (type == 65363)//fleche droite
 		img->player.angle_side = 1;
+	else if (type == 65505)
+		img->player.shift = 1;
 	return (0);
 }
 
@@ -122,6 +124,8 @@ int	key_released(int type, t_data *img)
 		img->player.angle_side = 0;
 	else if (type == 65363)//fleche droite
 		img->player.angle_side = 0;
+	else if (type == 65505)
+		img->player.shift = 0;
 	return (0);
 }
 
@@ -160,6 +164,11 @@ int	main(int argc, char **argv)
 	img.player.angle = 90;
 	img.player.vx = cos(deg_to_rad(img.player.angle));
 	img.player.vy = sin(deg_to_rad(img.player.angle));
+	img.player.front = 0;
+	img.player.side = 0;
+	img.player.angle_side = 0;
+	img.player.shift = 0;
+	
 	//print_map(img.map, &img);
 	//print_player(img.player, &img);
 	//print_ray(&img);

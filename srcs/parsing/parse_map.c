@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 14:56:22 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:00:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,10 +281,12 @@ char	**isafile(char **av, t_data *img)
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		if (line[0] != '\n' && img->err == 0)
+		{
 			if (detect_map_line(line))
 				img->err = 1;
 			if (line[0] == '\n' && img->err == 1)
 				img->err = 2;
+		}
 		tmp = ft_strjoin(str, line);
 		if (str != NULL)
 			free(str);

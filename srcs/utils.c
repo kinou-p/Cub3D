@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 00:09:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:58:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,21 @@ void	ft_error(char *error_msg)
 
 int	update_pos(t_data *img)
 {
+	int multiplicator;
+
+	if (img->player.shift == 1)
+		multiplicator = 4;
+	else 
+		multiplicator = 2;
 	if (img->player.front == 1)
 	{
-		img->player.x += img->player.vx * 2;
-		img->player.y += img->player.vy * 2;
+		img->player.x += img->player.vx * multiplicator;
+		img->player.y += img->player.vy * multiplicator;
 	}
 	else if (img->player.front == -1)
 	{
-		img->player.x -= img->player.vx * 2;
-		img->player.y -= img->player.vy * 2;
+		img->player.x -= img->player.vx * multiplicator;
+		img->player.y -= img->player.vy * multiplicator;
 	}
 	if (img->player.side == 1)
 	{
@@ -98,6 +104,7 @@ int	update_pos(t_data *img)
 		img->player.vx = cos(deg_to_rad(img->player.angle));
 		img->player.vy = -sin(deg_to_rad(img->player.angle));
 	}
+	return (0);
 }
 
 // int	is_good(t_data *img, int type)

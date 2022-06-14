@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 01:04:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:58:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char *transform_map(char **double_map, t_data *img)
 	img->map.size = img->map.x * img->map.y;
 	printf("x= %d y= %d\n", img->map.x, img->map.y);
 	map = ft_calloc(sizeof(char), img->map.size + 1);
+	if (!map)
+		quit_game(img);
 	while (double_map[++i])
 	{
 		j = -1;
@@ -98,18 +100,25 @@ void	set_color(char *str, t_data *img)
 {
 	char	c;
 	int		index;
+	char 	**tab;
 
 	c = next_space(str, 0);
 	index = next_space_index(str, 0);
+	tab = ft_split(str + 1, ',');
+	if (!tab)
+		quit_game(img);
+	if (double_size(tab) != 3)
+		ft_exit("Error\nBad syntax in map file (RGB)\n");
 	if (c == 'F')
 	{
 		if (str[index + 1] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file (RGB)\n");
+		
 	}
 	if (c == 'C')
 	{
 		if (str[index + 1] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file (RGB)\n");
 	}
 }
 

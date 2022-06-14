@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 01:04:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:59:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct player_position
 	int		front;
 	int		side;
 	int		angle_side;
+	int		shift;
 }				player;
 
 typedef struct s_data {
@@ -98,6 +99,7 @@ typedef struct s_data {
 	int		err;
 }				t_data;
 
+int				update_pos(t_data *img);
 char			*transform_map(char **double_map, t_data *img);
 int				check_texture_color(char **tab, t_data *img);
 int				check_map(char **av, t_data *img);
