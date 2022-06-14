@@ -1,3 +1,8 @@
+NO ./sprite/magma.ppm
+SO ./sprite/stone_bricks.ppm
+EA ./sprite/glowstone.ppm
+WE ./sprite/obsidian.ppm
+
 F 220,100,0
 C 225,30,0
 
