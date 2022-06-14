@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 15:25:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:55:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ void close_or_not(char **tab, int i, int j, t_data *img)
 void	find_angle(char c, t_data *img)
 {
 	if (c == 'N')
-		img->player.angle = 0;
-	if (c == 'E')
 		img->player.angle = 90;
+	if (c == 'E')
+		img->player.angle = 0;
 	if (c == 'S')
-		img->player.angle = 180;
-	if (c == 'W')
 		img->player.angle = 270;
+	if (c == 'W')
+		img->player.angle = 180;
 }
 
 int	check_inner_utils(char *line, t_data *img)
