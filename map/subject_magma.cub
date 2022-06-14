@@ -1,5 +1,5 @@
-NO ./sprite/mossy_cobblestone.ppm
-SO ./sprite/mossy_cobblestone.ppm
+NO ./sprite/magma.ppm
+SO ./sprite/magma.ppm
 EA ./sprite/obsidian.ppm
 WE ./sprite/obsidian.ppm
 

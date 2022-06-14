@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 15:00:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:25:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,9 @@ int	check_inner_utils(char *line, t_data *img)
 		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 		{
 			find_angle(line[i], img);
-			img->player.x = (i - 1) * 64;
+			//img->player.x = (i - 1) * 64;
+			img->player.x = i * 64 - 32;
+			printf("playerx= %f\n", img->player.x);
 			player++;
 		}
 		else if (line[i] != '3' && line[i] != '0' && line[i] != '1')
@@ -173,8 +175,10 @@ void check_inner(char **map, t_data *img)//fonction bizarre
 	while (map[i])
 	{
 		player += check_inner_utils(map[i], img);
-		if (player == 1)
-			img->player.y == (i - 1) * 64;
+		if (player == 1 && !img->player.y)
+			img->player.y = i * 64 - 32;
+		printf("playery= %f\n", img->player.y);
+			//img->player.y = (i - 1) * 64;
 		i++;
 	}
 	if (player == 0)
