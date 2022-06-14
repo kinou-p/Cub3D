@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 15:59:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:01:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	print_line(t_data *img, double x, double y)
 
 int	key_pressed(int type, t_data *img)
 {
-	if (code == 65307)
+	if (type == 65307)
 		quit_game(img);
 	if (type == 'w')
 		img->player.front = 1;
