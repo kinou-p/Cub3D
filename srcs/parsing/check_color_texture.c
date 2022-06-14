@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 14:58:34 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:35:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char *transform_map(char **double_map, t_data *img)
 	index = 0;
 	//print_double_fd(double_map, 1);
 	img->map.size = img->map.x * img->map.y;
-	printf("x= %d y= %d\n", img->map.x, img->map.y);
+	//printf("x= %d y= %d\n", img->map.x, img->map.y);
 	map = ft_calloc(sizeof(char), img->map.size + 1);
 	if (!map)
 		quit_game(img);

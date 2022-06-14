@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 16:26:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:36:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ unsigned char *get_texture(char type, char *path, t_data *img)
 
 	if (!path)
 	{
-		printf("no path\n");
+		//printf("no path\n");
 		path = ft_strjoin("./sprite/brick_wall.ppm", 0);
 	}
 	(void)type;
