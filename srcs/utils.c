@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 16:27:38 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 00:54:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,12 @@ void set_back(t_data *img)
 	//int tmp;
 	
 	//tmp = (int *)img->buffer;
-	img->map.floor.r = 128;
-	img->map.floor.g = 128;
-	img->map.floor.b = 128;
-	img->map.sky.r = 0;
-	img->map.sky.g = 191;
-	img->map.sky.b = 255;
+	// img->map.floor.r = 128;
+	// img->map.floor.g = 128;
+	// img->map.floor.b = 128;
+	// img->map.sky.r = 0;
+	// img->map.sky.g = 191;
+	// img->map.sky.b = 255;
 	while (x < 512 * 960 * 4)
 	{
 		if (x > 512 * 960 * 2)

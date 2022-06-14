@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 21:26:20 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/14 23:36:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ typedef struct all_wall_texture{
 
 typedef struct s_color{
 	//unsigned char	t;
-	// unsigned char	r;
-	// unsigned char	g;
-	// unsigned char	b;
-	int	r;
-	int	g;
-	int	b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	//int	r;
+	//int	g;
+	//int	b;
 }				color;
 
 typedef struct map_information{

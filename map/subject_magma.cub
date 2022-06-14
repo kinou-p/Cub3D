@@ -3,6 +3,8 @@ SO ./sprite/stone_bricks.ppm
 EA ./sprite/glowstone.ppm
 WE ./sprite/obsidian.ppm
 
+F 220,100,0
+C 31,38,227
 
         1111111111111111111111111
         1000000000110000000000001

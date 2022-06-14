@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 16:39:08 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/14 18:14:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 	t_data	img;
 
 	if (argc != 2)
-		ft_error("Error: bad number of arguments, only need a map");
+		ft_error("Error:  bad number of arguments, only need a map");
 	set_map(&img);
 	img.player.x = 0;
 	img.player.y = 0;
@@ -83,8 +83,8 @@ int	main(int argc, char **argv)
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");
 	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
-	img.player.vx = -cos(deg_to_rad(img.player.angle));
-	img.player.vy = -sin(deg_to_rad(img.player.angle));
+	img.player.vx = cos(deg_to_rad(img.player.angle));
+	img.player.vy = sin(deg_to_rad(img.player.angle));
 	img.player.front = 0;
 	img.player.side = 0;
 	img.player.angle_side = 0;

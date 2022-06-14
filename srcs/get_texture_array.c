@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 16:36:08 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 00:34:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	put_texture_in_struct(char type, unsigned char *texture, t_data *img)
 	}
 }
 
-unsigned char *get_texture(char type, char *path, t_data *img)
+unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 {
 	int		fd;
 	unsigned char		*ret;
@@ -56,7 +56,10 @@ unsigned char *get_texture(char type, char *path, t_data *img)
 	count = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		ft_exit("Error\nBad texture file\n");
+	{
+		printf("path= %s\n", path);
+		ft_exit("Error\nBad texture file prout");
+	}
 	while (swap || !count)
 	{
 		if (swap)
