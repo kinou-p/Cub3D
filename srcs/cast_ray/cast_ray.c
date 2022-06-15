@@ -12,43 +12,6 @@
 
 #include "../../includes/Cub3D.h"
 
-int	get_color(char R, char G, char B)
-{
-	int	color;
-
-	color = 0;
-	color = color << 8;
-	color += R;
-	color = color << 8;
-	color += G;
-	color = color << 8;
-	color += B;
-	return (color);
-}
-
-void	set_pixel(t_data *img, int color, int x, int y)
-{
-	int	pixel;
-
-	if (y < 0 || y > 520 || x < 0 || x > 960)
-		return ;
-	pixel = (y * img->size_line) + (x * 4);
-	if (img->endian == 1)
-	{
-		img->buffer[pixel + 0] = 0;
-		img->buffer[pixel + 1] = (color >> 16) & 0xFF;
-		img->buffer[pixel + 2] = (color >> 8) & 0xFF;
-		img->buffer[pixel + 3] = (color) & 0xFF;
-	}
-	else if (img->endian == 0)
-	{
-		img->buffer[pixel + 0] = (color) & 0xFF;
-		img->buffer[pixel + 1] = (color >> 8) & 0xFF;
-		img->buffer[pixel + 2] = (color >> 16) & 0xFF;
-		img->buffer[pixel + 3] = 0;
-	}
-}
-
 void	draw_ray3d(t_data *img, t_ray ray)
 {
 	double	line_height;
@@ -61,14 +24,9 @@ void	draw_ray3d(t_data *img, t_ray ray)
 	double	gap;
 	double	myy;
 
-	x = 0;
-	y = 0;
-	mx = 0;
-	my = 0;
 	line_height = 64 * 960 / ray.dist;
 	line_offset = 256 - ((int)line_height) / 2;
-	gap = 1;
-	myy = 0;
+	x = 0;
 	y = 0;
 	my = 0;
 	myy = 0;

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 19:15:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:38:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	get_file_size(char *path, t_data *img, int *count, int fd)
 	close(fd);
 	img->to_be_free.fd = -1;
 	if (*count != 12291)
-		ft_exit("Error\nBad texture file (too much line)\n", img);
+		ft_exit("Error\nBad texture file (too much or not enough line)\n", img);
 }
 
 void	fill_ret(int count, t_data *img, unsigned char **ret, char *swap)

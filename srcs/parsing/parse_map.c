@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 18:52:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:03:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ void	check_zero_one(char **split, t_data *img)
 	i = 0;
 	while (split[i])
 	{
+		if (!ft_strchr(split[i], '1'))
+			ft_exit("Error\nInvalid line in map file\n", img);
 		size_line(split[i], img);
 		i++;
 	}
@@ -271,58 +273,41 @@ int	detect_map_line(char *line)
 	return (1);
 }
 
+char	**fill_tab(char *swap, int count, char **ret, int fd)
+{
+	while (swap || !count)
+	{
+		swap = get_next_line(fd);
+		if (ft_strlen(swap) >= 1 && swap[ft_strlen(swap) - 1] == '\n')
+			swap[ft_strlen(swap) - 1] = 0;
+		ret[count] = swap;
+		count++;
+	}
+	return (ret);
+}
+
 char	**isafile(char **av, t_data *img)
 {
-
 	int		fd;
-	char	*line;
-	char	*str;
-	char	*tmp;
-	char	**split;
-
-	check_dir(av[1], img);
-	img->err = 0;
+	char	**ret;
+	int		count;
+	int		pass;
+	
+	count = 0;
+	get_map_size(av[1], img, &count, 0);
+	ret = ft_calloc(sizeof(char*), count);
+	if (!ret)
+		quit_game(img);
+	img->to_be_free.tab = ret;
 	fd = open(av[1], O_RDONLY);
-	img->to_be_free.fd = fd;
-	str = NULL;
-	tmp = NULL;
-	if (fd == - 1)
-		ft_exit("Error\nFile doesn't exist\n", img);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (line[0] != '\n' && img->err == 0)
-		{
-			if (detect_map_line(line))
-				img->err = 1;
-			if (line[0] == '\n' && img->err == 1)
-				img->err = 2;
-		}
-		tmp = ft_strjoin(str, line);
-		free(line);
-		line = NULL;
-		if (str != NULL)
-			free(str);
-		if (!tmp)
-			quit_game(img);
-		str = tmp;
-	}
-	if (img->err == 2)
-	{
-		free(str);
-		ft_exit("Error\nBad texture file\n", img);
-	}
-	split = ft_split(str, '\n');
-	img->to_be_free.tab = split;
-	free(str);
-	free(line);
+	if (fd == -1)
+		ft_exit("Error\nBad texture file", img);
+	ret = fill_tab(0, 0, ret, fd);
 	close(fd);
-	img->to_be_free.fd = -1;
-	int pass = 0;
-	pass = check_texture_color(split, img);
-	check_zero_one(split + pass, img);
-	//leaks here -- normalement c bon
-	transform_map(split + pass, img);
-	free_double(split);
+	pass = check_texture_color(ret, img);
+	check_zero_one(ret + pass, img);
+	transform_map(ret + pass, img);
+	free_double(ret);
 	img->to_be_free.tab = 0;
 	return (0);
 }

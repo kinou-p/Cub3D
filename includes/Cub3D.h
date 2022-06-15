@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:42:10 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:39:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,14 @@ char			*transform_map(char **double_map, t_data *img);
 int				check_texture_color(char **tab, t_data *img);
 int				check_map(char **av, t_data *img);
 void			ft_exit(char *str, t_data *img);
+
 void			set_back(t_data *img);
 unsigned char	*get_texture(char type, char *path, t_data *img);
 int				get_color(char one, char two, char three);
+void			set_pixel(t_data *img, int color, int x, int y);
+void			get_file_size(char *path, t_data *img, int *count, int fd);
+void			get_map_size(char *path, t_data *img, int *count, int fd);
+
 double			reset_angle(double angle);
 double			deg_to_rad(double angle);
 void			draw_ray(t_data *img);
