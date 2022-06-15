@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 14:37:34 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:19:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ void	set_map(t_data *img)
 	img->map.texture.east = 0;
 	img->map.texture.south = 0;
 	img->map.texture.west = 0;
+	img->player.x = 0;
+	img->player.y = 0;
+	img->player.angle = 0;
+	img->player.vx = 0;
+	img->player.vy = 0;
+	img->player.front = 0;
+	img->player.side = 0;
+	img->player.angle_side = 0;
+	img->player.shift = 0;
+	img->to_be_free.one_tab = NULL;
+	img->to_be_free.fd_one = -1;
 }
 
 int	key_pressed(int type, t_data *img)
@@ -92,6 +103,6 @@ int	main(int argc, char **argv)
 	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
 	mlx_loop_hook(img.mlx, loop, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);
-	
+
 	mlx_loop(img.mlx);
 }
