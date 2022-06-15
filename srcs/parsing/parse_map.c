@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 15:26:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:54:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	verifie_texture_color(t_data *img)
 void error_msg(t_data *img)
 {
 	if (img->map.error == 1)
-		ft_exit("Error: Map isn't closed\n", img);
+		ft_exit("Error\nMap isn't closed\n", img);
 	if (img->map.error == 2)
-		ft_exit("Error: Missing player\n", img);
+		ft_exit("Error\nMissing player\n", img);
 	if (img->map.error == 3)
-		ft_exit("Error: Too many players\n", img);
+		ft_exit("Error\nToo many players\n", img);
 	if (img->map.error == -1)
-		ft_exit("Error: Bad character in map\n", img);
+		ft_exit("Error\nBad character in map\n", img);
 }
 
 void size_line(char *str, t_data *img)
@@ -289,7 +289,7 @@ char	**isafile(char **av, t_data *img)
 	str = NULL;
 	tmp = NULL;
 	if (fd == - 1)
-		ft_exit("Error: File doesn't exist\n", img);
+		ft_exit("Error\nFile doesn't exist\n", img);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		if (line[0] != '\n' && img->err == 0)
@@ -337,7 +337,7 @@ int check_map(char **av, t_data *img)
 
 	if (reverse_comp(av[1], ".cub") || (ft_strlen(av[1]) == ft_strlen(".cub")))
 	{
-		ft_exit("Error: Not a valid file \".cub\"\n", img);
+		ft_exit("Error\nNot a valid file \".cub\"\n", img);
 		return (1);
 	}
 	isafile(av, img);

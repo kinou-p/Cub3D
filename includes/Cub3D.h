@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:29:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:51:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ typedef struct map_information{
 
 typedef struct player_position
 {
-	double x;
-	double y;
-	double angle;
-	double vx;
-	double vy;
+	double	x;
+	double	y;
+	double	angle;
+	double	vx;
+	double	vy;
 	int		front;
 	int		side;
 	int		angle_side;
@@ -85,24 +85,26 @@ typedef struct player_position
 
 typedef struct need_to_be_free
 {
-	char	**tab;
-	int		fd;
+	char			**tab;
+	char			**tab_two;
+	unsigned char	*str;
+	int				fd;
 }				to_free;
 
 typedef struct s_data {
-	void	*mlx;
-	void	*mlx_win;
-	void	*mlx_test;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-	char	*buffer;
-	void	*mlx_win_test;
-	char	**double_map;
-	map_info map;
-	player	player;
-	to_free to_be_free;
-	int		err;
+	void		*mlx;
+	void		*mlx_win;
+	void		*mlx_test;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	char		*buffer;
+	void		*mlx_win_test;
+	char		**double_map;
+	map_info	map;
+	player		player;
+	to_free 	to_be_free;
+	int			err;
 }				t_data;
 
 int				update_pos(t_data *img);

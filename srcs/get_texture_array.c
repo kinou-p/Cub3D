@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:30:23 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:12:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,11 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 	close(fd);
 	img->to_be_free.fd = -1;
 	if (count != 12291)
-		ft_exit("Error\n Bad texture file\n", img);
+		ft_exit("Error\nBad texture file\n", img);
 	ret = ft_calloc(sizeof(char), count);
 	if (!ret)
 		quit_game(img);
+	img->to_be_free.str = ret;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		ft_exit("Error\nBad texture file", img);
@@ -104,7 +105,6 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 		{
 			free(swap);
 			swap = get_next_line(fd);
-			
 		}
 		if (swap)
 			swap[ft_strlen(swap) - 1] = 0;
@@ -112,14 +112,14 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 			ret[count] = (unsigned char)ft_atoi(swap);
 		else if (swap)
 		{
-			//printf("isnbr= %d swap= %s ft_atoi(swap)= ---%ld--- strlen= %ld\n",is_nbr(swap) ,swap , ft_atoi(swap), ft_strlen(swap) );
-			free(ret);
-			ft_exit("Error\nBad texture file\n", img);
+			free(swap);
+			ft_exit("Error\nBad texture file2\n", img);
 		}
 		count++;
 	}
 	close(fd);
 	img->to_be_free.fd = -1;
 	put_texture_in_struct(type, ret, img);
+	img->to_be_free.str = 0;
 	return (ret);
 }

@@ -6,18 +6,19 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:25:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:52:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/Cub3D.h"
 
-void	set_map(t_data *img)
+void	set_map_player(t_data *img)
 {
 	img->map.texture.north = 0;
 	img->map.texture.east = 0;
 	img->map.texture.south = 0;
 	img->map.texture.west = 0;
+	img->map.simple_map = 0;
 	img->player.x = 0;
 	img->player.y = 0;
 	img->player.angle = 0;
@@ -27,8 +28,12 @@ void	set_map(t_data *img)
 	img->player.side = 0;
 	img->player.angle_side = 0;
 	img->player.shift = 0;
+	img->to_be_free.str = 0;
 	img->to_be_free.tab = NULL;
+	img->to_be_free.tab_two = NULL;
 	img->to_be_free.fd = -1;
+	img->mlx = 0;
+	img->mlx_win = 0;
 }
 
 int	key_pressed(int type, t_data *img)
@@ -84,7 +89,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_error("Error\nBad number of arguments, only need a map\n");
-	set_map(&img);
+	set_map_player(&img);
 	img.player.x = 0;
 	img.player.y = 0;
 	if (check_map(argv, &img))
