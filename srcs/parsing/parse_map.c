@@ -6,11 +6,24 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 16:46:36 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:24:27 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3D.h"
+
+void check_dir(char *path, t_data *img)
+{
+	int fd;
+
+	fd = open(path, O_DIRECTORY);
+    if (fd >= 0)
+    {
+        close(fd);
+        ft_exit("Error\nTexture path is a directory\n", img);
+    }
+	close(fd);
+}
 
 void ft_exit(char *str, t_data *img)
 {
@@ -286,6 +299,7 @@ char	**isafile(char **av, t_data *img)
 	char	*tmp;
 	char	**split;
 
+	check_dir(av[1], img);
 	img->err = 0;
 	fd = open(av[1], O_RDONLY);
 	img->to_be_free.fd = fd;

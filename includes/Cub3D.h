@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:02:52 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:28:47 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,6 @@ int				quit_game(t_data *img);
 void			ft_error(char *error_msg);
 void			print_player(player player, t_data *img);
 void			print_map(map_info map, t_data *img);
+void			check_dir(char *path, t_data *img);
 
 #endif
