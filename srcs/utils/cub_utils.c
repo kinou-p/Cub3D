@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:48:45 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 19:23:03 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 23:22:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_error(char *error_msg)
 void ft_exit(char *str, t_data *img)
 {
 	ft_putstr_fd(str, 2);
+	
 	quit_game(img);
 }
 
