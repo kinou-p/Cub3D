@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 17:24:27 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:52:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3D.h"
-
-void check_dir(char *path, t_data *img)
-{
-	int fd;
-
-	fd = open(path, O_DIRECTORY);
-    if (fd >= 0)
-    {
-        close(fd);
-        ft_exit("Error\nTexture path is a directory\n", img);
-    }
-	close(fd);
-}
-
-void ft_exit(char *str, t_data *img)
-{
-	ft_putstr_fd(str, 2);
-	quit_game(img);
-}
 
 void	verifie_texture_color(t_data *img)
 {
