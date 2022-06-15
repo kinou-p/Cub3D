@@ -100,9 +100,9 @@ void	draw_ray3d(t_data *img, t_ray ray)
 		}
 		else
 			color = 0;
-		while (++x < /*img->map.x / 2*/4)
+		while (++x < 4)
 		{
-				set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
+				set_pixel(img, color, ray.index * 4 + x, y + line_offset);
 		}
 		y++;
 	}
@@ -111,9 +111,9 @@ void	draw_ray3d(t_data *img, t_ray ray)
 
 void	draw_ray(t_data *img)
 {
-	double	ray_angle = 0; //ray angle
-	double	ray_y = 0; //where ray touch x
-	double	ray_x = 0; //where ray touch y
+	double	ray_angle = 0;
+	double	ray_y = 0;
+	double	ray_x = 0;
 	double	next_x = 0;
 	double	next_y = 0;
 	double	dist_v;
@@ -129,7 +129,6 @@ void	draw_ray(t_data *img)
 	int		mp = 0;
 	char	vertical_type;
 	char	horizontal_type;
-	//char texture_type;
 
 	void *new_img;
 	int bits_per_pixel = 0;
@@ -139,13 +138,7 @@ void	draw_ray(t_data *img)
 	new_img = mlx_new_image(img->mlx, 960, 512);
 	if (!new_img)
 		ft_exit("Error\nmlx_new_image failed\n", img);
-	//printf("newimg= %p\n", new_img);
 	img->buffer = mlx_get_data_addr(new_img, &bits_per_pixel, &size_line, &endian);
-	//img->buffer// = (char*)new_img;
-	//printf("buffer= %p\n", img->buffer);
-	//printf("buffer in string= %s\n", (char *)img->buffer);
-	//printf("bits= %d line_size= %d endian = %d\n", bits_per_pixel, size_line, endian);
-	//mlx_destroy_image(img->mlx, new_img);
 	img->bits_per_pixel = bits_per_pixel;
 	img->size_line = size_line;
 	img->endian = endian;
@@ -184,15 +177,11 @@ void	draw_ray(t_data *img)
 			ray_y = img->player.y;
 			count = img->map.max;
 		}
-		//printf("max= %d\n", img->map.max);
 		while (count < img->map.max) 
 		{ 
-			//printf("count = %d\n", count);
 			mx = (int)(ray_x)>>6;
 			my = (int)(ray_y)>>6;
 			mp = my * img->map.x + mx;
-			//printf("mx=%d my=%d mp= %d\n", mx, my, mp);
-			//printf("map= -%s- c= %c\n",img->map.simple_map, img->map.simple_map[mp]);
 			if (mp > 0 && mp < img->map.size && img->map.simple_map[mp] == '1')//hit wall
 			{
 				count = img->map.max;
@@ -206,7 +195,6 @@ void	draw_ray(t_data *img)
 				count += 1;
 			}
 		}
-		//print_ray2(img, img->player.vx, img->player.vy, dist_v);
 		vx = ray_x;
 		vy = ray_y;
 		//-------start horizontal ray---------
@@ -259,9 +247,7 @@ void	draw_ray(t_data *img)
 		ray_info.texture_type = 0;
 		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
 		{
-			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_h));
 			dist_f = dist_h;
-			//printf("rx= %f ry= %f\n", ray_x, ray_y);
 			ray_info.mp = ray_x;
 			wall_type = 0;
 			ray_info.texture_type = horizontal_type;
@@ -269,11 +255,9 @@ void	draw_ray(t_data *img)
 		else if (dist_v != -1)
 		{
 			dist_f = dist_v;
-			//printf("vx= %f vy= %f\n", vx, vy);
 			ray_x = vx;
 			ray_y = vy;
 			ray_info.mp = vy;
-			//print_ray2(img, cos(deg_to_rad(ray_angle)), -sin(deg_to_rad(ray_angle)), fabs(dist_v));
 			wall_type = 1;
 			ray_info.texture_type = vertical_type;
 		}

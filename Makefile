@@ -6,17 +6,18 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/13 16:27:49 by apommier          #+#    #+#              #
-#    Updated: 2022/06/11 13:31:36 by apommier         ###   ########.fr        #
+#    Updated: 2022/06/15 18:39:09 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= Cub3D
 SRCS	= srcs/main.c\
-			srcs/get_texture_array.c\
-			srcs/cast_ray.c\
+			srcs/cast_ray/get_texture_array.c\
+			srcs/cast_ray/cast_ray.c\
+			srcs/cast_ray/utils.c\
 			srcs/parsing/parse_map.c\
-			srcs/parsing/check_color_texture.c\
-			srcs/utils.c
+			srcs/parsing/check_color_texture.c
+			
 OBJS	= ${SRCS:.c=.o}
 CC		= gcc
 LIB		= -L ./mlx -lmlx -lXext -lX11 -lm
