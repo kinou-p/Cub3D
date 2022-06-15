@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:16:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:32:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ int	check_texture_color(char **tab, t_data *img)
 
 	index = 0;
 	next = 0;
-	while (next_space(tab[next], 0) != '1' && tab[next])
+	while (tab && tab[next] && next_space(tab[next], 0) != '1')
 		next++;
-	if (!tab[next])
+	if (!tab || !tab[next])
 		ft_exit("Error\nBad syntax in map file (identifier)\n", img);
 	while (index < next)
 	{
