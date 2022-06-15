@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 03:21:27 by apommier          #+#    #+#             */
-/*   Updated: 2022/05/06 19:29:58 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:14:31 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 
 typedef struct t_slist
 {
-	void			*nbr;
-	int				index;
+	void			*content;
 	int				swap;
 	struct t_slist	*next;
 }				t_list;

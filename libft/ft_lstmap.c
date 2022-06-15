@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <alexpomms@student.42.fr>         +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 00:10:12 by apommier          #+#    #+#             */
-/*   Updated: 2020/12/13 22:37:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:15:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	begin = 0;
 	while (lst)
 	{
-		new = ft_lstnew(f(lst->nbr));
+		new = ft_lstnew(f(lst->content));
 		if (!new)
 		{
 			ft_lstclear(&begin, *del);

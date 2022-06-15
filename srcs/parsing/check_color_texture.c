@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 01:04:34 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:40:19 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	check_value(char **tab)
 	}
 }
 
-void	set_color_utils(char **tab, color *img)
+void	set_color_utils(char **tab, color *rgb)
 {
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[0]) >= 0 && ft_atoi(tab[0]) <= 255))
 		ft_exit("Error\nBad syntax in map file (RGB)\n");
@@ -124,9 +124,10 @@ void	set_color_utils(char **tab, color *img)
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[2]) >= 0 && ft_atoi(tab[2]) <= 255))
 		ft_exit("Error\nBad syntax in map file (RGB)\n");
 	check_value(tab);
-	img->r = (unsigned char)ft_atoi(tab[0]);
-	img->g = (unsigned char)ft_atoi(tab[1]);
-	img->b = (unsigned char)ft_atoi(tab[2]);
+	rgb->r = (unsigned char)ft_atoi(tab[0]);
+	rgb->g = (unsigned char)ft_atoi(tab[1]);
+	rgb->b = (unsigned char)ft_atoi(tab[2]);
+	rgb->set = 1;
 	//printf("---%d\n", img->g);
 
 }
@@ -137,15 +138,15 @@ void	set_color(char *str, t_data *img)
 	int		index;
 	char 	**tab;
 
-	printf("str=%s \n", str);
+	//printf("str=%s \n", str);
 	c = next_space(str, 0);
 	index = next_space_index(str + 1, 0);
 	tab = ft_split(str + index + 1, ',');
 	if (!tab)
 		quit_game(img);
-	if (double_size(tab) != 3)
-		ft_exit("Error\nBad syntax in map file (RGB) 1\n");
-	print_double_fd(tab, 1);
+	//if (double_size(tab) != 3)
+	//	ft_exit("Error\nBad syntax in map file (RGB) 1\n");
+	//print_double_fd(tab, 1);
 	if (c == 'F')
 		set_color_utils(tab, &img->map.floor);
 	if (c == 'C')

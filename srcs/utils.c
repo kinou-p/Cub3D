@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 00:54:36 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:33:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ double reset_angle(double angle)
 
 void	ft_error(char *error_msg)
 {
-	/*int	i;
-
-	i = 0;*/
 	ft_putendl_fd(error_msg, 2);
 	exit(1);
 }
@@ -107,43 +104,11 @@ int	update_pos(t_data *img)
 	return (0);
 }
 
-int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
-{
-	return (*(int *)(unsigned char [4]){b, g, r, t});
-}
-
 void set_back(t_data *img)
 {
-	/*for(int y = 0; y < 512; ++y)
-	for(int x = 0; x < 960; ++x)
-	{
-    	int pixel = (y * img->size_line) + (x * 4);
+	int x;
 
-    	if (endian == 1)        // Most significant (Alpha) byte first
-    	{
-    	    buffer[pixel + 0] = (color >> 24);
-    	    buffer[pixel + 1] = (color >> 16) & 0xFF;
-    	    buffer[pixel + 2] = (color >> 8) & 0xFF;
-    	    buffer[pixel + 3] = (color) & 0xFF;
-    	}
-    	//else if (endian == 0)   // Least significant (Blue) byte first
-    	//{
-    	    img->buffer[pixel + 0] = (color) & 0xFF;
-    	    img->buffer[pixel + 1] = (color >> 8) & 0xFF;
-    	    img->buffer[pixel + 2] = (color >> 16) & 0xFF;
-    	    img->buffer[pixel + 3] = (color >> 24);
-    	//}
-	}*/
-	int x = 0;
-	//int tmp;
-	
-	//tmp = (int *)img->buffer;
-	// img->map.floor.r = 128;
-	// img->map.floor.g = 128;
-	// img->map.floor.b = 128;
-	// img->map.sky.r = 0;
-	// img->map.sky.g = 191;
-	// img->map.sky.b = 255;
+	x = 0;
 	while (x < 512 * 960 * 4)
 	{
 		if (x > 512 * 960 * 2)
@@ -155,14 +120,6 @@ void set_back(t_data *img)
 				img->buffer[x + 2] =img->map.floor.r;
 				img->buffer[x + 3] = 0;
 			}
-			//tmp = create_trgb(128, 128, 128, 0);
-			else
-			{
-				img->buffer[x + 0] = 128;
-    			img->buffer[x + 1] = 128;
-    			img->buffer[x + 2] = 128;
-    			img->buffer[x + 3] = 0;
-			}
 		}
 		else
 		{
@@ -170,11 +127,6 @@ void set_back(t_data *img)
 			img->buffer[x + 1] = img->map.sky.g;
 			img->buffer[x + 2] =img->map.sky.r;
 			img->buffer[x + 3] = 0;
-			//tmp = create_trgb(255, 191, 0, 0);
-			/*img->buffer[x + 0] = 255;
-    		img->buffer[x + 1] = 191;
-    		img->buffer[x + 2] = 0;
-    		img->buffer[x + 3] = 0;*/
 		}
 		x += 4;
 	}
