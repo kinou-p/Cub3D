@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 12:33:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:40:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	quit_game(t_data *img)
 		free(img->mlx);
 	free_texture(img);
 	free(img->map.simple_map);
+	if ()
+		
 	//free(img->map.texture.north);
 	//free_double(img->map);
 	exit(0);

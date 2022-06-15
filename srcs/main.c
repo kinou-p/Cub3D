@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 18:14:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:37:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int argc, char **argv)
 	img.player.y = 0;
 	if (check_map(argv, &img))
 		return (0);
-	img.map.texture.basic = get_texture(0, 0, &img);
 	img.mlx = mlx_init();
 	if (!img.mlx)
 		ft_error("Error: mlx_init fail");

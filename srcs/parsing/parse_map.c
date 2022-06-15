@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 14:35:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:38:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ char	**isafile(char **av, t_data *img)
 	int pass = 0;
 	pass = check_texture_color(split, img);
 	check_zero_one(split + pass, img);
-	//leaks here
+	//leaks here -- normalement c bon
 	transform_map(split + pass, img);
 	free_double(split);
 	img->to_be_free.one_tab = 0;

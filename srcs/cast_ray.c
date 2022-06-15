@@ -177,10 +177,7 @@ void	draw_ray(t_data *img)
 
 	new_img = mlx_new_image(img->mlx, 960, 512);
 	if (!new_img)
-	{
-		printf("no img\n");
-		exit(1);
-	}
+		ft_exit("Error\nmlx_new_image failed\n");
 	//printf("newimg= %p\n", new_img);
 	img->buffer = mlx_get_data_addr(new_img, &bits_per_pixel, &size_line, &endian);
 	//img->buffer// = (char*)new_img;
