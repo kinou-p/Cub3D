@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/14 16:32:34 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:09:54 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,32 @@ void ft_exit(char *str)
 	exit(1);
 }
 
+void	verifie_texture_color(t_data *img)
+{
+	if (img->map.texture.north == NULL)
+		ft_exit("Error\nTexture isn't loaded properly\n");
+	if (img->map.texture.east == NULL)
+		ft_exit("Error\nTexture isn't loaded properly\n");
+	if (img->map.texture.south == NULL)
+		ft_exit("Error\nTexture isn't loaded properly\n");
+	if (img->map.texture.west == NULL)
+		ft_exit("Error\nTexture isn't loaded properly\n");
+	if (img->map.floor.set != 1)
+		ft_exit("Error\nColor not set properly\n");
+	if (img->map.sky.set != 1)
+		ft_exit("Error\nColor not set properly\n");
+}
+
 void error_msg(t_data *img)
 {
 	if (img->map.error == 1)
-		ft_putstr_fd("Error: Map isn't closed\n", 2);
+		ft_exit("Error: Map isn't closed\n");
 	if (img->map.error == 2)
-		ft_putstr_fd("Error: Missing player\n", 2);
+		ft_exit("Error: Missing player\n");
 	if (img->map.error == 3)
-		ft_putstr_fd("Error: Too many players\n", 2);
+		ft_exit("Error: Too many players\n");
 	if (img->map.error == -1)
-		ft_putstr_fd("Error: Bad character in map\n", 2);
+		ft_exit("Error: Bad character in map\n");
 }
 
 void size_line(char *str, t_data *img)
@@ -330,6 +346,7 @@ int check_map(char **av, t_data *img)
 		error_msg(img);
 		exit(1);//surely leak
 	}
+	verifie_texture_color(img);
 	return (0);
 }
 
