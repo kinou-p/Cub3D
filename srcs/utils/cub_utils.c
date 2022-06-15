@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:48:45 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 23:22:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 23:41:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,20 @@ void	ft_error(char *error_msg)
 	exit(1);
 }
 
-void ft_exit(char *str, t_data *img)
+void	ft_exit(char *str, t_data *img)
 {
 	ft_putstr_fd(str, 2);
-	
 	quit_game(img);
 }
 
-void check_dir(char *path, t_data *img)
+void	check_dir(char *path, t_data *img)
 {
-	int fd;
+	int	fd;
 
 	fd = open(path, O_DIRECTORY);
-    if (fd >= 0)
-    {
-        close(fd);
-        ft_exit("Error\nPath is a directory and not a file\n", img);
-    }
+	if (fd >= 0)
+	{
+		close(fd);
+		ft_exit("Error\nPath is a directory and not a file\n", img);
+	}
 }
