@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 15:54:55 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:46:36 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,10 @@ void	check_zero_one(char **split, t_data *img)
 	tmp[i] = NULL;
 	inter_map(split, tmp, img);
 	if (img->map.error == -1)
+	{
+		free_double(tmp);
 		return;
+	}
 	check_border(tmp, img);
 	check_inner(tmp, img);
 	free_double(tmp);
