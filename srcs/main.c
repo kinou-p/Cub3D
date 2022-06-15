@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:52:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:16:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,5 @@ int	main(int argc, char **argv)
 	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
 	mlx_loop_hook(img.mlx, loop, &img);
 	mlx_hook(img.mlx_win, 17, 0L, &quit_game, &img);
-
 	mlx_loop(img.mlx);
 }

@@ -14,13 +14,16 @@
 
 char	*ft_free(char *save, int *end)
 {
-	if (!*end)
+	if (!end || !*end)
 	{
-		free(save);
-		free(end);
+		if (save)
+			free(save);
+		if (end)
+			free(end);
 		return (0);
 	}
-	free(end);
+	if (end)
+		free(end);
 	return (save);
 }
 
@@ -81,7 +84,10 @@ char	*get_next_line(int fd)
 
 	line = 0;
 	if (fd < 0)
+	{
+		ft_free(save, 0);
 		return (0);
+	}
 	end = malloc(sizeof(int *));
 	*end = 1;
 	if (save == NULL)

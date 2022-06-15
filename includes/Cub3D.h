@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:51:37 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:02:52 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct need_to_be_free
 	char			**tab;
 	char			**tab_two;
 	unsigned char	*str;
+	char			*string;
 	int				fd;
 }				to_free;
 

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 16:12:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:25:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 	close(fd);
 	img->to_be_free.fd = -1;
 	if (count != 12291)
-		ft_exit("Error\nBad texture file\n", img);
+		ft_exit("Error\nBad texture file (too much line)\n", img);
 	ret = ft_calloc(sizeof(char), count);
 	if (!ret)
 		quit_game(img);
@@ -100,7 +100,6 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 		if (swap)
 			free(swap);
 		swap = get_next_line(fd);
-		//printf("str = -%s-\n", swap);
 		if (!count)
 		{
 			free(swap);
@@ -112,8 +111,9 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 			ret[count] = (unsigned char)ft_atoi(swap);
 		else if (swap)
 		{
+			get_next_line(-1);
 			free(swap);
-			ft_exit("Error\nBad texture file2\n", img);
+			ft_exit("Error\nBad texture file (not numbers or to high)\n", img);
 		}
 		count++;
 	}
