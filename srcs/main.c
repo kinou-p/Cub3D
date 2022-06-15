@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:11:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:42:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,46 +34,6 @@ void	set_map_player(t_data *img)
 	img->to_be_free.fd = -1;
 	img->mlx = 0;
 	img->mlx_win = 0;
-}
-
-int	key_pressed(int type, t_data *img)
-{
-	if (type == 65307)
-		quit_game(img);
-	if (type == 'w')
-		img->player.front = 1;
-	else if (type == 's')
-		img->player.front = -1;
-	else if (type == 'a')
-		img->player.side = -1;
-	else if (type == 'd')
-		img->player.side = 1;
-	else if (type == 65361)
-		img->player.angle_side = -1;
-	else if (type == 65363)
-		img->player.angle_side = 1;
-	else if (type == 65505)
-		img->player.shift = 1;
-	return (0);
-}
-
-int	key_released(int type, t_data *img)
-{
-	if (type == 'w')
-		img->player.front = 0;
-	else if (type == 's')
-		img->player.front = 0;
-	else if (type == 'a')
-		img->player.side = 0;
-	else if (type == 'd')
-		img->player.side = 0;
-	else if (type == 65361)
-		img->player.angle_side = 0;
-	else if (type == 65363)
-		img->player.angle_side = 0;
-	else if (type == 65505)
-		img->player.shift = 0;
-	return (0);
 }
 
 int	loop(t_data *img)

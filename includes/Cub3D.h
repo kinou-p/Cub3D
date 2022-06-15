@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:44:44 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:42:10 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,8 @@ void			ft_error(char *error_msg);
 void			print_player(t_player player, t_data *img);
 void			print_map(t_map_info map, t_data *img);
 void			check_dir(char *path, t_data *img);
+
+int				key_pressed(int type, t_data *img);
+int				key_released(int type, t_data *img);
 
 #endif

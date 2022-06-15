@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/13 16:27:49 by apommier          #+#    #+#              #
-#    Updated: 2022/06/15 18:39:09 by apommier         ###   ########.fr        #
+#    Updated: 2022/06/15 18:49:48 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ SRCS	= srcs/main.c\
 			srcs/cast_ray/get_texture_array.c\
 			srcs/cast_ray/cast_ray.c\
 			srcs/cast_ray/utils.c\
+			srcs/cast_ray/set_back.c\
+			srcs/key_event/key.c\
+			srcs/utils/cub_utils.c\
+			srcs/utils/quit_game.c\
 			srcs/parsing/parse_map.c\
 			srcs/parsing/check_color_texture.c
 			

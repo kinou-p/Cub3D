@@ -6,11 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:10:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:41:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Cub3D.h"
+#include "../../includes/Cub3D.h"
 
 void	put_texture_in_struct(char type, unsigned char *texture, t_data *img)
 {
