@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 14:23:32 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:36:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ void	put_texture_in_struct(char type, unsigned char *texture, t_data *img)
 			ft_exit("Error\nMultiple declaration of texture\n");
 		img->map.texture.east = texture;
 	}
-}
-
-int		verify_texture()
-{
-	
 }
 
 int	is_nbr(char *str)

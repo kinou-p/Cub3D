@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 15:09:54 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:15:22 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,7 @@ char	**isafile(char **av, t_data *img)
 
 	img->err = 0;
 	fd = open(av[1], O_RDONLY);
+	img->to_be_free.fd_one = fd;
 	str = NULL;
 	tmp = NULL;
 	if (fd == - 1)
@@ -299,29 +300,32 @@ char	**isafile(char **av, t_data *img)
 				img->err = 2;
 		}
 		tmp = ft_strjoin(str, line);
-		if (str != NULL)
-			free(str);
-		str = tmp;
-		//size_line(line, img);
 		free(line);
 		line = NULL;
+		if (str != NULL)
+			free(str);
+		if (!tmp)
+			quit_game(img);
+		str = tmp;
 	}
 	if (img->err == 2)
 	{
-		// free(line);
 		free(str);
 		ft_exit("Error\nBad texture file\n");
 	}
 	split = ft_split(str, '\n');
+	img->to_be_free.one_tab = split;
 	free(str);
 	free(line);
 	close(fd);
+	img->to_be_free.fd_one = -1;
 	int pass = 0;
 	pass = check_texture_color(split, img);
 	check_zero_one(split + pass, img);
 	//leaks here
 	transform_map(split + pass, img);
 	free_double(split);
+	img->to_be_free.one_tab = 0;
 	return (0);
 }
 
