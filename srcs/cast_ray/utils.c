@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:52:18 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:15:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void check_dir(char *path, t_data *img)
     if (fd >= 0)
     {
         close(fd);
-        ft_exit("Error\nTexture path is a directory\n", img);
+        ft_exit("Error\nPath is a directory and not a file\n", img);
     }
-	close(fd);
 }
