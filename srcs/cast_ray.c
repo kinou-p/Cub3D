@@ -91,7 +91,7 @@ void	set_pixel(t_data *img, int color, int x, int y)
 	}
 }
 
-void	draw_ray3d(t_data *img, ray ray)
+void	draw_ray3d(t_data *img, t_ray ray)
 {
 	double	line_height;
 	double	line_offset;
@@ -290,7 +290,7 @@ void	draw_ray(t_data *img)
 			}											   //check next horizontal
   		}
 		int wall_type;
-		ray	ray_info;
+		t_ray	ray_info;
 		
 		wall_type = 0;
 		ray_info.texture_type = 0;

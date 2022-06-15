@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:28:47 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:44:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define PI 3.1415926535
 
 typedef struct s_root {
-	int size;
-	int height;
-	int error;
+	int	size;
+	int	height;
+	int	error;
 }				t_root;
 
 typedef struct ray_info{
@@ -36,39 +36,39 @@ typedef struct ray_info{
 	double	tx;
 	double	mp;
 	double	dist;
-	int 	index;
+	int		index;
 	int		wall_type;
 	int		pixel;
 	char	texture_type;
 
-}				ray;
+}				t_ray;
 
 typedef struct all_wall_texture{
 	unsigned char	*north;
 	unsigned char	*east;
 	unsigned char	*west;
 	unsigned char	*south;
-}				sprite;
+}				t_sprite;
 
 typedef struct s_color{
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
 	int				set;
-}				color;
+}				t_color;
 
 typedef struct map_information{
-	char	**map;
-	sprite	texture;
-	color	floor;
-	color	sky;
-	char	*simple_map;
-	int		size;
-	int		x;
-	int		y;
-	int		max;
-	int		error;
-}				map_info;
+	char		**map;
+	t_sprite	texture;
+	t_color		floor;
+	t_color		sky;
+	char		*simple_map;
+	int			size;
+	int			x;
+	int			y;
+	int			max;
+	int			error;
+}				t_map_info;
 
 typedef struct player_position
 {
@@ -81,7 +81,7 @@ typedef struct player_position
 	int		side;
 	int		angle_side;
 	int		shift;
-}				player;
+}				t_player;
 
 typedef struct need_to_be_free
 {
@@ -90,7 +90,7 @@ typedef struct need_to_be_free
 	unsigned char	*str;
 	char			*string;
 	int				fd;
-}				to_free;
+}				t_to_free;
 
 typedef struct s_data {
 	void		*mlx;
@@ -102,9 +102,9 @@ typedef struct s_data {
 	char		*buffer;
 	void		*mlx_win_test;
 	char		**double_map;
-	map_info	map;
-	player		player;
-	to_free 	to_be_free;
+	t_map_info	map;
+	t_player	player;
+	t_to_free	to_be_free;
 	int			err;
 }				t_data;
 
@@ -123,8 +123,8 @@ void			print_ray(t_data *img);
 int				key_press(int code, t_data *img);
 int				quit_game(t_data *img);
 void			ft_error(char *error_msg);
-void			print_player(player player, t_data *img);
-void			print_map(map_info map, t_data *img);
+void			print_player(t_player player, t_data *img);
+void			print_map(t_map_info map, t_data *img);
 void			check_dir(char *path, t_data *img);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:24:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:42:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	check_value(char **tab, t_data *img)
 	}
 }
 
-void	set_color_utils(char **tab, color *rgb, t_data *img)
+void	set_color_utils(char **tab, t_color *rgb, t_data *img)
 {
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[0]) >= 0 && ft_atoi(tab[0]) <= 255))
 		ft_exit("Error\nBad parameter in map file identifier(RGB)\n", img);
