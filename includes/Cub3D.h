@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/14 23:36:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:43:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ typedef struct all_wall_texture{
 }				sprite;
 
 typedef struct s_color{
-	//unsigned char	t;
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
-	//int	r;
-	//int	g;
-	//int	b;
+	int				set;
 }				color;
 
 typedef struct map_information{
@@ -87,6 +84,14 @@ typedef struct player_position
 	int		shift;
 }				player;
 
+typedef struct need_to_be_free
+{
+	char	**one_tab;
+	char	**two_tab;
+	char	*one_str;
+	int		fd_one;
+}				to_free;
+
 typedef struct s_data {
 	void	*mlx;
 	void	*mlx_win;
@@ -99,6 +104,7 @@ typedef struct s_data {
 	char	**double_map;
 	map_info map;
 	player	player;
+	to_free to_be_free;
 	int		err;
 }				t_data;
 
