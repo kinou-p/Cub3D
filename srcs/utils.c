@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:53:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:13:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,15 @@ int	quit_game(t_data *img)
 		free(img->to_be_free.str);
 	if (img->to_be_free.fd != -1)
 		close(img->to_be_free.fd);
-		
-	//free(img->map.texture.north);
-	//free_double(img->map);
-	exit(0);
+	exit(1);
 }
 
-double deg_to_rad(double angle)
+double	deg_to_rad(double angle)
 {
 	return (angle * 3.14159265358979323846 / 180.0);
 }
 
-double reset_angle(double angle)
+double	reset_angle(double angle)
 {
 	if (angle > 359)
 		angle -= 360.0;
@@ -72,11 +69,11 @@ void	ft_error(char *error_msg)
 
 int	update_pos(t_data *img)
 {
-	int multiplicator;
+	int	multiplicator;
 
 	if (img->player.shift == 1)
 		multiplicator = 4;
-	else 
+	else
 		multiplicator = 2;
 	if (img->player.front == 1)
 	{
@@ -90,22 +87,22 @@ int	update_pos(t_data *img)
 	}
 	if (img->player.side == 1)
 	{
- 		img->player.x -= img->player.vy ;
- 		img->player.y += img->player.vx ;
+		img->player.x -= img->player.vy;
+		img->player.y += img->player.vx;
 	}
 	else if (img->player.side == -1)
 	{
-		img->player.x += img->player.vy; //* 5;
-		img->player.y -= img->player.vx; //* 5;
+		img->player.x += img->player.vy;
+		img->player.y -= img->player.vx;
 	}
-	if (img->player.angle_side == -1)//fleche gauche
+	if (img->player.angle_side == -1)
 	{
 		img->player.angle += 1;
 		img->player.angle = reset_angle(img->player.angle);
 		img->player.vx = cos(deg_to_rad(img->player.angle));
 		img->player.vy = -sin(deg_to_rad(img->player.angle));
 	}
-	else if (img->player.angle_side == 1)//fleche droite
+	else if (img->player.angle_side == 1)
 	{
 		img->player.angle -= 1;
 		img->player.angle = reset_angle(img->player.angle);
@@ -115,9 +112,9 @@ int	update_pos(t_data *img)
 	return (0);
 }
 
-void set_back(t_data *img)
+void	set_back(t_data *img)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (x < 512 * 960 * 4)
@@ -128,7 +125,7 @@ void set_back(t_data *img)
 			{
 				img->buffer[x + 0] = img->map.floor.b;
 				img->buffer[x + 1] = img->map.floor.g;
-				img->buffer[x + 2] =img->map.floor.r;
+				img->buffer[x + 2] = img->map.floor.r;
 				img->buffer[x + 3] = 0;
 			}
 		}
@@ -136,7 +133,7 @@ void set_back(t_data *img)
 		{
 			img->buffer[x + 0] = img->map.sky.b;
 			img->buffer[x + 1] = img->map.sky.g;
-			img->buffer[x + 2] =img->map.sky.r;
+			img->buffer[x + 2] = img->map.sky.r;
 			img->buffer[x + 3] = 0;
 		}
 		x += 4;

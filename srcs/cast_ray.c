@@ -12,77 +12,35 @@
 
 #include "../includes/Cub3D.h"
 
-void	print_ray2(t_data *img, double vx, double vy, double dist)
+int	get_color(char R, char G, char B)
 {
-	int i = -1;
-	int red = 0;
+	int	color;
 
-	red = red << 8;
-	red +=255;
-	red = red << 8;
-	red = red << 8;
-	while (++i < dist)
-	{
-		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) , red);
-		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) + 1, (img->player.y + (vy) * i) , red);
-		mlx_pixel_put(img->mlx_test, img->mlx_win_test, (img->player.x + (vx) * i) , (img->player.y + (vy) * i) + 1, red);
-	}
-}
-
-int get_color(char R, char G, char B)
-{
-	int color = 0;
-
-	//printf("R= %d G= %d B= %d\n", R, G, B);
+	color = 0;
 	color = color << 8;
 	color += R;
-	//printf("color= %d\n", color);
 	color = color << 8;
 	color += G;
-	//printf("color= %d\n", color);
 	color = color << 8;
 	color += B;
-	//printf("color= %d\n", color);
 	return (color);
-}
-
-int get_red()
-{
-	int red = 0;
-
-	red = red << 8;
-	red +=255;
-	red = red << 8;
-	red = red << 8;
-	return (red);
-}
-
-int get_dark_red()
-{
-	int red = 0;
-
-	red = red << 8;
-	red +=139;
-	red = red << 8;
-	red = red << 8;
-	return (red);
 }
 
 void	set_pixel(t_data *img, int color, int x, int y)
 {
-	int pixel;
+	int	pixel;
 
 	if (y < 0 || y > 520 || x < 0 || x > 960)
 		return ;
 	pixel = (y * img->size_line) + (x * 4);
-	if (img->endian == 1)		// Most significant (Alpha) byte first
+	if (img->endian == 1)
 	{
 		img->buffer[pixel + 0] = 0;
 		img->buffer[pixel + 1] = (color >> 16) & 0xFF;
 		img->buffer[pixel + 2] = (color >> 8) & 0xFF;
 		img->buffer[pixel + 3] = (color) & 0xFF;
 	}
-	else if (img->endian == 0)   // Least significant (Blue) byte first
+	else if (img->endian == 0)
 	{
 		img->buffer[pixel + 0] = (color) & 0xFF;
 		img->buffer[pixel + 1] = (color >> 8) & 0xFF;
@@ -95,55 +53,60 @@ void	draw_ray3d(t_data *img, t_ray ray)
 {
 	double	line_height;
 	double	line_offset;
-	int		x = 0;
-	double	y = 0;
-	int		mx = 0;
-	int		my = 0;
-	int 	color;
-	int		texture_size = 64;
+	int		x;
+	double	y;
+	int		mx;
+	int		my;
+	int		color;
+	double	gap;
+	double	myy;
 
-	line_height = /*img->map.size*/64 * 960 / ray.dist;
+	x = 0;
+	y = 0;
+	mx = 0;
+	my = 0;
+	line_height = 64 * 960 / ray.dist;
 	line_offset = 256 - ((int)line_height) / 2;
-	double	gap = 1;
-	double myy = 0;
-		y = 0;
-		my = 0;
-		myy = 0;
-		gap = (texture_size / line_height);
-		mx = ((int)ray.mp) % texture_size;
-		if (line_height > 512)
+	gap = 1;
+	myy = 0;
+	y = 0;
+	my = 0;
+	myy = 0;
+	gap = (64 / line_height);
+	mx = ((int)ray.mp) % 64;
+	if (line_height > 512)
+	{
+		line_offset = 0;
+		myy = gap * ((line_height - 512) / 2);
+	}
+	while (y < line_height - 8 && y < 512)
+	{
+		myy += gap;
+		my = (int)myy;
+		ray.pixel = ((my) * 64 + mx) * 3 + 1;
+		x = -1;
+		if (ray.pixel >= 12290 || ray.pixel < 0)
+			return ;
+		else if (ray.pixel > 0)
 		{
-			line_offset = 0;
-			myy = gap * ((line_height - 512) / 2);
+			if (ray.texture_type == 'N' && img->map.texture.north)
+				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
+			else if (ray.texture_type == 'S' && img->map.texture.south)
+				color = get_color(img->map.texture.south[ray.pixel], img->map.texture.south[ray.pixel + 1], img->map.texture.south[ray.pixel + 2]);
+			else if (ray.texture_type == 'W' && img->map.texture.west)
+				color = get_color(img->map.texture.west[ray.pixel], img->map.texture.west[ray.pixel + 1], img->map.texture.west[ray.pixel + 2]);
+			else if (ray.texture_type == 'E' && img->map.texture.east)
+				color = get_color(img->map.texture.east[ray.pixel], img->map.texture.east[ray.pixel + 1], img->map.texture.east[ray.pixel + 2]);
 		}
-		while (y < line_height - 8 && y < 512)
+		else
+			color = 0;
+		while (++x < /*img->map.x / 2*/4)
 		{
-			myy += gap;
-			my = (int)myy;//gap;
-			ray.pixel = ((my) * 64 + mx)* 3 + 1;
-			x = -1;
-			if (ray.pixel >= 12290 || ray.pixel < 0)//here read
-				return ;
-			else if (ray.pixel > 0)
-			{
-				if (ray.texture_type == 'N' && img->map.texture.north)
-					color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
-				else if (ray.texture_type == 'S' && img->map.texture.south)
-					color = get_color(img->map.texture.south[ray.pixel], img->map.texture.south[ray.pixel + 1], img->map.texture.south[ray.pixel + 2]);
-				else if (ray.texture_type == 'W' && img->map.texture.west)
-					color = get_color(img->map.texture.west[ray.pixel], img->map.texture.west[ray.pixel + 1], img->map.texture.west[ray.pixel + 2]);
-				else if (ray.texture_type == 'E' && img->map.texture.east)
-					color = get_color(img->map.texture.east[ray.pixel], img->map.texture.east[ray.pixel + 1], img->map.texture.east[ray.pixel + 2]);
-			}
-			else
-				color = 0;
-			while (++x < /*img->map.x / 2*/4)
-			{
-					set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
-			}
-			y++;
+				set_pixel(img, color, ray.index * /*(img->map.x / 2)*/4 + x, y + line_offset);
 		}
-		x++;
+		y++;
+	}
+	x++;
 }
 
 void	draw_ray(t_data *img)

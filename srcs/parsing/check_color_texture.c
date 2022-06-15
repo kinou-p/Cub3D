@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:42:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:16:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	next_space_index(char *str, int i)
 	return (i);
 }
 
-char *transform_map(char **double_map, t_data *img)
+char	*transform_map(char **double_map, t_data *img)
 {
 	char	*map;
 	int		i;
@@ -82,8 +82,8 @@ void	set_texture_file(char *str, t_data *img, char c)
 
 void	check_value(char **tab, t_data *img)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (tab[i])
@@ -101,11 +101,14 @@ void	check_value(char **tab, t_data *img)
 
 void	set_color_utils(char **tab, t_color *rgb, t_data *img)
 {
-	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[0]) >= 0 && ft_atoi(tab[0]) <= 255))
+	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[0]) >= 0
+			&& ft_atoi(tab[0]) <= 255))
 		ft_exit("Error\nBad parameter in map file identifier(RGB)\n", img);
-	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[1]) >= 0 && ft_atoi(tab[1]) <= 255))
+	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[1]) >= 0
+			&& ft_atoi(tab[1]) <= 255))
 		ft_exit("Error\nBad parameter in map file identifier(RGB)\n", img);
-	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[2]) >= 0 && ft_atoi(tab[2]) <= 255))
+	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[2]) >= 0
+			&& ft_atoi(tab[2]) <= 255))
 		ft_exit("Error\nBad parameter in map file identifier(RGB)\n", img);
 	check_value(tab, img);
 	rgb->r = (unsigned char)ft_atoi(tab[0]);
@@ -118,7 +121,7 @@ void	set_color(char *str, t_data *img)
 {
 	char	c;
 	int		index;
-	char 	**tab;
+	char	**tab;
 
 	index = -1;
 	while (str[++index])
@@ -140,7 +143,7 @@ void	set_color(char *str, t_data *img)
 	img->to_be_free.tab_two = 0;
 }
 
-int check_texture_color(char **tab, t_data *img)
+int	check_texture_color(char **tab, t_data *img)
 {
 	int		next;
 	int		index;
@@ -153,9 +156,13 @@ int check_texture_color(char **tab, t_data *img)
 		ft_exit("Error\nBad syntax in map file (identifier)\n", img);
 	while (index < next)
 	{
-		if (next_space(tab[index], 0) == 'N' || next_space(tab[index], 0) == 'S' || next_space(tab[index], 0) == 'W' || next_space(tab[index], 0) == 'E')
+		if (next_space(tab[index], 0) == 'N'
+			|| next_space(tab[index], 0) == 'S'
+			|| next_space(tab[index], 0) == 'W'
+			|| next_space(tab[index], 0) == 'E')
 			set_texture_file(tab[index], img, next_space(tab[index], 0));
-		else if (next_space(tab[index], 0) == 'F' || next_space(tab[index], 0) == 'C')
+		else if (next_space(tab[index], 0) == 'F'
+			|| next_space(tab[index], 0) == 'C')
 			set_color(tab[index], img);
 		else if (next_space(tab[index], 0))
 			ft_exit("Error\nBad syntax in map file (identifier)\n", img);

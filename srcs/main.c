@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:16:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:11:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	key_pressed(int type, t_data *img)
 		img->player.side = -1;
 	else if (type == 'd')
 		img->player.side = 1;
-	else if (type == 65361)//fleche gauche
+	else if (type == 65361)
 		img->player.angle_side = -1;
-	else if (type == 65363)//fleche droite
+	else if (type == 65363)
 		img->player.angle_side = 1;
 	else if (type == 65505)
 		img->player.shift = 1;
@@ -67,9 +67,9 @@ int	key_released(int type, t_data *img)
 		img->player.side = 0;
 	else if (type == 'd')
 		img->player.side = 0;
-	else if (type == 65361)//fleche gauche
+	else if (type == 65361)
 		img->player.angle_side = 0;
-	else if (type == 65363)//fleche droite
+	else if (type == 65363)
 		img->player.angle_side = 0;
 	else if (type == 65505)
 		img->player.shift = 0;
@@ -90,8 +90,6 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		ft_error("Error\nBad number of arguments, only need a map\n");
 	set_map_player(&img);
-	img.player.x = 0;
-	img.player.y = 0;
 	if (check_map(argv, &img))
 		return (0);
 	img.mlx = mlx_init();
@@ -100,10 +98,6 @@ int	main(int argc, char **argv)
 	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
 	img.player.vx = cos(deg_to_rad(img.player.angle));
 	img.player.vy = sin(deg_to_rad(img.player.angle));
-	img.player.front = 0;
-	img.player.side = 0;
-	img.player.angle_side = 0;
-	img.player.shift = 0;
 	mlx_hook(img.mlx_win, 2, 1L << 0, key_pressed, &img);
 	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
 	mlx_loop_hook(img.mlx, loop, &img);

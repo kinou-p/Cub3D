@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 17:25:21 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:10:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	put_texture_in_struct(char type, unsigned char *texture, t_data *img)
 
 int	is_nbr(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -54,17 +54,18 @@ int	is_nbr(char *str)
 	return (1);
 }
 
-unsigned char *get_texture(char type, char *path, t_data *img)//change in list
+unsigned char	*get_texture(char type, char *path, t_data *img)
 {
-	int		fd;
-	unsigned char		*ret;
-	int		count;
-	char	*swap = 0;
+	int				fd;
+	unsigned char	*ret;
+	int				count;
+	char			*swap;
 
+	swap = 0;
 	(void)type;
 	count = 0;
 	if (!path)
-		return(0);
+		return (0);
 	fd = open(path, O_DIRECTORY);
 	if (fd >= 0)
 	{
@@ -107,7 +108,8 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 		}
 		if (swap)
 			swap[ft_strlen(swap) - 1] = 0;
-		if ((swap && is_nbr(swap) && ft_strlen(swap) <= 3 && ft_atoi(swap) <= 255 && ft_atoi(swap) >= 0) || !count)
+		if ((swap && is_nbr(swap) && ft_strlen(swap) <= 3
+				&& ft_atoi(swap) <= 255 && ft_atoi(swap) >= 0) || !count)
 			ret[count] = (unsigned char)ft_atoi(swap);
 		else if (swap)
 		{
