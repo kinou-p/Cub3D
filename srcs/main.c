@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 15:19:08 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:25:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	set_map(t_data *img)
 	img->player.side = 0;
 	img->player.angle_side = 0;
 	img->player.shift = 0;
-	img->to_be_free.one_tab = NULL;
-	img->to_be_free.fd_one = -1;
+	img->to_be_free.tab = NULL;
+	img->to_be_free.fd = -1;
 }
 
 int	key_pressed(int type, t_data *img)
@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 	t_data	img;
 
 	if (argc != 2)
-		ft_error("Error:  bad number of arguments, only need a map");
+		ft_error("Error\nBad number of arguments, only need a map\n");
 	set_map(&img);
 	img.player.x = 0;
 	img.player.y = 0;
@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 		return (0);
 	img.mlx = mlx_init();
 	if (!img.mlx)
-		ft_error("Error: mlx_init fail");
+		ft_exit("Error\nmlx_init fail\n", &img);
 	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
 	img.player.vx = cos(deg_to_rad(img.player.angle));
 	img.player.vy = sin(deg_to_rad(img.player.angle));

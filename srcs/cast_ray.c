@@ -134,8 +134,6 @@ void	draw_ray3d(t_data *img, ray ray)
 					color = get_color(img->map.texture.west[ray.pixel], img->map.texture.west[ray.pixel + 1], img->map.texture.west[ray.pixel + 2]);
 				else if (ray.texture_type == 'E' && img->map.texture.east)
 					color = get_color(img->map.texture.east[ray.pixel], img->map.texture.east[ray.pixel + 1], img->map.texture.east[ray.pixel + 2]);
-				else
-					color = get_color(img->map.texture.basic[ray.pixel], img->map.texture.basic[ray.pixel + 1], img->map.texture.basic[ray.pixel + 2]);//here read
 			}
 			else
 				color = 0;
@@ -177,7 +175,7 @@ void	draw_ray(t_data *img)
 
 	new_img = mlx_new_image(img->mlx, 960, 512);
 	if (!new_img)
-		ft_exit("Error\nmlx_new_image failed\n");
+		ft_exit("Error\nmlx_new_image failed\n", img);
 	//printf("newimg= %p\n", new_img);
 	img->buffer = mlx_get_data_addr(new_img, &bits_per_pixel, &size_line, &endian);
 	//img->buffer// = (char*)new_img;

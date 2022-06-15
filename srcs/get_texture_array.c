@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:10:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 14:36:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:30:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ void	put_texture_in_struct(char type, unsigned char *texture, t_data *img)
 	if (type == 'N')
 	{
 		if (img->map.texture.north)
-			ft_exit("Error\nMultiple declaration of texture\n");
+			ft_exit("Error\nMultiple declaration of texture\n", img);
 		img->map.texture.north = texture;
 	}
 	if (type == 'S')
 	{
 		if (img->map.texture.south)
-			ft_exit("Error\nMultiple declaration of texture\n");
+			ft_exit("Error\nMultiple declaration of texture\n", img);
 		img->map.texture.south = texture;
 	}
 	if (type == 'W')
 	{
 		if (img->map.texture.west)
-			ft_exit("Error\nMultiple declaration of texture\n");
+			ft_exit("Error\nMultiple declaration of texture\n", img);
 		img->map.texture.west = texture;
 	}
 	if (type == 'E')
 	{
 		if (img->map.texture.east)
-			ft_exit("Error\nMultiple declaration of texture\n");
+			ft_exit("Error\nMultiple declaration of texture\n", img);
 		img->map.texture.east = texture;
 	}
 }
@@ -69,12 +69,12 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 	if (fd >= 0)
 	{
 		close(fd);
-		ft_exit("Error\nTexture path is a directory\n");
+		ft_exit("Error\nTexture path is a directory\n", img);
 	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		quit_game(img);
-	img->to_be_free.fd_one = fd;
+	img->to_be_free.fd = fd;
 	while (swap || !count)
 	{
 		if (swap)
@@ -83,17 +83,16 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 		swap = get_next_line(fd);
 	}
 	close(fd);
-	img->to_be_free.fd_one = -1;
-	printf("count= %d\n", count);
+	img->to_be_free.fd = -1;
 	if (count != 12291)
-		ft_exit("Error\n Bad texture file\n");
+		ft_exit("Error\n Bad texture file\n", img);
 	ret = ft_calloc(sizeof(char), count);
 	if (!ret)
 		quit_game(img);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		ft_exit("Error\nBad texture file");
-	img->to_be_free.fd_one = fd;
+		ft_exit("Error\nBad texture file", img);
+	img->to_be_free.fd = fd;
 	count = 0;
 	while (swap || !count)
 	{	
@@ -115,12 +114,12 @@ unsigned char *get_texture(char type, char *path, t_data *img)//change in list
 		{
 			//printf("isnbr= %d swap= %s ft_atoi(swap)= ---%ld--- strlen= %ld\n",is_nbr(swap) ,swap , ft_atoi(swap), ft_strlen(swap) );
 			free(ret);
-			ft_exit("Error\nBad texture file\n");
+			ft_exit("Error\nBad texture file\n", img);
 		}
 		count++;
 	}
 	close(fd);
-	img->to_be_free.fd_one = -1;
+	img->to_be_free.fd = -1;
 	put_texture_in_struct(type, ret, img);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 14:40:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:29:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct all_wall_texture{
 	unsigned char	*east;
 	unsigned char	*west;
 	unsigned char	*south;
-	unsigned char	*basic;
 }				sprite;
 
 typedef struct s_color{
@@ -86,10 +85,8 @@ typedef struct player_position
 
 typedef struct need_to_be_free
 {
-	char	**one_tab;
-	char	**two_tab;
-	char	*one_str;
-	int		fd_one;
+	char	**tab;
+	int		fd;
 }				to_free;
 
 typedef struct s_data {
@@ -112,7 +109,7 @@ int				update_pos(t_data *img);
 char			*transform_map(char **double_map, t_data *img);
 int				check_texture_color(char **tab, t_data *img);
 int				check_map(char **av, t_data *img);
-void			ft_exit(char *str);
+void			ft_exit(char *str, t_data *img);
 void			set_back(t_data *img);
 unsigned char	*get_texture(char type, char *path, t_data *img);
 int				get_color(char one, char two, char three);

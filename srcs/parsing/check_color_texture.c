@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 12:40:19 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:27:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,28 @@ void	set_texture_file(char *str, t_data *img, char c)
 	if (c == 'N')
 	{
 		if (str[index + 1] != 'O' || str[index + 2] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file\n", img);
 	}
 	if (c == 'S')
 	{
 		if (str[index + 1] != 'O' || str[index + 2] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file\n", img);
 	}
 	if (c == 'W')
 	{
 		if (str[index + 1] != 'E' || str[index + 2] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file\n", img);
 	}
 	if (c == 'E')
 	{
 		if (str[index + 1] != 'A' || str[index + 2] != ' ')
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file\n", img);
 	}
 	//printf("path= -%s-\n", str + index + 3);
 	get_texture(c, str + index + 3, img);
 }
 
-void	check_value(char **tab)
+void	check_value(char **tab, t_data *img)
 {
 	int i;
 	int j;
@@ -108,22 +108,22 @@ void	check_value(char **tab)
 		while (tab[i][j])
 		{
 			if (!ft_isdigit(tab[i][j]))
-				ft_exit("Error\nBad syntax in map file (RGB)2\n");
+				ft_exit("Error\nBad syntax in map file (RGB)2\n", img);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	set_color_utils(char **tab, color *rgb)
+void	set_color_utils(char **tab, color *rgb, t_data *img)
 {
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[0]) >= 0 && ft_atoi(tab[0]) <= 255))
-		ft_exit("Error\nBad syntax in map file (RGB)\n");
+		ft_exit("Error\nBad syntax in map file (RGB)\n", img);
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[1]) >= 0 && ft_atoi(tab[1]) <= 255))
-		ft_exit("Error\nBad syntax in map file (RGB)\n");
+		ft_exit("Error\nBad syntax in map file (RGB)\n", img);
 	if (ft_strlen(tab[0]) > 3 || !(ft_atoi(tab[2]) >= 0 && ft_atoi(tab[2]) <= 255))
-		ft_exit("Error\nBad syntax in map file (RGB)\n");
-	check_value(tab);
+		ft_exit("Error\nBad syntax in map file (RGB)\n", img);
+	check_value(tab, img);
 	rgb->r = (unsigned char)ft_atoi(tab[0]);
 	rgb->g = (unsigned char)ft_atoi(tab[1]);
 	rgb->b = (unsigned char)ft_atoi(tab[2]);
@@ -148,9 +148,9 @@ void	set_color(char *str, t_data *img)
 	//	ft_exit("Error\nBad syntax in map file (RGB) 1\n");
 	//print_double_fd(tab, 1);
 	if (c == 'F')
-		set_color_utils(tab, &img->map.floor);
+		set_color_utils(tab, &img->map.floor, img);
 	if (c == 'C')
-		set_color_utils(tab, &img->map.sky);
+		set_color_utils(tab, &img->map.sky, img);
 	free_double(tab);
 }
 
@@ -168,7 +168,7 @@ int check_texture_color(char **tab, t_data *img)
 	while (next_space(tab[next], 0) != '1' && tab[next])
 		next++;
 	if (!tab[next])
-		ft_exit("Error\nBad syntax in map file\n");
+		ft_exit("Error\nBad syntax in map file\n", img);
 	while (index < next)
 	{
 		if (next_space(tab[index], 0) == 'N' || next_space(tab[index], 0) == 'S' || next_space(tab[index], 0) == 'W' || next_space(tab[index], 0) == 'E')
@@ -179,7 +179,7 @@ int check_texture_color(char **tab, t_data *img)
 
 		}
 		else if (next_space(tab[index], 0))
-			ft_exit("Error\nBad syntax in map file\n");
+			ft_exit("Error\nBad syntax in map file\n", img);
 		index++;
 	}
 	return (next);

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 23:37:02 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 14:40:49 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:29:19 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	free_texture(t_data *img)
 		free(img->map.texture.east);
 	if (img->map.texture.west)
 		free(img->map.texture.west);
-	if (img->map.texture.basic)
-		free(img->map.texture.basic);
 }
 
 int	quit_game(t_data *img)
@@ -34,7 +32,10 @@ int	quit_game(t_data *img)
 		free(img->mlx);
 	free_texture(img);
 	free(img->map.simple_map);
-	if ()
+	if (img->to_be_free.tab)
+		free_double(img->to_be_free.tab);
+	if (img->to_be_free.fd != -1)
+		close(img->to_be_free.fd);
 		
 	//free(img->map.texture.north);
 	//free_double(img->map);

@@ -6,44 +6,44 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 15:19:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:26:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3D.h"
 
-void ft_exit(char *str)
+void ft_exit(char *str, t_data *img)
 {
 	ft_putstr_fd(str, 2);
-	exit(1);
+	quit_game(img);
 }
 
 void	verifie_texture_color(t_data *img)
 {
 	if (img->map.texture.north == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n");
+		ft_exit("Error\nTexture isn't loaded properly\n", img);
 	if (img->map.texture.east == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n");
+		ft_exit("Error\nTexture isn't loaded properly\n", img);
 	if (img->map.texture.south == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n");
+		ft_exit("Error\nTexture isn't loaded properly\n", img);
 	if (img->map.texture.west == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n");
+		ft_exit("Error\nTexture isn't loaded properly\n", img);
 	if (img->map.floor.set != 1)
-		ft_exit("Error\nColor not set properly\n");
+		ft_exit("Error\nColor not set properly\n", img);
 	if (img->map.sky.set != 1)
-		ft_exit("Error\nColor not set properly\n");
+		ft_exit("Error\nColor not set properly\n", img);
 }
 
 void error_msg(t_data *img)
 {
 	if (img->map.error == 1)
-		ft_exit("Error: Map isn't closed\n");
+		ft_exit("Error: Map isn't closed\n", img);
 	if (img->map.error == 2)
-		ft_exit("Error: Missing player\n");
+		ft_exit("Error: Missing player\n", img);
 	if (img->map.error == 3)
-		ft_exit("Error: Too many players\n");
+		ft_exit("Error: Too many players\n", img);
 	if (img->map.error == -1)
-		ft_exit("Error: Bad character in map\n");
+		ft_exit("Error: Bad character in map\n", img);
 }
 
 void size_line(char *str, t_data *img)
@@ -285,11 +285,11 @@ char	**isafile(char **av, t_data *img)
 
 	img->err = 0;
 	fd = open(av[1], O_RDONLY);
-	img->to_be_free.fd_one = fd;
+	img->to_be_free.fd = fd;
 	str = NULL;
 	tmp = NULL;
 	if (fd == - 1)
-		ft_exit("Error: File doesn't exist\n");
+		ft_exit("Error: File doesn't exist\n", img);
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		if (line[0] != '\n' && img->err == 0)
@@ -311,21 +311,21 @@ char	**isafile(char **av, t_data *img)
 	if (img->err == 2)
 	{
 		free(str);
-		ft_exit("Error\nBad texture file\n");
+		ft_exit("Error\nBad texture file\n", img);
 	}
 	split = ft_split(str, '\n');
-	img->to_be_free.one_tab = split;
+	img->to_be_free.tab = split;
 	free(str);
 	free(line);
 	close(fd);
-	img->to_be_free.fd_one = -1;
+	img->to_be_free.fd = -1;
 	int pass = 0;
 	pass = check_texture_color(split, img);
 	check_zero_one(split + pass, img);
 	//leaks here -- normalement c bon
 	transform_map(split + pass, img);
 	free_double(split);
-	img->to_be_free.one_tab = 0;
+	img->to_be_free.tab = 0;
 	return (0);
 }
 
@@ -337,7 +337,7 @@ int check_map(char **av, t_data *img)
 
 	if (reverse_comp(av[1], ".cub") || (ft_strlen(av[1]) == ft_strlen(".cub")))
 	{
-		ft_putstr_fd("Error: Not a valid file \".cub\"\n", 2);
+		ft_exit("Error: Not a valid file \".cub\"\n", img);
 		return (1);
 	}
 	isafile(av, img);
@@ -348,7 +348,7 @@ int check_map(char **av, t_data *img)
 	if (img->map.error != 0)
 	{
 		error_msg(img);
-		exit(1);//surely leak
+		quit_game(img);//surely leak???
 	}
 	verifie_texture_color(img);
 	return (0);
