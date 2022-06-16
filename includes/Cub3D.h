@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 21:39:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:18:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,47 @@ typedef struct s_data {
 	char		*buffer;
 	void		*mlx_win_test;
 	char		**double_map;
+	void		*image;
 	t_map_info	map;
 	t_player	player;
 	t_to_free	to_be_free;
 	int			err;
 }				t_data;
 
-int				update_pos(t_data *img);
+typedef struct draw_ray_3D {
+	double	line_height;
+	double	line_offset;
+	int		x;
+	double	y;
+	int		mx;
+	int		my;
+	int		color;
+	double	gap;
+	double	myy;
+}				t_draw_ray_info;
+
+typedef struct draw_ray_var {
+	double	ray_angle;
+	double	ray_y;
+	double	ray_x;
+	double	next_x;
+	double	next_y;
+	double	dist_v;
+	double	dist_h;
+	double	dist_f;
+	double	vx;
+	double	vy;
+	int		count;
+	double	aTan;
+	int		nb_ray;
+	int		my;
+	int		mx;
+	int		mp;
+	char	vertical_type;
+	char	horizontal_type;
+}				t_var_draw_ray;
+
+
 char			*transform_map(char **double_map, t_data *img);
 int				check_texture_color(char **tab, t_data *img);
 int				check_map(char **av, t_data *img);
@@ -118,18 +152,26 @@ void			set_back(t_data *img);
 unsigned char	*get_texture(char type, char *path, t_data *img);
 int				get_color(char one, char two, char three);
 void			set_pixel(t_data *img, int color, int x, int y);
+int				set_color_texture(t_ray *ray, t_sprite img);
 void			get_file_size(char *path, t_data *img, int *count, int fd);
 void			get_map_size(char *path, t_data *img, int *count, int fd);
 
+char			next_space(char *str, int i);
+int				next_space_index(char *str, int i);
 double			reset_angle(double angle);
 double			deg_to_rad(double angle);
+
 void			draw_ray(t_data *img);
+void			set_info_draw(t_var_draw_ray *info);
 void			print_ray(t_data *img);
-int				key_press(int code, t_data *img);
+
+void			vertical_ray(t_var_draw_ray *vr, t_data *img);
+void			horizontal_ray(t_var_draw_ray *hr, t_data *img);
+
+int				update_pos(t_data *img);
+//int				key_press(int code, t_data *img);
 int				quit_game(t_data *img);
 void			ft_error(char *error_msg);
-void			print_player(t_player player, t_data *img);
-void			print_map(t_map_info map, t_data *img);
 void			check_dir(char *path, t_data *img);
 
 int				key_pressed(int type, t_data *img);

@@ -6,236 +6,115 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 23:56:03 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 23:56:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:18:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3D.h"
 
+void	set_draw_info(t_draw_ray_info *info, t_ray *ray)
+{
+	info->line_height = 64 * 960 / ray->dist;
+	info->line_offset = 256 - ((int)info->line_height) / 2;
+	info->x = 0;
+	info->y = 0;
+	info->mx = ((int)ray->mp) % 64;
+	info->my = 0;
+	info->gap = (64 / info->line_height);
+	info->myy = 0;
+	if (info->line_height > 512)
+	{
+		info->line_offset = 0;
+		info->myy = info->gap * ((info->line_height - 512) / 2);
+	}
+}
+
 void	draw_ray3d(t_data *img, t_ray ray)
 {
-	double	line_height;
-	double	line_offset;
-	int		x;
-	double	y;
-	int		mx;
-	int		my;
-	int		color;
-	double	gap;
-	double	myy;
+	t_draw_ray_info	info;
 
-	line_height = 64 * 960 / ray.dist;
-	line_offset = 256 - ((int)line_height) / 2;
-	x = 0;
-	y = 0;
-	my = 0;
-	myy = 0;
-	gap = (64 / line_height);
-	mx = ((int)ray.mp) % 64;
-	if (line_height > 512)
+	set_draw_info(&info, &ray);
+	while (info.y < info.line_height - 8 && info.y < 512)
 	{
-		line_offset = 0;
-		myy = gap * ((line_height - 512) / 2);
-	}
-	while (y < line_height - 8 && y < 512)
-	{
-		myy += gap;
-		my = (int)myy;
-		ray.pixel = ((my) * 64 + mx) * 3 + 1;
-		x = -1;
-		if (ray.pixel >= 12290 || ray.pixel < 0)
+		info.myy += info.gap;
+		info.my = (int)info.myy;
+		ray.pixel = ((info.my) * 64 + info.mx) * 3 + 1;
+		info.color = set_color_texture(&ray, img->map.texture);
+		if (info.color == -1)
 			return ;
-		else if (ray.pixel > 0)
-		{
-			if (ray.texture_type == 'N' && img->map.texture.north)
-				color = get_color(img->map.texture.north[ray.pixel], img->map.texture.north[ray.pixel + 1], img->map.texture.north[ray.pixel + 2]);
-			else if (ray.texture_type == 'S' && img->map.texture.south)
-				color = get_color(img->map.texture.south[ray.pixel], img->map.texture.south[ray.pixel + 1], img->map.texture.south[ray.pixel + 2]);
-			else if (ray.texture_type == 'W' && img->map.texture.west)
-				color = get_color(img->map.texture.west[ray.pixel], img->map.texture.west[ray.pixel + 1], img->map.texture.west[ray.pixel + 2]);
-			else if (ray.texture_type == 'E' && img->map.texture.east)
-				color = get_color(img->map.texture.east[ray.pixel], img->map.texture.east[ray.pixel + 1], img->map.texture.east[ray.pixel + 2]);
-		}
-		else
-			color = 0;
-		while (++x < 4)
-		{
-				set_pixel(img, color, ray.index * 4 + x, y + line_offset);
-		}
-		y++;
+		info.x = -1;
+		while (++info.x < 4)
+			set_pixel(img, info.color, ray.index * 4 + info.x,
+				info.y + info.line_offset);
+		info.y++;
 	}
-	x++;
+	info.x++;
+}
+
+void	set_dist_ray(t_var_draw_ray *info, t_ray *ray_info, t_data *img)
+{
+	ray_info->ty = info->ray_y;
+	ray_info->pixel = 0;
+	ray_info->tx = info->ray_x;
+	ray_info->index = info->nb_ray;
+	info->dist_f = info->dist_f
+		* cos(deg_to_rad(reset_angle(img->player.angle - info->ray_angle)));
+	ray_info->dist = info->dist_f;
+	if (info->dist_f > 0)
+		draw_ray3d(img, *ray_info);
+	info->ray_angle = reset_angle(info->ray_angle - 0.25);
+}
+
+void	set_ray_info(t_var_draw_ray *info, t_data *img)
+{
+	t_ray	ray_info;
+
+	ray_info.texture_type = 0;
+	if (info->dist_h != -1 && (info->dist_h < info->dist_v
+			|| info->dist_v == -1))
+	{
+		info->dist_f = info->dist_h;
+		ray_info.mp = info->ray_x;
+		ray_info.texture_type = info->horizontal_type;
+	}
+	else if (info->dist_v != -1)
+	{
+		info->dist_f = info->dist_v;
+		info->ray_x = info->vx;
+		info->ray_y = info->vy;
+		ray_info.mp = info->vy;
+		ray_info.texture_type = info->vertical_type;
+	}
+	else
+	{
+		ray_info.mp = 0;
+		info->dist_f = 0;
+	}
+	set_dist_ray(info, &ray_info, img);
 }
 
 void	draw_ray(t_data *img)
 {
-	double	ray_angle = 0;
-	double	ray_y = 0;
-	double	ray_x = 0;
-	double	next_x = 0;
-	double	next_y = 0;
-	double	dist_v;
-	double	dist_h;
-	double	dist_f;
-	double	vx = 0;
-	double	vy = 0;
-	int		count = 0;
-	double	aTan = 0;
-	int		nb_ray = -1;
-	int		my = 0;
-	int		mx = 0;
-	int		mp = 0;
-	char	vertical_type;
-	char	horizontal_type;
+	t_var_draw_ray	info;
 
-	void *new_img;
-	int bits_per_pixel = 0;
-	int size_line = 0;
-	int endian = 0;
-
-	new_img = mlx_new_image(img->mlx, 960, 512);
-	if (!new_img)
+	set_info_draw(&info);
+	img->image = mlx_new_image(img->mlx, 960, 512);
+	if (!img->image)
 		ft_exit("Error\nmlx_new_image failed\n", img);
-	img->buffer = mlx_get_data_addr(new_img, &bits_per_pixel, &size_line, &endian);
-	img->bits_per_pixel = bits_per_pixel;
-	img->size_line = size_line;
-	img->endian = endian;
+	img->buffer = mlx_get_data_addr(img->image, &img->bits_per_pixel,
+			&img->size_line, &img->endian);
 	set_back(img);
-	
-	
-	(void)dist_f;
-	count = 0;
-	ray_angle = reset_angle(img->player.angle + 30);
-	while (++nb_ray < 240)
+	info.count = 0;
+	info.ray_angle = reset_angle(img->player.angle + 30);
+	while (++info.nb_ray < 240)
 	{
-		count = 0;
-		dist_v = -1;
-		dist_h = -1;
-		//----------start vertical ray----------
-		aTan = tan(deg_to_rad(ray_angle));
-		if (cos(deg_to_rad(ray_angle)) > 0.001)//looking left
-		{
-			ray_x = (((int)img->player.x>>6)<<6) + 64;
-			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
-			next_x = 64;
-			next_y = -next_x * aTan;
-			vertical_type = 'E';
-		}
-		else if (cos(deg_to_rad(ray_angle)) < -0.001)//looking right
-		{
-			ray_x = (((int)img->player.x>>6)<<6) - 0.0001;
-			ray_y = (img->player.x - ray_x) * aTan + img->player.y;
-			next_x = -64;
-			next_y = -next_x * aTan;
-			vertical_type = 'W';
-		}
-		else
-		{
-			ray_x = img->player.x;
-			ray_y = img->player.y;
-			count = img->map.max;
-		}
-		while (count < img->map.max) 
-		{ 
-			mx = (int)(ray_x)>>6;
-			my = (int)(ray_y)>>6;
-			mp = my * img->map.x + mx;
-			if (mp > 0 && mp < img->map.size && img->map.simple_map[mp] == '1')//hit wall
-			{
-				count = img->map.max;
-				//printf("vertical wall\n");
-				dist_v = cos(deg_to_rad(ray_angle)) * (ray_x-img->player.x) - sin(deg_to_rad(ray_angle)) * (ray_y-img->player.y);
-			}		 
-			else
-			{
-				ray_x += next_x;
-				ray_y += next_y;
-				count += 1;
-			}
-		}
-		vx = ray_x;
-		vy = ray_y;
-		//-------start horizontal ray---------
-		count = 0;
-		aTan = 1.0 / aTan; 
-		if (sin(deg_to_rad(ray_angle)) > 0.001)//looking up 
-		{
-			ray_y = (((int)img->player.y>>6)<<6) - 0.0001;
-			ray_x = (img->player.y - ray_y) * aTan + img->player.x;
-			next_y = -64;
-			next_x = -next_y * aTan;
-			horizontal_type = 'N';
-		}
-		else if (sin(deg_to_rad(ray_angle))<-0.001)//looking down
-		{
-			ray_y = (((int)img->player.y>>6)<<6) + 64;
-			ray_x = (img->player.y - ray_y) * aTan + img->player.x;
-			next_y = 64;
-			next_x = -next_y * aTan;
-			horizontal_type = 'S';
-		}
-		else
-		{
-			ray_x = img->player.x;
-			ray_y = img->player.y;
-			count = img->map.max;
-		}//looking straight left or right
-		
-		while (count < img->map.max)  
-		{ 
-			mx = (int)(ray_x)>>6;
-			my = (int)(ray_y)>>6;
-			mp = my * img->map.x + mx;		   
-			if (mp > 0 && mp < img->map.size && img->map.simple_map[mp] == '1')//hit   
-			{
-				count = img->map.max;
-				dist_h = cos(deg_to_rad(ray_angle)) * (ray_x - img->player.x) - sin(deg_to_rad(ray_angle)) * (ray_y - img->player.y);
-			}	
-			else
-			{
-				ray_x += next_x;
-				ray_y += next_y;
-				count += 1;
-			}											   //check next horizontal
-  		}
-		int wall_type;
-		t_ray	ray_info;
-		
-		wall_type = 0;
-		ray_info.texture_type = 0;
-		if (dist_h != -1 && (dist_h < dist_v || dist_v == -1))
-		{
-			dist_f = dist_h;
-			ray_info.mp = ray_x;
-			wall_type = 0;
-			ray_info.texture_type = horizontal_type;
-		}
-		else if (dist_v != -1)
-		{
-			dist_f = dist_v;
-			ray_x = vx;
-			ray_y = vy;
-			ray_info.mp = vy;
-			wall_type = 1;
-			ray_info.texture_type = vertical_type;
-		}
-		else
-		{
-			ray_info.mp = 0;
-			dist_f = 0;
-		}
-		ray_info.ty = ray_y;
-		ray_info.pixel = 0; 
-		ray_info.tx = ray_x;
-		ray_info.index = nb_ray;
-		ray_info.wall_type = wall_type;
-		int ca = reset_angle(img->player.angle - ray_angle); //fisheye
-		dist_f = dist_f * cos(deg_to_rad(ca));	//fisheye
-		ray_info.dist = dist_f;	
-		if (dist_f > 0)	 
-			draw_ray3d(img, ray_info);
-		ray_angle = reset_angle(ray_angle - 0.25);
+		info.count = 0;
+		info.dist_v = -1;
+		info.dist_h = -1;
+		vertical_ray(&info, img);
+		horizontal_ray(&info, img);
+		set_ray_info(&info, img);
 	}
-	mlx_put_image_to_window(img->mlx, img->mlx_win, new_img, 0, 0);
-	mlx_destroy_image(img->mlx, new_img);
+	mlx_put_image_to_window(img->mlx, img->mlx_win, img->image, 0, 0);
+	mlx_destroy_image(img->mlx, img->image);
 }
