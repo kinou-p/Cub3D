@@ -6,50 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:54:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/06/15 23:33:19 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:38:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Cub3D.h"
-
-void	verifie_texture_color(t_data *img)
-{
-	if (img->map.texture.north == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n", img);
-	if (img->map.texture.east == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n", img);
-	if (img->map.texture.south == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n", img);
-	if (img->map.texture.west == NULL)
-		ft_exit("Error\nTexture isn't loaded properly\n", img);
-	if (img->map.floor.set != 1)
-		ft_exit("Error\nColor not set properly\n", img);
-	if (img->map.sky.set != 1)
-		ft_exit("Error\nColor not set properly\n", img);
-}
-
-void	error_msg(t_data *img)
-{
-	if (img->map.error == 1)
-		ft_exit("Error\nMap isn't closed\n", img);
-	if (img->map.error == 2)
-		ft_exit("Error\nMissing player\n", img);
-	if (img->map.error == 3)
-		ft_exit("Error\nToo many players\n", img);
-	if (img->map.error == -1)
-		ft_exit("Error\nBad character in map\n", img);
-}
-
-void	size_line(char *str, t_data *img)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (i > img->map.x)
-		img->map.x = i;
-}
 
 char	*charge_new(t_data *img, char **map, char **tmp_map)
 {
@@ -90,153 +51,6 @@ int	reverse_comp(char *s1, char *s2)
 	return (0);
 }
 
-void	inter_map(char **split, char **tmp, t_data *img)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (split[i])
-	{
-		j = 0;
-		while (split[i][j])
-		{
-			if (split[i][j] == '3')
-				img->map.error = -1;
-			else if (split[i][j] != ' ')
-				tmp[i + 1][j + 1] = split[i][j];
-			j++;
-		}
-		i++;
-	}
-}
-
-void	close_or_not(char **tab, int i, int j, t_data *img)
-{
-	if (tab[i + 1][j] == '3' || tab[i - 1][j] == '3')
-		img->map.error = 1;
-	if (tab[i][j + 1] == '3' || tab[i][j - 1] == '3')
-		img->map.error = 1;
-	if (tab[i + 1][j + 1] == '3' || tab[i + 1][j - 1] == '3')
-		img->map.error = 1;
-	if (tab[i - 1][j + 1] == '3' || tab[i - 1][j - 1] == '3')
-		img->map.error = 1;
-	if (img->map.error != 1)
-		img->map.error = 0;
-}
-
-void	find_angle(char c, t_data *img)
-{
-	if (c == 'N')
-		img->player.angle = 90;
-	if (c == 'E')
-		img->player.angle = 0;
-	if (c == 'S')
-		img->player.angle = 270;
-	if (c == 'W')
-		img->player.angle = 180;
-}
-
-int	check_inner_utils(char *line, t_data *img)
-{
-	int	i;
-	int	player;
-
-	i = 0;
-	player = 0;
-	while (line[i])
-	{
-		if (line[i] == 'N' || line[i] == 'S'
-			|| line[i] == 'E' || line[i] == 'W')
-		{
-			find_angle(line[i], img);
-			img->player.x = i * 64 - 32;
-			player++;
-		}
-		else if (line[i] != '3' && line[i] != '0' && line[i] != '1')
-			return (100);
-		i++;
-	}
-	return (player);
-}
-
-void	check_inner(char **map, t_data *img)
-{
-	int	i;
-	int	player;
-
-	i = 0;
-	player = 0;
-	while (map[i])
-	{
-		player += check_inner_utils(map[i], img);
-		if (player == 1 && !img->player.y)
-			img->player.y = i * 64 - 32;
-		i++;
-	}
-	if (player == 0)
-		img->map.error = 2;
-	if (player > 1 && player < 100)
-		img->map.error = 3;
-	if (player >= 100)
-		img->map.error = -1;
-}
-
-void	check_border(char **tab, t_data *img)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j])
-		{
-			if (tab[i][j] == '0' || tab[i][j] == 'W' || tab[i][j] == 'N'
-				|| tab[i][j] == 'S' || tab[i][j] == 'E')
-				close_or_not(tab, i, j, img);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	check_zero_one(char **split, t_data *img)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	while (split[i])
-	{
-		if (!ft_strchr(split[i], '1'))
-			ft_exit("Error\nInvalid line in map file\n", img);
-		size_line(split[i], img);
-		i++;
-	}
-	img->map.y = i;
-	tmp = malloc(sizeof(char *) * (i + 3));
-	if (!tmp)
-		quit_game(img);
-	i = 0;
-	while (i < img->map.y + 2)
-	{
-		tmp[i] = charge_new(img, split, tmp);
-		i++;
-	}
-	tmp[i] = NULL;
-	inter_map(split, tmp, img);
-	if (img->map.error == -1)
-	{
-		free_double(tmp);
-		return ;
-	}
-	check_border(tmp, img);
-	check_inner(tmp, img);
-	free_double(tmp);
-}
-
 int	is_in_charset(char c, char *charset)
 {
 	while (*charset)
@@ -266,45 +80,6 @@ int	detect_map_line(char *line)
 	return (1);
 }
 
-char	**fill_tab(char *swap, int count, char **ret, int fd)
-{
-	while (swap || !count)
-	{
-		swap = get_next_line(fd);
-		if (ft_strlen(swap) >= 1 && swap[ft_strlen(swap) - 1] == '\n')
-			swap[ft_strlen(swap) - 1] = 0;
-		ret[count] = swap;
-		count++;
-	}
-	return (ret);
-}
-
-char	**isafile(char **av, t_data *img)
-{
-	int		fd;
-	char	**ret;
-	int		count;
-	int		pass;
-
-	count = 0;
-	get_map_size(av[1], img, &count, 0);
-	ret = ft_calloc(sizeof(char *), count);
-	if (!ret)
-		quit_game(img);
-	img->to_be_free.tab = ret;
-	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-		ft_exit("Error\nBad texture file", img);
-	ret = fill_tab(0, 0, ret, fd);
-	close(fd);
-	pass = check_texture_color(ret, img);
-	check_zero_one(ret + pass, img);
-	transform_map(ret + pass, img);
-	free_double(ret);
-	img->to_be_free.tab = 0;
-	return (0);
-}
-
 int	check_map(char **av, t_data *img)
 {
 	img->map.x = 0;
@@ -325,6 +100,6 @@ int	check_map(char **av, t_data *img)
 		error_msg(img);
 		quit_game(img);
 	}
-	verifie_texture_color(img);
+	verify_texture_color(img);
 	return (0);
 }

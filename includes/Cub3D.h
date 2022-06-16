@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:30:59 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/16 16:18:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:38:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ typedef struct draw_ray_var {
 	double	vx;
 	double	vy;
 	int		count;
-	double	aTan;
+	double	tan;
 	int		nb_ray;
 	int		my;
 	int		mx;
@@ -142,11 +142,24 @@ typedef struct draw_ray_var {
 	char	horizontal_type;
 }				t_var_draw_ray;
 
-
 char			*transform_map(char **double_map, t_data *img);
 int				check_texture_color(char **tab, t_data *img);
 int				check_map(char **av, t_data *img);
 void			ft_exit(char *str, t_data *img);
+
+void			find_angle(char c, t_data *img);
+void			size_line(char *str, t_data *img);
+void			check_inner(char **map, t_data *img);
+void			check_border(char **tab, t_data *img);
+
+void			verify_texture_color(t_data *img);
+void			error_msg(t_data *img);
+void			inter_map(char **split, char **tmp, t_data *img);
+void			check_empty_line(char **split, t_data *img, int *i);
+void			check_zero_one(char **split, t_data *img);
+
+char			*charge_new(t_data *img, char **map, char **tmp_map);
+char			**isafile(char **av, t_data *img);
 
 void			set_back(t_data *img);
 unsigned char	*get_texture(char type, char *path, t_data *img);

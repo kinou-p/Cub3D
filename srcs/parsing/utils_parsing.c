@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 23:34:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 23:38:38 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:25:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,27 @@ char	*transform_map(char **double_map, t_data *img)
 	}
 	img->map.simple_map = map;
 	return (0);
+}
+
+void	find_angle(char c, t_data *img)
+{
+	if (c == 'N')
+		img->player.angle = 90;
+	if (c == 'E')
+		img->player.angle = 0;
+	if (c == 'S')
+		img->player.angle = 270;
+	if (c == 'W')
+		img->player.angle = 180;
+}
+
+void	size_line(char *str, t_data *img)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (i > img->map.x)
+		img->map.x = i;
 }

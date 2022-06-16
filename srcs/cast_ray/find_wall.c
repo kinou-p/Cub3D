@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:15:16 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/16 16:19:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:21:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ void	find_horizontal_wall(t_var_draw_ray *info, t_data *img)
 void	horizontal_ray(t_var_draw_ray *hr, t_data *img)
 {
 	hr->count = 0;
-	hr->aTan = 1.0 / hr->aTan;
+	hr->tan = 1.0 / hr->tan;
 	if (sin(deg_to_rad(hr->ray_angle)) > 0.001)
 	{
 		hr->ray_y = (((int)img->player.y >> 6) << 6) - 0.0001;
-		hr->ray_x = (img->player.y - hr->ray_y) * hr->aTan + img->player.x;
+		hr->ray_x = (img->player.y - hr->ray_y) * hr->tan + img->player.x;
 		hr->next_y = -64;
-		hr->next_x = -hr->next_y * hr->aTan;
+		hr->next_x = -hr->next_y * hr->tan;
 		hr->horizontal_type = 'N';
 	}
 	else if (sin(deg_to_rad(hr->ray_angle)) < -0.001)
 	{
 		hr->ray_y = (((int)img->player.y >> 6) << 6) + 64;
-		hr->ray_x = (img->player.y - hr->ray_y) * hr->aTan + img->player.x;
+		hr->ray_x = (img->player.y - hr->ray_y) * hr->tan + img->player.x;
 		hr->next_y = 64;
-		hr->next_x = -hr->next_y * hr->aTan;
+		hr->next_x = -hr->next_y * hr->tan;
 		hr->horizontal_type = 'S';
 	}
 	else
@@ -95,21 +95,21 @@ void	find_vertical_wall(t_var_draw_ray *info, t_data *img)
 
 void	vertical_ray(t_var_draw_ray *vr, t_data *img)
 {
-	vr->aTan = tan(deg_to_rad(vr->ray_angle));
+	vr->tan = tan(deg_to_rad(vr->ray_angle));
 	if (cos(deg_to_rad(vr->ray_angle)) > 0.001)
 	{
 		vr->ray_x = (((int)img->player.x >> 6) << 6) + 64;
-		vr->ray_y = (img->player.x - vr->ray_x) * vr->aTan + img->player.y;
+		vr->ray_y = (img->player.x - vr->ray_x) * vr->tan + img->player.y;
 		vr->next_x = 64;
-		vr->next_y = -vr->next_x * vr->aTan;
+		vr->next_y = -vr->next_x * vr->tan;
 		vr->vertical_type = 'E';
 	}
 	else if (cos(deg_to_rad(vr->ray_angle)) < -0.001)
 	{
 		vr->ray_x = (((int)img->player.x >> 6) << 6) - 0.0001;
-		vr->ray_y = (img->player.x - vr->ray_x) * vr->aTan + img->player.y;
+		vr->ray_y = (img->player.x - vr->ray_x) * vr->tan + img->player.y;
 		vr->next_x = -64;
-		vr->next_y = -vr->next_x * vr->aTan;
+		vr->next_y = -vr->next_x * vr->tan;
 		vr->vertical_type = 'W';
 	}
 	else
@@ -134,7 +134,7 @@ void	set_info_draw(t_var_draw_ray *info)
 	info->vx = 0;
 	info->vy = 0;
 	info->count = 0;
-	info->aTan = 0;
+	info->tan = 0;
 	info->nb_ray = -1;
 	info->my = 0;
 	info->mx = 0;
