@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 18:42:53 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:12:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 	t_data	img;
 
 	if (argc != 2)
-		ft_error("Error\nBad number of arguments, only need a map\n");
+		ft_error("Error\nBad number of arguments, only need a map");
 	set_map_player(&img);
 	if (check_map(argv, &img))
 		return (0);
