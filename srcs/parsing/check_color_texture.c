@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 01:00:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/15 23:38:56 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:55:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	set_color(char *str, t_data *img)
 	c = next_space(str, 0);
 	index = next_space_index(str + 1, 0);
 	tab = ft_split(str + index + 1, ',');
-	if (!tab)
-		quit_game(img);
+	if (!tab || double_size(tab) != 3)
+		ft_exit("Error\nBad syntax for RGB identifier\n", img);
 	img->to_be_free.tab_two = tab;
 	if (c == 'F')
 		set_color_utils(tab, &img->map.floor, img);

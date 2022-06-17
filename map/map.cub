@@ -1,7 +1,10 @@
-NO ./sprite/brick_wall.ppm
-SO ./sprite/brick_wall.ppm
-EA ./sprite/brick_wall.ppm
-WE ./sprite/brick_wall.ppm
+NO ./sprite/magma.ppm
+SO ./sprite/magma.ppm
+EA ./sprite/magma.ppm
+WE ./sprite/magma.ppm
+
+F 210,37,0
+C 24,231,27
 
 111111111111111111
 11110000000001111

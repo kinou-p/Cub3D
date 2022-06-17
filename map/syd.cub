@@ -1,10 +1,10 @@
-NO ./sprite/mossy_stone_bricks.ppm
-SO ./sprite/stone_bricks.ppm
-EA ./sprite/mossy_cobblestone.ppm
-WE ./sprite/obsidian.ppm
+NO ./sprite/syd.ppm
+SO ./sprite/syd.ppm
+EA ./sprite/syd.ppm
+WE ./sprite/syd.ppm
 
-F 210,37,0
-C 24,231,27
+F 0,0,0,
+C 255,255,255
 
         1111111111111111111111111
         1000000000110000000000001
