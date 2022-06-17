@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 16:42:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/17 12:12:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:16:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 		ft_exit("Error\nmlx_init fail\n", &img);
 	img.mlx_win = mlx_new_window(img.mlx, 960, 512, "Cub3D");
 	img.player.vx = cos(deg_to_rad(img.player.angle));
-	img.player.vy = sin(deg_to_rad(img.player.angle));
+	img.player.vy = -sin(deg_to_rad(img.player.angle));
 	mlx_hook(img.mlx_win, 2, 1L << 0, key_pressed, &img);
 	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
 	mlx_loop_hook(img.mlx, loop, &img);
