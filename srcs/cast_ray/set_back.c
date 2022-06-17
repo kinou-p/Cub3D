@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 18:46:05 by apommier          #+#    #+#             */
-/*   Updated: 2022/06/17 15:20:54 by apommier         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:24:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	set_back(t_data *img)
 	{
 		if (x > 512 * 960 * 2)
 		{
-				img->buffer[x + 0] = img->map.floor.b;
-				img->buffer[x + 1] = img->map.floor.g;
-				img->buffer[x + 2] = img->map.floor.r;
-				img->buffer[x + 3] = 0;
+										img->buffer[x + 0] = img->map.floor.b;
+						img->buffer[x + 1] = img->map.floor.g;
+								img->buffer[x + 2] = img->map.floor.r;
+			img->buffer[x + 3] = 0;
 		}
 		else
 		{
-			img->buffer[x + 0] = img->map.sky.b;
-			img->buffer[x + 1] = img->map.sky.g;
-			img->buffer[x + 2] = img->map.sky.r;
+						img->buffer[x + 0] = img->map.sky.b;
+				img->buffer[x + 1] = img->map.sky.g;
+							img->buffer[x + 2] = img->map.sky.r;
 			img->buffer[x + 3] = 0;
 		}
 		x += 4;
